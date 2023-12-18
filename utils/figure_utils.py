@@ -15,18 +15,30 @@ def get_network_value_list(config, dataloader, model):
     return result_list
 
 def make_figure(config, train_dataloader, model, data, total_hyperplane_list, job_index):
+    total_hyperplane_list.extend(generate_domain_bounding_hyperplanes(config))
     result_list = get_network_value_list(config, train_dataloader, model)
+    data_bounds = config.data_bounds
+    x_min = float(data_bounds[0])
+    x_max = float(data_bounds[1])
+    y_min = data_bounds[2]
+    y_max = data_bounds[3]
+    width = float(x_max - x_min)
+    height = float(y_max - y_min)
+
+    ratio = width/height
 
     plt.style.use('_mpl-gallery-nogrid')
 
-    fig1 = plt.figure(figsize=(15,5))
+    fig1 = plt.figure(figsize=(10, 10 * ratio))
     ax = fig1.add_subplot(111)
 
-    p = config.figure_width
-
-    ax.set(xlim=(-p, p), xticks=np.arange(-p, p, step=1),
-        ylim=(-p, p), yticks=np.arange(-p, p, step=1))
-    ax.set_title(f'Learned Decomposition of Phase Space')
+    extra_room_x = width * 0.05 * ratio
+    extra_room_x = 0
+    extra_room_y = height * 0.05
+    extra_room_y = 0
+    ax.set(xlim=(x_min - extra_room_x, x_max + extra_room_x), xticks=np.arange(x_min, x_max, step=1),
+        ylim=(y_min - extra_room_y, y_max + extra_room_y), yticks=np.arange(y_min, y_max, step=1))
+    ax.set_title(f'Learned Decomposition of Phase Space (System {config.system})')
     ax.set_xlabel('x')
     ax.set_ylabel('y')
 
@@ -42,9 +54,9 @@ def make_figure(config, train_dataloader, model, data, total_hyperplane_list, jo
 
     for hyperplane in total_hyperplane_list:
         if np.isclose(np.asarray(hyperplane.normal_vec[1]), np.asarray([0])):
-            plt.axvline(x = -hyperplane.bias/hyperplane.normal_vec[0], c = 'k', linewidth=0.5)
+            plt.axvline(x = -hyperplane.bias/hyperplane.normal_vec[0], ymin = y_min, ymax = y_max, c = 'k', linewidth=0.5)
         elif np.isclose(np.asarray(hyperplane.normal_vec[0]), np.asarray([0])):
-            plt.axhline(y = -hyperplane.bias/hyperplane.normal_vec[1], c = 'k', linewidth=0.5)
+            plt.axhline(y = -hyperplane.bias/hyperplane.normal_vec[1], xmin = x_min, xmax = x_max, c = 'k', linewidth=0.5)
         else:
             normal_vec_0 = np.dot(np.asarray(hyperplane.normal_vec), np.asarray([1, 0]))
             normal_vec_1 = np.dot(np.asarray(hyperplane.normal_vec), np.asarray([0, 1]))
@@ -52,13 +64,13 @@ def make_figure(config, train_dataloader, model, data, total_hyperplane_list, jo
             slope = -normal_vec_0/normal_vec_1 
             b = float(yintercept)
             m = float(slope)
-            x = np.linspace(-config.figure_width, config.figure_width, 10)
+            x = np.linspace(x_min, x_max, 10)
             y = m * x + b
-            ax.plot(x, y, c = 'k', linewidth = 1)
+            ax.plot(x, y, c = 'k', linewidth = 2)
 
     scatter = ax.scatter(scatterx1, scattery1, marker ='o', s = 5, cmap = 'viridis', c = result_list)
-    cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.046, pad=0.15)
-    cbar.set_label(label = 'Numerical value of network on training data')
+    cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.11, format="%.2f")
+    cbar.set_label(label = 'Value of network on training data')
     filename = f'output/figures/system{config.system}/{job_index}-decomposition.png'
     plt.savefig(filename)
     plt.close(fig1)
@@ -68,16 +80,20 @@ def make_loss_plots(config, job_index, test_loss_list, train_loss_list):
     ax = fig2.add_subplot(111)
     example_type = config.example_type
     system = config.system
-    ax.set_title(example_type + f' System {system} Example {job_index}: Loss for Test and Training Datasets')
+    ax.set_title('Test and train loss: '+ example_type + f' (System {system}, Example {job_index})')
     ax.set_xlabel('Epoch Number')
     ax.set_ylabel('Loss')
 
     timelist=list(range(1,config.epochs+1))
 
     plt.subplots_adjust(left=0.2, bottom=0.2, top=0.9, right = 0.9)
-    ax.set(xticks=np.arange(0, config.epochs+1, step=50))
-    ax.plot(timelist, test_loss_list, linewidth = .8, c = 'red', label = 'Test Loss')
-    ax.plot(timelist, train_loss_list, linewidth = .8, c = 'k', label = 'Train Loss')
+    if config.epochs > 100:
+        step = config.epochs/100
+    else:
+        step = config.epochs/10
+    ax.set(xticks=np.arange(0, config.epochs+1, step=step))
+    ax.plot(timelist, test_loss_list, linewidth = 1.2, c = 'blueviolet', linestyle = 'dashed', label = 'Test Loss')
+    ax.plot(timelist, train_loss_list, linewidth = 1, c = 'darkorange', label = 'Train Loss')
     ax.legend()
     filename = f'output/figures/system{system}/{job_index}-loss.png'
     plt.savefig(filename)

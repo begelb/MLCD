@@ -428,33 +428,24 @@ def get_cube_vertices_for_labeling(config, cube_as_polytope):
 def get_cube_label(config, vertex_list, model, labeling_threshold):
     label_list = []
 
-    print('len(vertex_list)', len(vertex_list))
     for vertex in vertex_list:
         # Check if vertex is already a tensor
         if not isinstance(vertex, torch.Tensor):
             # Convert vertex to a tensor
             vertex = torch.tensor(vertex)
         network_value_at_vertex = evaluate_regression_network(config, vertex, model)
-        print('network value: ', network_value_at_vertex)
-        print('range: ', config.num_labels)
 
         has_label = False
         for label in range(config.num_labels):
-            print('x: ', label - labeling_threshold <= network_value_at_vertex <= label + labeling_threshold)
             if label - labeling_threshold <= network_value_at_vertex <= label + labeling_threshold:
                 label_list.append(label)
-                print('label: ', label)
                 has_label = True
                 break
 
         if not has_label:
             label_list.append(config.num_labels)
-            print('label: ', config.num_labels)
 
-    print('label set: ')
     label_set = list(set(label_list))
-    print(label_set)
-    print('-----')
     if len(label_set) > 1:
         return config.num_labels
     elif len(label_set) == 1:

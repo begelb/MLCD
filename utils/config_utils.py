@@ -18,7 +18,6 @@ class Config:
         self.optimizer_choice = config["optimizer_choice"]
         self.verbose = bool(config["verbose"])
         self.make_figures = bool(config["make_figures"])
-        self.figure_width = float(config["figure_width"])
         self.dimension = config["dimension"]
         self.data_bounds = ast.literal_eval(config["data_bounds"])
         self.train_data_file = config["train_data_file"]
@@ -47,9 +46,6 @@ class Config:
             exit()
         if type(self.make_figures) is not bool:
             print("Make figures has the incorrect type. Must be " + str(str) + ". Found a" + str(type(self.make_figures)))
-            exit()
-        if type(self.figure_width) is not float:
-            print("Figure width has the incorrect type. Must be " + str(float) + ". Found a " + str(type(self.figure_width)))
             exit()
         if type(self.dimension) is not int:
             print("Dimension has the incorrect type. Must be " + str(int) + ". Found a " + str(type(self.dimension)))
