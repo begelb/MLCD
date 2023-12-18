@@ -4,8 +4,8 @@ from utils.config_utils import configure
 '''' Global variables set by user '''
 
 system = 1
-N = 10
-labeling_threshold = 0.3
+N = 4
+labeling_threshold = 0.1
 job_index = 0
 
 def main():

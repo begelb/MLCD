@@ -24,9 +24,11 @@ def generate_domain_bounding_hyperplanes(config):
 
 ''' Function that returns output of regression network for a given input after applying thresholding '''
 def evaluate_regression_network(config, x, model):
-    d = config.dimension
-    num_labels = config.num_labels
-    return torch.clamp(model(x.clone().detach().view(1, d)), min = 0.0, max = float(num_labels) - 1)
+    with torch.no_grad():
+        d = config.dimension
+        num_labels = config.num_labels
+        result = torch.clamp(model(x.clone().detach().view(1, d)), min = 0.0, max = float(num_labels) - 1)
+    return float(result)
 
 ''' Compute the intersection of d hyperplanes in general arrangement in dimension d '''
 def hyperplane_intersection(hyperplane_list, d):
@@ -426,20 +428,33 @@ def get_cube_vertices_for_labeling(config, cube_as_polytope):
 def get_cube_label(config, vertex_list, model, labeling_threshold):
     label_list = []
 
+    print('len(vertex_list)', len(vertex_list))
     for vertex in vertex_list:
         # Check if vertex is already a tensor
         if not isinstance(vertex, torch.Tensor):
             # Convert vertex to a tensor
             vertex = torch.tensor(vertex)
         network_value_at_vertex = evaluate_regression_network(config, vertex, model)
+        print('network value: ', network_value_at_vertex)
+        print('range: ', config.num_labels)
+
+        has_label = False
         for label in range(config.num_labels):
+            print('x: ', label - labeling_threshold <= network_value_at_vertex <= label + labeling_threshold)
             if label - labeling_threshold <= network_value_at_vertex <= label + labeling_threshold:
                 label_list.append(label)
+                print('label: ', label)
+                has_label = True
                 break
-            else:
-                label_list.append(config.num_labels)
 
+        if not has_label:
+            label_list.append(config.num_labels)
+            print('label: ', config.num_labels)
+
+    print('label set: ')
     label_set = list(set(label_list))
+    print(label_set)
+    print('-----')
     if len(label_set) > 1:
         return config.num_labels
     elif len(label_set) == 1:
@@ -448,7 +463,10 @@ def get_cube_label(config, vertex_list, model, labeling_threshold):
 def update_label_to_cubes_dict(label_to_cubes_dict, label, cube_id):
     labeled_cube_list = label_to_cubes_dict[label]
     labeled_cube_list.append(cube_id.tolist())
-    label_to_cubes_dict[label] = labeled_cube_list
+    new_dict = dict()
+    new_dict[label] = labeled_cube_list
+    label_to_cubes_dict.update(new_dict)
+    #print('label to cubes dict: ', label_to_cubes_dict)
     return label_to_cubes_dict
 
 def get_num_cubes_labeled(config, label_to_cubes_dict):
