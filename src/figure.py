@@ -1,8 +1,19 @@
+from .hyperplane import Hyperplane
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
-from .decomposition_utils import generate_domain_bounding_hyperplanes, get_model_parameters, make_coordinate_to_weights_dict
-import csv
+
+def generate_domain_bounding_hyperplanes(config):
+    data_bounds_list = config.data_bounds
+    d = len(data_bounds_list)//2
+    domain_bounding_hyperplanes = []
+    for i in range(0, d):
+        normal_vec = np.zeros(d)
+        normal_vec[i] = 1
+        H1 = Hyperplane(normal_vec, -data_bounds_list[2*i]) # Why is this minus and not plus?
+        H2 = Hyperplane(normal_vec, -data_bounds_list[2*i + 1])
+        domain_bounding_hyperplanes.extend([H1, H2])
+    return domain_bounding_hyperplanes
 
 def get_network_value_list(config, dataloader, model):
     result_list = []

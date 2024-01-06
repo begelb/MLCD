@@ -41,3 +41,26 @@ def data_set_up(config):
     figure_dataloader = DataLoader(train_dataset, batch_size = batch_size, shuffle = False)
 
     return train_data, train_dataloader, test_dataloader, figure_dataloader
+
+def point_inside_domain(point, data_bounds_list, d):
+    tolerance = 1e-4
+    pt_inside_domain_Bool_tracker = []
+    for i in range(d):
+        if float(point[i]) + tolerance < data_bounds_list[2*i] or float(point[i]) - tolerance > data_bounds_list[2*i+1]:
+            pt_inside_domain_Bool_tracker.append(False)
+        else:
+            pt_inside_domain_Bool_tracker.append(True)
+    if all(pt_inside_domain_Bool_tracker):
+        return True
+    else:
+        return False
+    
+def convert_data_to_tensors(data, d):
+    data_tensor_list = []
+    for l in range(0, len(data)):
+        data_point = data[l]
+        data_tensor = np.zeros(d)
+        for k in range(0, d):
+            data_tensor[k] += float(data_point[k])
+        data_tensor_list.append(data_tensor)
+    return data_tensor_list

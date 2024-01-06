@@ -1,5 +1,5 @@
-from utils.experiment_utils import compute_example
-from utils.config_utils import configure
+from src.experiment import compute_example
+from src.config import configure
 
 '''' Global variables set by user '''
 
