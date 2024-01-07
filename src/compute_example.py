@@ -6,24 +6,6 @@ from .misc import get_list_to_write
 from .figure import make_figure, make_loss_plots
 from .data import data_set_up
 
-class Experiment:
-    def __init__(self, labeling_threshold_list, N_list, ):
-        self.labeling_threshold_list = labeling_threshold_list
-        self.N_list = N_list
-
-    def generate_parameter_lists(self):
-        parameter_list = []
-        for base in self.base_list:
-            for fexp in self.fexp_list:
-                for bexp in self.bexp_list:
-                    for penalty_max in self.penalty_max_list:
-                        for separatrix_self_penalty in self.separatrix_self_penalty_list:
-                            parameter_list.append([base, fexp, bexp, penalty_max, separatrix_self_penalty])
-        return parameter_list
-
-    def get_experiment_parameters(self, job_index):
-        return self.generate_parameter_lists()[job_index]
-
 def compute_example(config, job_index, N, labeling_threshold):
     with open(f'output/results/system{config.system}/results_system{config.system}_example_{job_index}.csv', 'w', newline='') as file:
         writer = csv.writer(file)

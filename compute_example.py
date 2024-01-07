@@ -1,4 +1,4 @@
-from src.experiment import compute_example
+from src.compute_example import compute_example
 from src.config import configure
 
 '''' Global variables set by user '''

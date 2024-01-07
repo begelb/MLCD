@@ -2,7 +2,7 @@
     'system': 1,
     'example_type': 'Two stable fixed points',
     'learning_rate': 0.01,
-    'epochs': 10,
+    'epochs': 5,
     'optimizer_choice': 'Adam',
     'verbose': True,
     'make_figures': True,

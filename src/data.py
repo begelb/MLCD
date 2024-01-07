@@ -1,5 +1,6 @@
 import csv
 import torch
+import numpy as np
 from torch.utils.data import DataLoader, Dataset
 
 class MyDataset(Dataset):
