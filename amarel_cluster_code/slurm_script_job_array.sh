@@ -22,5 +22,5 @@ cd /home/bg545/Research
 
 # Run python script with input data. The variable ${SLURM_ARRAY_TASK_ID}
 # is the array task id and varies from 0 to 99 in this example.
-srun python3 /home/bg545/Research/Final_Reg_Training_Homology_colormap.py ${SLURM_ARRAY_TASK_ID}
+srun python3 /home/bg545/Research/run_experiment.py ${SLURM_ARRAY_TASK_ID}
 # /home/bg545/Research/Final_Reg_Training_Homology_colormap.py
