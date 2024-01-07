@@ -25,7 +25,7 @@ def get_network_value_list(config, dataloader, model):
                 result_list.append(float(pred_thresh[i]))
     return result_list
 
-def make_figure(config, train_dataloader, model, data, total_hyperplane_list, job_index):
+def make_figure(config, train_dataloader, model, data, total_hyperplane_list, example_index):
     total_hyperplane_list.extend(generate_domain_bounding_hyperplanes(config))
     result_list = get_network_value_list(config, train_dataloader, model)
     data_bounds = config.data_bounds
@@ -82,16 +82,16 @@ def make_figure(config, train_dataloader, model, data, total_hyperplane_list, jo
     scatter = ax.scatter(scatterx1, scattery1, marker ='o', s = 5, cmap = 'viridis', c = result_list)
     cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.11, format="%.2f")
     cbar.set_label(label = 'Value of network on training data')
-    filename = f'output/figures/system{config.system}/{job_index}-decomposition.png'
+    filename = f'output/figures/system{config.system}/{example_index}-decomposition.png'
     plt.savefig(filename)
     plt.close(fig1)
 
-def make_loss_plots(config, job_index, test_loss_list, train_loss_list):
+def make_loss_plots(config, example_index, test_loss_list, train_loss_list):
     fig2 = plt.figure(figsize=(15,5))
     ax = fig2.add_subplot(111)
     example_type = config.example_type
     system = config.system
-    ax.set_title('Test and train loss: '+ example_type + f' (System {system}, Example {job_index})')
+    ax.set_title('Test and train loss: '+ example_type + f' (System {system}, Example {example_index})')
     ax.set_xlabel('Epoch Number')
     ax.set_ylabel('Loss')
 
@@ -106,6 +106,6 @@ def make_loss_plots(config, job_index, test_loss_list, train_loss_list):
     ax.plot(timelist, test_loss_list, linewidth = 1.2, c = 'blueviolet', linestyle = 'dashed', label = 'Test Loss')
     ax.plot(timelist, train_loss_list, linewidth = 1, c = 'darkorange', label = 'Train Loss')
     ax.legend()
-    filename = f'output/figures/system{system}/{job_index}-loss.png'
+    filename = f'output/figures/system{system}/{example_index}-loss.png'
     plt.savefig(filename)
     plt.close(fig2)

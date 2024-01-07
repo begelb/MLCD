@@ -1,2 +1,1 @@
 ex_num,N,optimizer_choice,learning_rate,epsilon,num_cubes,final_test_loss,hom_uncertain,hom_zero,hom_one,hom_two,hom_three
-0,4,Adam,0.01,0.1,25,0.506400004029274,[],[],[]
