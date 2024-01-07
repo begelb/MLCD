@@ -16,14 +16,18 @@ For homology computations, we use the Python extension [pyCHomP2](https://pypi.o
 ## How to create your own data
 - Note something about all of the data being inside the data folders, but write instructions here for how to reproduce making it
 
-## How to run the code for a single example using provided data
-To compute a single example, run ``` single_example.py ```. At the top of the file, under "Global variables set by user", you can change:
+## How to run the code for a single example
+To compute a single example, run ``` single_example.py ```. 
+
+At the top of the file, under "Global variables set by user", you can change:
 - the system,
 - the number of nodes in the hidden layer of the neural network,
 - the list of labeling thresholds, and
 - the integer name that refers to the example.
 
 Other variables, which we expect to be changed less frequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and numbered by the corresponding system.
+
+This computation will use the data located in ```data/``` and the subfolder that corresponds to the system number specified under "Global variables set by user" at the top of the file. So, if you want to run an example with your own data, you must replace the provided data with the data that you created.
 
 ## How to run an experiment using provided data
 To run an experiment on the Amarel cluster, use the shell script ``` amarel_cluster_code/slurm_script_job_array.sh ```. The path in line 25 should be appropriately modified to use your username and the folder where the code of this repository is located. At the top of ``` run_experiment.py ```, under "Global variables set by user", you can change the system, the list of labeling thresholds, and repetitions per unique set of parameters. The lists of hidden layer widths for each system are specified in the txt files located in the folder ```config```.
