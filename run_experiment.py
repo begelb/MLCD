@@ -7,11 +7,8 @@ import sys
 # system is an integer that refers to which dynamical system the user would like to use
 system = 1
 
-# N is the number of nodes in the hidden layer of the network
-N_list = [4, 8, 12]
-
 # labeling threshold is the list of labeling thresholds to be used to label the cubes
-labeling_threshold_list = [0.1, 0.3, 0.49]
+labeling_threshold_list = [0.1, 0.2, 0.3, 0.4, 0.49]
 
 # repetitions_per_parameter_set is the number of nodes being used in the cluster
 # so, if line 13 of slurm_script_job_array.sh is #SBATCH --array=0-499, then repetitions_per_parameter_set should be 500
@@ -26,6 +23,7 @@ job_index = int(sys.argv[1])
 def main():
     config_fname = f'config/system{system}.txt'
     config = configure(config_fname)
+    N_list = config.N_list
     experiment_class = Experiment(N_list)
     experiment_class.run_experiment(job_index, config, repetitions_per_parameter_set, labeling_threshold_list)
 

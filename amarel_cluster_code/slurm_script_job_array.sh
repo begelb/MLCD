@@ -10,7 +10,7 @@
 #SBATCH --ntasks=1                 # Total number of tasks across all nodes
 #SBATCH --cpus-per-task=1          # Number of CPUs (cores) per task (>1 if multithread tasks)
 #SBATCH --mem=1000                  # Real memory (RAM) required (MB)
-#SBATCH --array=0-999          # Array job will submit 100 jobs
+#SBATCH --array=0-499          # Array job will submit 100 jobs
 #SBATCH --time=6:00:00            # Total run time limit (hh:mm:ss)
 #SBATCH --requeue                  # Return job to the queue if preempted
 #SBATCH --export=ALL               # Export you current env to the job env
