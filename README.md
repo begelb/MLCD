@@ -9,7 +9,14 @@ The software has several required Python packages. The requirements are listed i
 
 For homology computations, we use the Python extension [pyCHomP2](https://pypi.org/project/pychomp2/).
 
-## How to run the code for a single example
+## Explanation of system numbers
+
+- We'll probably want to write here what the system numbers are here
+
+## How to create your own data
+- Note something about all of the data being inside the data folders, but write instructions here for how to reproduce making it
+
+## How to run the code for a single example using provided data
 To compute a single example, run ``` single_example.py ```. At the top of the file, under "Global variables set by user", you can change:
 - the system,
 - the number of nodes in the hidden layer of the neural network,
@@ -18,7 +25,7 @@ To compute a single example, run ``` single_example.py ```. At the top of the fi
 
 Other variables, which we expect to be changed less frequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and numbered by the corresponding system.
 
-## How to run an experiment
+## How to run an experiment using provided data
 To run an experiment on the Amarel cluster, use the shell script ``` amarel_cluster_code/slurm_script_job_array.sh ```. The path in line 25 should be appropriately modified to use your username and the folder where the code of this repository is located. At the top of ``` run_experiment.py ```, under "Global variables set by user", you can change the system, the list of labeling thresholds, and repetitions per unique set of parameters. The lists of hidden layer widths for each system are specified in the txt files located in the folder ```config```.
 
 ## Acknowledgements
