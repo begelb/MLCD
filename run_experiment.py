@@ -2,7 +2,7 @@ from src.config import configure
 from src.experiment import Experiment
 import sys 
 
-'''' Global variables set by user '''
+''' Global variables set by user '''
 
 # system is an integer that refers to which dynamical system the user would like to use
 system = 1
