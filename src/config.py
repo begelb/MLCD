@@ -23,7 +23,7 @@ class Config:
         self.train_data_file = config["train_data_file"]
         self.test_data_file = config["test_data_file"]
         self.num_labels = config["num_labels"]
-        self.epsilon_list = ast.literal_eval(config["epsilon_list"])
+        self.N_list = ast.literal_eval(config["network_width_list_for_experiment"])
 
     def check_types(self):
         if type(self.system) is not int:
@@ -66,14 +66,20 @@ class Config:
         if type(self.num_labels) is not int:
             print("Number of labels has the wrong type. Must be " + str(int) + ". Found a " + str(type(self.num_labels)))
             exit()
-        if type(self.epsilon_list) is not list:
-            print("Epsilon list has the incorrect type. Must be " + str(list) + ". Found a " + str(type(self.epsilon_list)))
+        if type(self.N_list) is not list:
+            print("Network_width_list_for_experiment has the wrong type. Must be " + str(list) + ". Found a " + str(type(self.N_list)))
             exit()
-        for epsilon in self.epsilon_list:
-            if type(epsilon) is not float:
-                print("Epsilon list element has the incorrect type. Must be " + str(float) + ". Found a " + str(type(epsilon)))
-                exit()
-        
+        for N in self.N_list:
+            if type(N) is not int:
+                print("Network width inside network_width_list_for_experiment has the wrong type. Must be " + str(int) + ". Found a " + str(type(N)))
+                exit()      
+
+def user_warning_about_N_and_dimension(config, N):
+    if N % config.dimension != 0:
+        print("Warning: N is expected to be an integer multiple of the dimension of the system, which is " + str(config.dimension))
+        user_choice = input("Do you want to continue? (y/n):")
+        if user_choice != "y":
+            exit()  
 
 def configure(config_fname):
     config = Config(config_fname)

@@ -29,4 +29,3 @@ def compute_example(config, example_index, N, labeling_threshold_list):
             model = load_model(N, config, example_index, batch_size = batch_size)
             make_figure(config, figure_dataloader, model, train_data, total_hyperplane_list, example_index)
             make_loss_plots(config, example_index, test_loss_list, train_loss_list)
-
