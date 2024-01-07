@@ -1,8 +1,6 @@
 import torch
 from torch import nn
 
-# to do: is batch_size = None okay as the default?
-
 def get_batch_size(train_data, percentage):
     return int(len(train_data)*percentage)
 

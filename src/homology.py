@@ -1,6 +1,4 @@
 from .label_cubes import get_labeled_cubes, get_num_cubes_labeled
-from .decomposition import get_decomposition_data
-from .data import convert_data_to_tensors
 import pychomp2 as pychomp
 
 def get_homology_dict_from_model(config, model, labeling_threshold, sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list):
