@@ -10,7 +10,7 @@ The software has several required Python packages. The requirements are listed i
 For homology computations, we use the Python extension [pyCHomP2](https://pypi.org/project/pychomp2/).
 
 ## How to run the code for a single example
-To compute a single example, run `` `single_example.py` ``. At the top of the file, under "Global variables set by user", you can change:
+To compute a single example, run ``` single_example.py ```. At the top of the file, under "Global variables set by user", you can change:
 - the system,
 - the number of nodes in the hidden layer of the neural network,
 - the list of labeling thresholds, and
