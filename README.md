@@ -28,8 +28,8 @@ To run an experiment on the Amarel cluster, use the shell script ``` amarel_clus
 
 - The authors acknowledge the [Office of Advanced Research Computing (OARC)](https://oarc.rutgers.edu) at Rutgers, The State University of New Jersey for providing access to the Amarel cluster and associated research computing resources that have contributed to any results included in ```output```. 
 
-- [GitHub Copilot](https://github.com/features/copilot), developed by **GitHub, OpenAI, and Microsoft** (2024) was used in the creation of this software with Duplicate Detection filtering feature set to “Block." See the [GitHub Copilot FAQ](https://github.com/features/copilot) for further information about copyright and training data. 
+- [GitHub Copilot](https://github.com/features/copilot), developed by **GitHub, OpenAI, and Microsoft** (2024), was used in the creation of this software with Duplicate Detection filtering feature set to “Block." See the [GitHub Copilot FAQ](https://github.com/features/copilot) for further information about copyright and training data. 
 
-- The files ```network.py``` and ```train.py``` contain modified source code from [PyTorch Tutorials](https://github.com/pytorch/tutorials) written by **Pytorch contributors** (2017-2022). See LICENSE.md for important copyright information.
+- The files ```network.py``` and ```train.py``` contain modified source code from [PyTorch Tutorials](https://github.com/pytorch/tutorials) written by **Pytorch contributors** (2017-2022). See LICENSE.md for copyright information pertaining to these files.
 
-- [Visual Studio Code](https://code.visualstudio.com), developed by **Microsoft** (2024) was used in the creation of this software.
+- [Visual Studio Code](https://code.visualstudio.com), developed by **Microsoft** (2024), was used in the creation of this software.
