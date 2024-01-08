@@ -1,9 +1,9 @@
 # attractor-identification-draft
 
 ## Requirements
-This software was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/).
+This code was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/).
 
-The software has several required Python packages. The requirements are listed in ```requirements.txt.``` To install all of the requirements at once, run the following terminal command:
+Compiling the code requires several Python packages. The requirements are listed in ```requirements.txt.``` To install all of the requirements at once, run the following terminal command:
 
 ```pip install -r requirements.txt```
 
@@ -45,10 +45,10 @@ To run an experiment on the Amarel cluster, use the shell script ``` amarel_clus
 
 - The file ```src/config.py``` and the files inside ```config``` are based on the contents of the GitHub repository [MORALS: Morse Graph-aided discovery of Regions of Attraction in a learned Latent Space](https://github.com/Ewerton-Vieira/MORALS/tree/main) written by **Ewerton Vieira, Aravind Sivaramakrishnan, and Sumanth Tangirala** (2023) and available under MIT License. See LICENSE.md for copyright information pertaining to these files.
 
-- The authors acknowledge the [Office of Advanced Research Computing (OARC)](https://oarc.rutgers.edu) at Rutgers, The State University of New Jersey for providing access to the Amarel cluster and associated research computing resources that have contributed to any results included in ```output```. 
+- The authors acknowledge the [Office of Advanced Research Computing (OARC)](https://oarc.rutgers.edu) at Rutgers, The State University of New Jersey for providing access to the Amarel cluster and associated research computing resources that have been used to develop and run this code.
 
-- [GitHub Copilot](https://github.com/features/copilot), developed by **GitHub, OpenAI, and Microsoft** (2024), was used in the creation of this software with Duplicate Detection filtering feature set to “Block." See the [GitHub Copilot FAQ](https://github.com/features/copilot) for further information about copyright and training data. 
+- [GitHub Copilot](https://github.com/features/copilot), developed by **GitHub, OpenAI, and Microsoft** (2024), was used in the development of this code with Duplicate Detection filtering feature set to “Block." See the [GitHub Copilot FAQ](https://github.com/features/copilot) for further information about copyright and training data. 
 
 - The files ```network.py``` and ```train.py``` contain modified source code from [PyTorch Tutorials](https://github.com/pytorch/tutorials) written by **Pytorch contributors** (2017-2022). See LICENSE.md for copyright information pertaining to these files.
 
-- [Visual Studio Code](https://code.visualstudio.com), developed by **Microsoft** (2024), was used in the creation of this software.
+- [Visual Studio Code](https://code.visualstudio.com), developed by **Microsoft** (2024), was used in the development of this code.
