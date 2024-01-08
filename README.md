@@ -27,6 +27,16 @@ At the top of the file, under "Global variables set by user", you can change:
 
 Other variables, which we expect to be changed less frequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and numbered by the corresponding system. This computation will use the training and testing data sets with paths specified in the configuration file. By default, the paths are specified with the provided data.
 
+### Figures
+If the dimension is two and ```make_figures``` is set to True in the configuration file, then figures will be saved in ```output/figures```.
+
+### Models
+Models will be saved in ```output/models```.
+
+### Homology results
+The homology results will be saved in ```output/results```.
+
+
 ## How to run an experiment
 To run an experiment on the Amarel cluster, use the shell script ``` amarel_cluster_code/slurm_script_job_array.sh ```. The path in line 25 should be appropriately modified. At the top of ``` run_experiment.py ```, under "Global variables set by user", you can change the system, the list of labeling thresholds, and repetitions per unique set of parameters. The lists of hidden layer widths for each system are specified in the ```.txt``` files located in the folder ```config```.
 

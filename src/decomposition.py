@@ -125,8 +125,6 @@ def get_hyperplane_data(config, hyperplane_dict, data_as_tensors, is_boundary_hy
     total_hyperplane_list = []
 
     for k in range(0, config.dimension):
-        if config.verbose:
-            print('Post-processing dimension: ', k)
         list_of_hyperplanes_with_boundaries, is_boundary_hyperplane_dict = add_boundaries(config, hyperplane_dict[k], data_as_tensors, is_boundary_hyperplane_dict)
         sorted_hyperplane_list_with_single_boundaries = sort_hyperplanes_and_remove_unnecessary_hyperplanes(list_of_hyperplanes_with_boundaries, is_boundary_hyperplane_dict)
         list_of_hyperplane_lists.append(sorted_hyperplane_list_with_single_boundaries)
