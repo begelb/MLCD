@@ -9,9 +9,9 @@ The software has several required Python packages. The requirements are listed i
 
 For homology computations, we use the Python extension [pyCHomP2](https://pypi.org/project/pychomp2/).
 
-## Explanation of system numbers
+## System numbers
 
-- We'll probably want to write here what the system numbers are here
+See ```data/system_number_meanings.txt``` for a dictionary of the system integer labels to the qualitative descriptions of these systems. 
 
 ## How to create your own data
 - Note something about all of the data being inside the data folders, but write instructions here for how to reproduce making it
@@ -20,7 +20,7 @@ For homology computations, we use the Python extension [pyCHomP2](https://pypi.o
 To compute a single example, run ``` single_example.py ```. 
 
 At the top of the file, under "Global variables set by user", you can change:
-- the system,
+- the system number,
 - the number of nodes in the hidden layer of the neural network,
 - the list of labeling thresholds, and
 - the integer name that refers to the example.
