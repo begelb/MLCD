@@ -1,0 +1,15 @@
+{
+    'system': 2,
+    'example_type': 'Two stable fixed points (curved separatrix)',
+    'learning_rate': 0.01,
+    'epochs': 100,
+    'optimizer_choice': 'Adam',
+    'verbose': True,
+    'make_figures': True,
+    'dimension': 2,
+    'data_bounds': '[-4, 4, -3.5, 3.5]',
+    'train_data_file': 'data/system2/train.csv',
+    'test_data_file': 'data/system2/test.csv',
+    'num_labels': 2,
+    'network_width_list_for_experiment': '[2, 4, 6, 8, 10]'
+}

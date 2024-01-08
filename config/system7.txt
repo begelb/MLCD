@@ -1,0 +1,15 @@
+{
+    'system': 7,
+    'example_type': 'EMT hill system in 6-d',
+    'learning_rate': 0.01,
+    'epochs': 500,
+    'optimizer_choice': 'Adam',
+    'verbose': True,
+    'make_figures': True,
+    'dimension': 4,
+    'data_bounds': '[-4.98, 5.03, -1.96, 8.05, -4.85, 5.16, -1.28, 8.72, -4.45, 5.59, -1.39, 8.62]'
+    'train_data_file': 'data/system7/train.csv',
+    'test_data_file': 'data/system7/test.csv',
+    'num_labels': 2,
+    'network_width_list_for_experiment': '[2, 4, 6, 8, 10]'
+}
