@@ -3,7 +3,7 @@
 ## Requirements
 This software was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/).
 
-The software has several required Python packages. The requirements are listed in requirements.txt. To install all of the requirements at once, run the following terminal command:
+The software has several required Python packages. The requirements are listed in ```requirements.txt.``` To install all of the requirements at once, run the following terminal command:
 
 ```pip install -r requirements.txt```
 
