@@ -38,7 +38,12 @@ The homology results will be saved in ```output/results```.
 
 
 ## How to run an experiment
-To run an experiment on the Amarel cluster, use the shell script ``` amarel_cluster_code/slurm_script_job_array.sh ```. The path in line 25 should be appropriately modified. At the top of ``` run_experiment.py ```, under "Global variables set by user", you can change the system, the list of labeling thresholds, and repetitions per unique set of parameters. The lists of hidden layer widths for each system are specified in the ```.txt``` files located in the folder ```config```.
+To run the experiments described in the paper, we used [Slurm Workload Manager](https://slurm.schedmd.com/overview.html). To run your own experiments, you can modify the script ``` amarel_cluster_code/slurm_script_job_array.sh ``` and use the slurm command ```sbatch```. For more detail, see the [slurm documentation](https://slurm.schedmd.com/sbatch.html). At the top of ```run_experiment.py```, under "Global variables set by user", you can change:
+- the system number,
+- the list of labeling thresholds, and
+- repetitions per unique set of parameters.
+
+By default, the only parameter that is varied is the width of the neural network hidden layer. The lists of hidden layer widths for each system are specified in the ```.txt``` files located in the folder ```config```.
 
 ## Acknowledgements
 - The file ```amarel_cluster_code/slurm_script_job_array.sh``` was copied from the GitHub repository [cluster-help](https://github.com/marciogameiro/cluster-help) written by **Marcio Gameiro** (2020) and available under MIT License. Small modifications to the file were made. See LICENSE.md for copyright information pertaining to this file. 
