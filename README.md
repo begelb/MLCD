@@ -3,7 +3,7 @@
 ## Requirements
 This code was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/).
 
-Compiling the code requires several Python packages. The requirements are listed in ```requirements.txt.``` To install all of the requirements at once, run the following terminal command:
+Compiling the code requires several Python packages. The requirements are listed in ```requirements.txt.``` To install all of the requirements at once after cloning the respository, use the following command:
 
 ```pip install -r requirements.txt```
 
