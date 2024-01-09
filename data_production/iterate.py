@@ -3,7 +3,7 @@
 """
 Created on Tue Jan  9 16:12:55 2024
 
-@author: paultatasciore
+@author: Paul Tatasciore
 """
 import sys
 sys.path.append("/usr/local/lib/python3.9/site-packages")
