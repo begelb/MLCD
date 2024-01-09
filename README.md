@@ -14,7 +14,8 @@ For homology computations, we use the Python extension [pyCHomP2](https://pypi.o
 See ```data/system_number_meanings.txt``` for a dictionary of the system integer labels to the qualitative descriptions of these systems. 
 
 ## How to create your own data
-- Note something about all of the data being inside the data folders, but write instructions here for how to reproduce making it
+Data for each system is already produced and contained in the ```data``` directory. 
+To produce new data one can go to the ```make_data.py``` file in the ```data_production``` directory. Choose the system number and the number of initial points and the data will be saved as ```data.csv``` which one can then split into ```train.csv``` and ```test.csv```.
 
 ## How to run the code for a single example
 To compute a single example, run ``` single_example.py ```. 
