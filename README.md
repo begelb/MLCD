@@ -15,7 +15,7 @@ See ```data/system_number_meanings.txt``` for a dictionary of the system integer
 
 ## How to create your own data
 Data for each system is already produced and contained in the ```data``` directory. 
-To produce new data one can go to the ```make_data.py``` file in the ```data_production``` directory. Choose the system number and the number of initial points and the data will be saved as ```data.csv``` which one can then split into ```train.csv``` and ```test.csv```.
+To produce new data one can run ```data_production/make_data.py```. Choose the system number and the number of initial points and the data will be saved as ```data.csv``` which one can then split into a training/testing.
 
 ## How to run the code for a single example
 To compute a single example, run ``` single_example.py ```. 
