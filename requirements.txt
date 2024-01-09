@@ -8,3 +8,4 @@ scipy>=1.7.3
 sklearn>=0.24.2
 ripser>=0.6.1
 persim>=0.3.1
+gudhi>=3.5.0
