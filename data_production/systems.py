@@ -3,13 +3,10 @@
 """
 Created on Tue Jan  9 15:46:20 2024
 
-@author: paultatasciore
+@author: Paul Tatasciore
 """
 
-
-
 import numpy as np
-
 
 # system 1: Two stable fixed points (straight separatrix) in 2-d
 domain_straight = ((-2,2),(-3.5,3.5))
