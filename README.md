@@ -39,7 +39,9 @@ The homology results will be saved in ```output/results```.
 
 
 ## How to run an experiment
-To run the experiments described in the paper, we used [Slurm Workload Manager](https://slurm.schedmd.com/overview.html). To run your own experiments, you can modify the script ``` amarel_cluster_code/slurm_script_job_array.sh ``` and use the slurm command ```sbatch```. For more detail, see the [slurm documentation](https://slurm.schedmd.com/sbatch.html). At the top of ```run_experiment.py```, under "Global variables set by user", you can change:
+To run the experiments described in the paper, we used [Slurm Workload Manager](https://slurm.schedmd.com/overview.html) and the script ``` amarel_cluster_code/slurm_script_job_array.sh ```.
+
+At the top of ```run_experiment.py```, under "Global variables set by user", you can change:
 - the system number,
 - the list of labeling thresholds, and
 - repetitions per unique set of parameters.
