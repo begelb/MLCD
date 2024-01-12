@@ -13,6 +13,7 @@ import systems
 import iterate
 import numpy as np
 import gudhi
+from format_data import save_formatted_data
 
 ''' Global variables set by user '''
 
@@ -77,13 +78,14 @@ if __name__ == "__main__":
     resolution = float(input("What is the resolution? ")) 
     labels = iterate.get_labels(lifted_pts_in_domain, resolution)
     
-    
     labeled_pts_in_domain = np.hstack((X0[index_pts_in_domain],np.expand_dims(labels, axis=1)))
     labeled_pts_out_domain = np.hstack((X0[index_pts_out_domain],-1*np.ones((len(index_pts_out_domain[0]),1))))
-    labeled_pts = np.vstack((labeled_pts_in_domain,labeled_pts_out_domain)) 
+    labeled_pts = np.vstack((labeled_pts_in_domain,labeled_pts_out_domain))
+
+    save_formatted_data(labeled_pts_in_domain, num_of_pts)
     
-    np.savetxt("data.csv", labeled_pts)     # labeled_pts (initial points with labels)
-    np.savetxt("images.csv", lifted_pts)    # lifted_pts (final points with norms)
+    #np.savetxt("data.csv", labeled_pts, delimiter=',')     # labeled_pts (initial points with labels)
+    np.savetxt("images.csv", lifted_pts, delimiter=',')    # lifted_pts (final points with norms)
 
   
             
