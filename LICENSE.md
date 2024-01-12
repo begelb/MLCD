@@ -1,4 +1,4 @@
-## License pertaining to modified source code of [PyTorch Tutorials](https://github.com/pytorch/tutorials) that appears in ```network.py``` and ```train.py```
+## License pertaining to modified source code of [PyTorch Tutorials](https://github.com/pytorch/tutorials) contained in ```network.py``` and ```train.py```
 
 BSD 3-Clause License
 
