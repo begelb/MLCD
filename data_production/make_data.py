@@ -14,11 +14,10 @@ import iterate
 import numpy as np
 import gudhi
 
-
 ''' Global variables set by user '''
 
 # system is an integer that refers to which dynamical system the user would like to use
-system = 8
+system = 1
 
 
 # number of points to be sampled and iterated in the domain
