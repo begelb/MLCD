@@ -60,4 +60,4 @@ By default, the only parameter that is varied is the width of the neural network
 - [Visual Studio Code](https://code.visualstudio.com), developed by **Microsoft** (2024), was used in the development of this code.
 
 ## Explanation of requirements
-- To run ```data_production/make_data.py```, the user must have matplotlib<=3.5.6 due to a known issue with [gudhi and matplotlib](https://github.com/GUDHI/gudhi-devel/issues/724)https://github.com/GUDHI/gudhi-devel/issues/724). 
+- To run ```data_production/make_data.py```, the user must have matplotlib<=3.5.6 due to a known issue with [gudhi and matplotlib](https://github.com/GUDHI/gudhi-devel/issues/724).
