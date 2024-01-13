@@ -13,13 +13,12 @@ For homology computations, we use the Python extension [pyCHomP2](https://pypi.o
 
 See ```data/system_number_meanings.txt``` for a dictionary of the system integer labels to the qualitative descriptions of these systems. 
 
+## How to use the code available in a Jupyter notebook
+The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, you can adjust code parameters, train a neural network, compute homology of labeled regions from the learned decomposition of phase space, then produce a plot of the decomposition. 
+
 ## How to create your own data
 Data for each system is already produced and contained in the ```data``` directory.
 To produce new data, one can run ```data_production/make_data.py```. Choose the system number and the number of initial points, and a persistence diagram will be produced. From this, you will need to choose an appropriate threshold, and then the data will be saved as ```data.csv```, which one can split into a training/testing set.
-
-
-## How to use the code available in a Jupyter notebook
-The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, you can adjust code parameters, train a neural network, compute homology of labeled regions from the learned decomposition of phase space, then produce a plot of the decomposition. 
 
 ## System configurations
 
