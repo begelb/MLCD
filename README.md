@@ -21,7 +21,7 @@ The main functionality of the code is available in ```learn_decomposition.ipynb`
 
 ## How to create your own data
 Data for each system is already produced and contained in the ```data``` directory.
-To produce new data, one can run ```data_production/make_data.py```. Choose the system number and the number of initial points, and a persistence diagram will be produced. From this, you will need to choose an appropriate threshold, and then the data will be saved as ```data.csv```, which one can split into a training/testing set.
+To produce new data, one can run ```data_production/make_data.py```. Choose the system number and the number of initial points, and a persistence diagram will be produced. From this, it is necessary to choose an appropriate threshold, and then the data will be saved as ```data.csv```, which one can split into a training/testing set.
 
 ## System configurations
 
