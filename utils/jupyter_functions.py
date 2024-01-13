@@ -27,7 +27,6 @@ def compute_homology(system, labeling_threshold, N, model):
         
     homology_dict, num_cubes_labeled, total_hyperplane_list = get_homology_dict_from_model(config, model, labeling_threshold, sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list)
     
-    print('homology dict: ', homology_dict)
     for label in range(config.num_labels + 1):
         if len(homology_dict[label]) == 0:
             print('Label ' + str(label) + ' region is empty.')
