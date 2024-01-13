@@ -1,5 +1,4 @@
 from src.compute_example import compute_example
-from src.config import configure, user_warning_about_N_and_dimension
 
 '''' Global variables set by user '''
 
@@ -18,10 +17,7 @@ example_index = 0
 ''' Main code block '''
 
 def main():
-    config_fname = f'config/system{system}.txt'
-    config = configure(config_fname)
-    user_warning_about_N_and_dimension(config, N)
-    compute_example(config, example_index, N, labeling_threshold_list)
+    compute_example(system, N, labeling_threshold_list, 0)
 
 if __name__ == "__main__":
     main()

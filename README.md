@@ -17,16 +17,22 @@ See ```data/system_number_meanings.txt``` for a dictionary of the system integer
 Data for each system is already produced and contained in the ```data``` directory.
 To produce new data, one can run ```data_production/make_data.py```. Choose the system number and the number of initial points, and a persistence diagram will be produced. From this, you will need to choose an appropriate threshold, and then the data will be saved as '''data.csv''', which one can split into a training/testing set.
 
-## How to run the code for a single example
-To compute a single example, run ``` single_example.py ```. 
+
+## How to use the code available in a Jupyter notebook
+The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, you can adjust code parameters, train a neural network, compute homology of labeled regions from the learned decomposition of phase space, then produce a plot of the decomposition. 
+
+## System configurations
+
+Variable that are system specific or which we expect to be changed infrequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and numbered by the corresponding system. With the exception of the Jupyter notebook, ```learn_decomposition.ipynb```, all computations use local copies of the training and testing datasets with paths specified in the configuration file. By default, the paths are specified with the provided data.
+
+## Alternative way to compute a single example
+As an alternative to the Jupyter notebook, it is possible to compute a single example using the file ``` single_example.py ```. 
 
 At the top of the file, under "Global variables set by user", you can change:
 - the system number,
 - the number of nodes in the hidden layer of the neural network,
 - the list of labeling thresholds, and
 - the integer name that refers to the example.
-
-Other variables, which we expect to be changed less frequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and numbered by the corresponding system. This computation will use the training and testing datasets with paths specified in the configuration file. By default, the paths are specified with the provided data.
 
 ### Figures
 If the dimension is two and ```make_figures``` is set to True in the configuration file, then figures will be saved in ```output/figures```.

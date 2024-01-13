@@ -25,9 +25,9 @@ def get_network_value_list(config, dataloader, model):
                 result_list.append(float(pred_thresh[i]))
     return result_list
 
-def make_figure(config, train_dataloader, model, data, total_hyperplane_list, example_index):
+def make_figure(config, figure_dataloader, model, data, total_hyperplane_list, show, example_index=0):
     total_hyperplane_list.extend(generate_domain_bounding_hyperplanes(config))
-    result_list = get_network_value_list(config, train_dataloader, model)
+    result_list = get_network_value_list(config, figure_dataloader, model)
     data_bounds = config.data_bounds
     x_min = float(data_bounds[0])
     x_max = float(data_bounds[1])
@@ -65,9 +65,9 @@ def make_figure(config, train_dataloader, model, data, total_hyperplane_list, ex
 
     for hyperplane in total_hyperplane_list:
         if np.isclose(np.asarray(hyperplane.normal_vec[1]), np.asarray([0])):
-            plt.axvline(x = -hyperplane.bias/hyperplane.normal_vec[0], ymin = y_min, ymax = y_max, c = 'k', linewidth=0.5)
+            plt.axvline(x = -hyperplane.bias/hyperplane.normal_vec[0], ymin = y_min, ymax = y_max, c = 'k', linewidth=1)
         elif np.isclose(np.asarray(hyperplane.normal_vec[0]), np.asarray([0])):
-            plt.axhline(y = -hyperplane.bias/hyperplane.normal_vec[1], xmin = x_min, xmax = x_max, c = 'k', linewidth=0.5)
+            plt.axhline(y = -hyperplane.bias/hyperplane.normal_vec[1], xmin = x_min, xmax = x_max, c = 'k', linewidth=1)
         else:
             normal_vec_0 = np.dot(np.asarray(hyperplane.normal_vec), np.asarray([1, 0]))
             normal_vec_1 = np.dot(np.asarray(hyperplane.normal_vec), np.asarray([0, 1]))
@@ -77,13 +77,15 @@ def make_figure(config, train_dataloader, model, data, total_hyperplane_list, ex
             m = float(slope)
             x = np.linspace(x_min, x_max, 10)
             y = m * x + b
-            ax.plot(x, y, c = 'k', linewidth = 2)
+            ax.plot(x, y, c = 'k', linewidth = 1)
 
     scatter = ax.scatter(scatterx1, scattery1, marker ='o', s = 5, cmap = 'viridis', c = result_list)
     cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.11, format="%.2f")
-    cbar.set_label(label = 'Value of network on training data')
+    cbar.set_label(label = 'Value of network on testing data')
     filename = f'output/figures/system{config.system}/{example_index}-decomposition.png'
     plt.savefig(filename)
+    if show:
+        plt.show()
     plt.close(fig1)
 
 def make_loss_plots(config, example_index, test_loss_list, train_loss_list):

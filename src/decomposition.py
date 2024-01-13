@@ -3,6 +3,7 @@ from .hyperplane import Hyperplane, data_is_on_one_side_of_hyperplane
 from copy import deepcopy
 from .network import load_model, get_model_parameters, make_coordinate_to_weights_dict
 from .data import convert_data_to_tensors
+from sys import exit
 
 def add_boundaries(config, hyperplane_list, data_as_tensors, is_boundary_hyperplane_dict):
     d = config.dimension
@@ -133,8 +134,8 @@ def get_hyperplane_data(config, hyperplane_dict, data_as_tensors, is_boundary_hy
     return list_of_hyperplane_lists, sorted_hyperplane_dict, total_hyperplane_list
 
 
-def get_decomposition_data(config, N, example_index, batch_size, data):
-    cube_reg_model = load_model(N, config, example_index, batch_size)
+def get_decomposition_data(config, N, data, example_index=0):
+    cube_reg_model = load_model(N, config, 1, example_index)
     parameter_dict = get_model_parameters(cube_reg_model)
     coordinate_to_weights_dict = make_coordinate_to_weights_dict(config, parameter_dict["shared_weight_matrix"], N)
     data_as_tensors = convert_data_to_tensors(data, config.dimension)

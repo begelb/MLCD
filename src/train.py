@@ -38,7 +38,7 @@ def test_loop(dataloader, model, loss_fn, num_labels):
     test_loss /= num_batches
     return test_loss
     
-def train_and_test(config, N, train_dataloader, test_dataloader, batch_size):
+def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs):
 
     ''' Set up neural network and training variables'''
     loss_fn = nn.MSELoss()
@@ -50,7 +50,7 @@ def train_and_test(config, N, train_dataloader, test_dataloader, batch_size):
 
     ''' Train and test the network '''
 
-    for epoch_number in range(config.epochs):
+    for epoch_number in range(epochs):
 
         # Train
         loss_train = train_loop(train_dataloader, model, loss_fn, optimizer, batch_size, config.num_labels)
@@ -61,7 +61,7 @@ def train_and_test(config, N, train_dataloader, test_dataloader, batch_size):
         test_loss_list.append(loss_test)
 
         if config.verbose:
-            print(f"Epoch {epoch_number + 1}/{config.epochs}")
+            print(f"Epoch {epoch_number + 1}/{epochs}")
             print(f"Test loss: {loss_test:>7f}")
             print(f"Train loss: {loss_train:>7f}")
 

@@ -97,7 +97,7 @@ class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
         output = self.output_layer(self.layer2(layer1_output))
         return output
 
-def load_model(N, config, example_index, batch_size):
+def load_model(N, config, batch_size, example_index=0):
     cube_reg_model = Regression_Cubical_Network_One_Nonlinearity(N, batch_size, config)
     cube_reg_model.load_state_dict(torch.load(f'output/models/system{config.system}/{example_index}-model.pth'))
     return cube_reg_model

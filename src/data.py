@@ -30,6 +30,10 @@ def data_set_up(config):
         reader = csv.reader(f)
         train_data = list(reader)
 
+    with open(test_data_file, newline='') as f:
+        reader = csv.reader(f)
+        test_data = list(reader)
+
     batch_size = len(train_data)//10
 
     d = config.dimension
@@ -39,9 +43,9 @@ def data_set_up(config):
 
     train_dataloader = DataLoader(train_dataset, batch_size = batch_size, shuffle=True)
     test_dataloader = DataLoader(test_dataset, batch_size = batch_size, shuffle=True)
-    figure_dataloader = DataLoader(train_dataset, batch_size = batch_size, shuffle = False)
+    figure_dataloader = DataLoader(test_dataset, batch_size = 1, shuffle = False)
 
-    return train_data, train_dataloader, test_dataloader, figure_dataloader
+    return train_data, test_data, train_dataloader, test_dataloader, figure_dataloader
 
 def point_inside_domain(point, data_bounds_list, d):
     tolerance = 1e-4
