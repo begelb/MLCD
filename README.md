@@ -30,7 +30,7 @@ Variable that are system specific or which we expect to be changed infrequently-
 ## Alternative way to compute a single example
 As an alternative to the Jupyter notebook, it is possible to compute a single example using the file ``` single_example.py ```. 
 
-At the top of the file, under "Global variables set by user", you can change:
+At the top of the file, under "Global variables set by user", it is possible to change:
 - the system number,
 - the number of nodes in the hidden layer of the neural network,
 - the list of labeling thresholds, and
@@ -49,7 +49,7 @@ The homology results will be saved in ```output/results```.
 ## How to run an experiment
 To run the experiments described in the paper, we used [Slurm Workload Manager](https://slurm.schedmd.com/overview.html) and the script ``` amarel_cluster_code/slurm_script_job_array.sh ```.
 
-At the top of ```run_experiment.py```, under "Global variables set by user", you can change:
+At the top of ```run_experiment.py```, under "Global variables set by user", it is possible to change:
 - the system number,
 - the list of labeling thresholds, and
 - repetitions per unique set of parameters.
