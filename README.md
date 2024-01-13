@@ -1,7 +1,7 @@
 # attractor-identification-draft
 
 ## Requirements
-This code was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/).
+This code was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/). **The program must be executed using Python<=3.11**.
 
 Compiling the code requires several Python packages. The requirements are listed in ```requirements.txt.``` To install all of the requirements at once after cloning the respository, use the following command:
 
