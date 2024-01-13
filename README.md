@@ -15,9 +15,9 @@ See ```data/system_number_meanings.txt``` for a dictionary of the system integer
 
 ## How to use the code available in a Jupyter notebook
 The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, it is possible to:
-- train a neural network using the data from the paper
-- compute homology of labeled regions from the learned decomposition of phase space, and
-- produce a plot of the decomposition. 
+- Train a neural network using the data from the paper
+- Compute homology of labeled regions from the learned decomposition of phase space, and
+- Produce a plot of the decomposition. 
 
 ## How to create your own data
 Data for each system is already produced and contained in the ```data``` directory.
