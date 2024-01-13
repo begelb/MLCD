@@ -28,59 +28,44 @@ class Config:
 
     def check_types(self):
         if type(self.system) is not int:
-            print("System has the incorrect type. Must be " + str(int) + ". Found a " + str(type(self.system)))
-            exit()
+            raise Exception("System has the incorrect type. Must be " + str(int) + ". Found a " + str(type(self.system)))
         if type(self.example_type) is not str:
-            print("Example type has the incorrect type. Must be " + str(str) + ". Found a " + str(type(self.example_type)))
-            exit()
+            raise Exception("Example type has the incorrect type. Must be " + str(str) + ". Found a " + str(type(self.example_type)))
         if type(self.learning_rate) is not float:
-            print("Learning rate has the incorrect type. Must be " + str(float) + ". Found a " + str(type(self.learning_rate)))
-            exit()
+            raise Exception("Learning rate has the incorrect type. Must be " + str(float) + ". Found a " + str(type(self.learning_rate)))
         if type(self.epochs) is not int:
-            print("Epochs has the incorrect type. Must be " + str(int) + ". Found a " + str(type(self.epochs)))
-            exit()
+            raise Exception("Epochs has the incorrect type. Must be " + str(int) + ". Found a " + str(type(self.epochs)))
         if type(self.optimizer_choice) is not str:
-            print("Optimizer choice has the incorrect type. Must be " + str(str) +". Found a " + str(type(self.optimizer_choice)))
-            exit()
+            raise Exception("Optimizer choice has the incorrect type. Must be " + str(str) +". Found a " + str(type(self.optimizer_choice)))
         if type(self.verbose) is not bool:
-            print("Verbose has the incorrect type. Must be " + str(bool) +". Found a" + str(type(self.verbose)))
-            exit()
+            raise Exception("Verbose has the incorrect type. Must be " + str(bool) +". Found a" + str(type(self.verbose)))
         if type(self.make_figures) is not bool:
-            print("Make figures has the incorrect type. Must be " + str(str) + ". Found a" + str(type(self.make_figures)))
-            exit()
+            raise Exception("Make figures has the incorrect type. Must be " + str(str) + ". Found a" + str(type(self.make_figures)))
         if type(self.dimension) is not int:
-            print("Dimension has the incorrect type. Must be " + str(int) + ". Found a " + str(type(self.dimension)))
-            exit()
+            raise Exception("Dimension has the incorrect type. Must be " + str(int) + ". Found a " + str(type(self.dimension)))
         if type(self.data_bounds) is not list:
-            print("Data bounds has the incorrect type. Must be " + str(list) + ". Found a " + str(type(self.data_bounds)))
-            exit()
+            raise Exception("Data bounds has the incorrect type. Must be " + str(list) + ". Found a " + str(type(self.data_bounds)))
         for bound in self.data_bounds:
             if type(bound) is not float and type(bound) is not int:
-                print("Data bounds list element has the incorrect type. Must be " + str(float) + " or " + str(int) + ". Found a " + str(type(bound)))
-                exit()
+                raise Exception("Data bounds list element has the incorrect type. Must be " + str(float) + " or " + str(int) + ". Found a " + str(type(bound)))
         if type(self.train_data_file) is not str:
-            print("Train data file has the incorrect type. Must be " + str(str) + " Found a " + str(type(self.train_data_file)))
-            exit()
+            raise Exception("Train data file has the incorrect type. Must be " + str(str) + " Found a " + str(type(self.train_data_file)))
         if type(self.test_data_file) is not str:
-            print("Test data file has the incorrect type. Must be " + str(str) + " Found a " + str(type(self.test_data_file)))
-            exit()
+            raise Exception("Test data file has the incorrect type. Must be " + str(str) + " Found a " + str(type(self.test_data_file)))
         if type(self.num_labels) is not int:
-            print("Number of labels has the wrong type. Must be " + str(int) + ". Found a " + str(type(self.num_labels)))
-            exit()
+            raise Exception("Number of labels has the wrong type. Must be " + str(int) + ". Found a " + str(type(self.num_labels)))
         if type(self.N_list) is not list:
-            print("Network_width_list_for_experiment has the wrong type. Must be " + str(list) + ". Found a " + str(type(self.N_list)))
-            exit()
+            raise Exception("Network_width_list_for_experiment has the wrong type. Must be " + str(list) + ". Found a " + str(type(self.N_list)))
         for N in self.N_list:
             if type(N) is not int:
-                print("Network width inside network_width_list_for_experiment has the wrong type. Must be " + str(int) + ". Found a " + str(type(N)))
-                exit()      
+                raise Exception("Network width inside network_width_list_for_experiment has the wrong type. Must be " + str(int) + ". Found a " + str(type(N)))\
 
 def user_warning_about_N_and_dimension(config, N):
     if N % config.dimension != 0:
         print("Warning: N is expected to be an integer multiple of the dimension of the system, which is " + str(config.dimension))
         user_choice = input("Do you want to continue? (y/n):")
         if user_choice != "y":
-            exit()  
+            raise Exception("User terminated program.")
 
 def configure(config_fname):
     config = Config(config_fname)

@@ -23,6 +23,7 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         save_model(trained_network, example_index, config)
         model = load_model(N, config, 1, example_index)
         sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list = get_decomposition_data(config, N, train_data, example_index)
+        print('got data')
         
         for labeling_threshold in labeling_threshold_list:
             homology_dict, num_cubes_labeled, total_hyperplane_list = get_homology_dict_from_model(config, model, labeling_threshold, sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list)

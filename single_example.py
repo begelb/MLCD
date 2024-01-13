@@ -6,7 +6,7 @@ from src.compute_example import compute_example
 system = 1
 
 # N is the number of nodes in the hidden layer of the network and must be an integer multiple of the dimension of the system
-N = 2
+N = 4
 
 # labeling threshold is the list of labeling thresholds to be used to label the cubes
 labeling_threshold_list = [0.3]
