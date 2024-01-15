@@ -7,7 +7,7 @@
     'verbose': True,
     'make_figures': True,
     'dimension': 2,
-    'data_bounds': '[-4, 4, -3.5, 3.5]',
+    'data_bounds': '[-3.5, 3.5, -3.5, 3.5]',
     'train_data_file': 'data/system2/train.csv',
     'test_data_file': 'data/system2/test.csv',
     'num_labels': 2,

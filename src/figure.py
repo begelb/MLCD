@@ -31,8 +31,8 @@ def make_figure(config, figure_dataloader, model, data, total_hyperplane_list, s
     data_bounds = config.data_bounds
     x_min = float(data_bounds[0])
     x_max = float(data_bounds[1])
-    y_min = data_bounds[2]
-    y_max = data_bounds[3]
+    y_min = float(data_bounds[2])
+    y_max = float(data_bounds[3])
     width = float(x_max - x_min)
     height = float(y_max - y_min)
 
@@ -43,9 +43,9 @@ def make_figure(config, figure_dataloader, model, data, total_hyperplane_list, s
     fig1 = plt.figure(figsize=(10, 10 * ratio))
     ax = fig1.add_subplot(111)
 
-    extra_room_x = width * 0.05 * ratio
+    #extra_room_x = width * 0.05 * ratio
     extra_room_x = 0
-    extra_room_y = height * 0.05
+    #extra_room_y = height * 0.05
     extra_room_y = 0
     ax.set(xlim=(x_min - extra_room_x, x_max + extra_room_x), xticks=np.arange(x_min, x_max, step=1),
         ylim=(y_min - extra_room_y, y_max + extra_room_y), yticks=np.arange(y_min, y_max, step=1))
