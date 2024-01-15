@@ -40,6 +40,8 @@ def compute_homology(system, labeling_threshold, N, model):
 def make_decomposition_plot(system, N, hyperplane_list, example_index=0):
     config_fname = f'config/system{system}.txt'
     config = configure(config_fname)
+    if config.dimension != 2:
+        return 'The system has dimension greater than 2, so a plot was not produced.'
     train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config)
     model = load_model(N, config, 1, example_index=0)
 

@@ -81,7 +81,7 @@ def make_figure(config, figure_dataloader, model, data, total_hyperplane_list, s
 
     scatter = ax.scatter(scatterx1, scattery1, marker ='o', s = 5, cmap = 'viridis', c = result_list)
     cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.11, format="%.2f")
-    cbar.set_label(label = 'Value of network on testing data')
+    cbar.set_label(label = 'Network value on testing data')
     filename = f'output/figures/system{config.system}/{example_index}-decomposition.png'
     plt.savefig(filename)
     if show:
