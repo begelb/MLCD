@@ -16,7 +16,8 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         writer = csv.writer(file)
         writer.writerow(["ex_num", "N", "optimizer_choice", "learning_rate", "epsilon", "num_cubes", "final_test_loss", "hom_uncertain", "hom_zero", "hom_one", "hom_two", "hom_three"])
 
-        train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config)
+        using_pandas = config.using_pandas
+        train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas = using_pandas)
         batch_size = get_batch_size(train_data, percentage = 0.1)
         epochs = config.epochs
         trained_network, train_loss_list, test_loss_list = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs)

@@ -10,7 +10,8 @@ from src.config import configure
 def train_classifier(system, N, epochs, example_index=0):
     config_fname = f'config/system{system}.txt'
     config = configure(config_fname)
-    train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config)
+    using_pandas = config.using_pandas
+    train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
     batch_size = get_batch_size(train_data, percentage = 0.1)
     trained_network, train_loss_list, test_loss_list = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs)
     save_model(trained_network, example_index, config)
@@ -21,7 +22,8 @@ def compute_homology(system, labeling_threshold, N, model):
     
     config_fname = f'config/system{system}.txt'
     config = configure(config_fname)
-    train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config)
+    using_pandas = config.using_pandas
+    train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
 
     sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list = get_decomposition_data(config, N, train_data)
         
@@ -42,7 +44,8 @@ def make_decomposition_plot(system, N, hyperplane_list, example_index=0):
     config = configure(config_fname)
     if config.dimension != 2:
         return 'The system has dimension greater than 2, so a plot was not produced.'
-    train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config)
+    using_pandas = config.using_pandas
+    train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
     model = load_model(N, config, 1, example_index=0)
 
     make_figure(config, figure_dataloader, model, test_data, hyperplane_list, show = True)

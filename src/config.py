@@ -23,8 +23,11 @@ class Config:
         self.data_bounds = ast.literal_eval(config["data_bounds"])
         self.train_data_file = config["train_data_file"]
         self.test_data_file = config["test_data_file"]
+        self.train_url = config["train_url"]
+        self.test_url = config["test_url"]
         self.num_labels = config["num_labels"]
         self.N_list = ast.literal_eval(config["network_width_list_for_experiment"])
+        self.using_pandas = not bool(config["using_local_data"])
 
     def check_types(self):
         if type(self.system) is not int:
@@ -52,13 +55,19 @@ class Config:
             raise Exception("Train data file has the incorrect type. Must be " + str(str) + " Found a " + str(type(self.train_data_file)))
         if type(self.test_data_file) is not str:
             raise Exception("Test data file has the incorrect type. Must be " + str(str) + " Found a " + str(type(self.test_data_file)))
+        if type(self.train_url) is not str:
+            raise Exception("Train URL has the incorrect type. Must be " + str(str) + " Found a " + str(type(self.train_url)))
+        if type(self.test_url) is not str:
+            raise Exception("Test URL has the incorrect type. Must be " + str(str) + " Found a " + str(type(self.test_url)))
         if type(self.num_labels) is not int:
             raise Exception("Number of labels has the wrong type. Must be " + str(int) + ". Found a " + str(type(self.num_labels)))
         if type(self.N_list) is not list:
             raise Exception("Network_width_list_for_experiment has the wrong type. Must be " + str(list) + ". Found a " + str(type(self.N_list)))
         for N in self.N_list:
             if type(N) is not int:
-                raise Exception("Network width inside network_width_list_for_experiment has the wrong type. Must be " + str(int) + ". Found a " + str(type(N)))\
+                raise Exception("Network width inside network_width_list_for_experiment has the wrong type. Must be " + str(int) + ". Found a " + str(type(N)))
+        if type(self.using_pandas) is not bool:
+            raise Exception("using_local_data has the wrong type. Must be " + str(bool) + ". Found a " + str(type(self.using_pandas)))
 
 def user_warning_about_N_and_dimension(config, N):
     if N % config.dimension != 0:
