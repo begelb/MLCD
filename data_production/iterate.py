@@ -99,17 +99,23 @@ def get_labels(lifted_pts, resolution):
     print('There are ', n_components, 'connected components in the graph.')          
     return labels
 
-def make_lifted_pts(X1, s, domain, norm=False, delay=False, delay_iter=0):
+def make_lifted_pts(X1, s, domain, norm=False, delay=False, delay_iter=1):
     index_pts_in_domain = np.where(np.linalg.norm(X1[-1], axis=1)<=max(np.linalg.norm(domain, axis=1))*1.5)
     index_pts_out_domain = np.where(np.linalg.norm(X1[-1], axis=1)>max(np.linalg.norm(domain, axis=1))*1.5)
     
+    if delay==True:
+        lifted_pts = np.hstack([X1[-(i+1),:,:] for i in range(delay_iter)])
+        
+    if delay==False:
+        lifted_pts = X1[-1]
+    
     if norm==True:
-        lifted_pts_in_domain = np.hstack([X1[-1,:,:], s])[index_pts_in_domain]
-        lifted_pts_out_domain = np.hstack([X1[-1,:,:], s-s-1])[index_pts_out_domain]   
+        lifted_pts_in_domain = np.hstack([lifted_pts, s])[index_pts_in_domain]
+        lifted_pts_out_domain = np.hstack([lifted_pts, s-s-1])[index_pts_out_domain]   
         lifted_pts = np.vstack((lifted_pts_in_domain,lifted_pts_out_domain))  
     
     if norm==False:
-        lifted_pts = X1[-1,:,:][index_pts_in_domain] 
+        lifted_pts = lifted_pts[index_pts_in_domain] 
         
     return lifted_pts
 
@@ -121,4 +127,10 @@ def make_labeled_pts(X0, X1, domain, labels):
     labeled_pts = np.vstack((labeled_pts_in_domain,labeled_pts_out_domain))
     return labeled_pts
 
+def make_resolution(lifted_pts):
+    diag = compute_persistance(lifted_pts) 
+    gudhi.plot_persistence_diagram(diag)
+    print(diag[:10])
+    resolution = float(input("What is the resolution? ")) 
+    return resolution
 

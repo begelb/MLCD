@@ -12,7 +12,6 @@ sys.path.append(
 import systems
 import iterate
 import numpy as np
-import gudhi
 from format_data import save_formatted_data
 import pickle
 
@@ -73,13 +72,10 @@ if __name__ == "__main__":
     s0 = iterate.compute_norms(X1)
     M = 100 * len(hausdorf_distances)         
     X1, s = iterate.iter_and_compute_norms(DS, X1, M, step_size, domain, radial) 
-    lifted_pts = iterate.make_lifted_pts(X1, s, domain, norm=False)
+    lifted_pts = iterate.make_lifted_pts(X1, s, domain, norm=False, delay=False, delay_iter=1)
     
 
-    diag = iterate.compute_persistance(lifted_pts) 
-    gudhi.plot_persistence_diagram(diag)
-    print(diag[:10])
-    resolution = float(input("What is the resolution? ")) 
+    resolution = iterate.make_resolution(lifted_pts)
     labels = iterate.get_labels(lifted_pts, resolution)
     
     labeled_pts = iterate.make_labeled_pts(X0, X1, domain, labels)
