@@ -5,10 +5,7 @@ Created on Tue Jan  9 16:12:55 2024
 
 @author: paultatasciore
 """
-import sys
-sys.path.append("/usr/local/lib/python3.9/site-packages")
-sys.path.append(
-    "/Users/paultatasciore/Library/Python/3.9/lib/python/site-packages")
+
 import numpy as np
 from scipy.stats import qmc
 from scipy.integrate import odeint
