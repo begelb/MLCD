@@ -14,11 +14,13 @@ import iterate
 import numpy as np
 import gudhi
 from format_data import save_formatted_data
+import pickle
+
 
 ''' Global variables set by user '''
 
 # system is an integer that refers to which dynamical system the user would like to use
-system = 1
+system = 8
 
 
 # number of points to be sampled and iterated in the domain
@@ -48,6 +50,16 @@ dim = len(domain)
 step_size = 1 
 eps = 1e-6
 max_iter = 100
+
+exp_info = {
+    'system' : system,
+    'num_of_pts' : num_of_pts,
+    'domain' : domain,
+    'dim' : dim,
+    'step_size' : step_size,
+    'eps' : eps,
+    'max_iter' : max_iter
+    }
 
 if DS == systems.Radial or DS == systems.Radial2: # or DS == Ellipsoidal or DS == Ellipsoidal_3d:
     radial = True
@@ -86,6 +98,9 @@ if __name__ == "__main__":
     
     #np.savetxt("data.csv", labeled_pts, delimiter=',')     # labeled_pts (initial points with labels)
     np.savetxt("images.csv", lifted_pts, delimiter=',')    # lifted_pts (final points with norms)
+    
+    with open('exp_info.pickle', 'wb') as handle:
+        pickle.dump(exp_info, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
   
             
