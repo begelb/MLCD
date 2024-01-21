@@ -5,10 +5,7 @@ Created on Tue Jan  9 16:27:17 2024
 
 @author: paultatasciore
 """
-import sys
-sys.path.append("/usr/local/lib/python3.9/site-packages")
-sys.path.append(
-    "/Users/paultatasciore/Library/Python/3.9/lib/python/site-packages")
+
 import systems
 import iterate
 import numpy as np
@@ -20,11 +17,11 @@ import pickle
 ''' Global variables set by user '''
 
 # system is an integer that refers to which dynamical system the user would like to use
-system = 8
+system = 1
 
 
 # number of points to be sampled and iterated in the domain
-num_of_pts = 100
+num_of_pts = 1000
 
 
 ''' Global variables that should not be changed by the user '''
