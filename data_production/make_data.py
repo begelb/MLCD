@@ -5,7 +5,10 @@ Created on Tue Jan  9 16:27:17 2024
 
 @author: paultatasciore
 """
-
+import sys
+sys.path.append("/usr/local/lib/python3.9/site-packages")
+sys.path.append(
+    "/Users/paultatasciore/Library/Python/3.9/lib/python/site-packages")
 import systems
 import iterate
 import numpy as np
@@ -21,7 +24,7 @@ system = 1
 
 
 # number of points to be sampled and iterated in the domain
-num_of_pts = 1000
+num_of_pts = 100
 
 
 ''' Global variables that should not be changed by the user '''
@@ -67,32 +70,21 @@ else:
 if __name__ == "__main__":
     X0 = iterate.init_pts(domain, num_of_pts) 
     X1, hausdorf_distances = iterate.remove_transience(DS, X0, step_size, max_iter, eps, domain, radial)  
-
     s0 = iterate.compute_norms(X1)
-
     M = 100 * len(hausdorf_distances)         
-    X1, s = iterate.iter_and_compute_norms(DS, X1, M, step_size, domain, radial)
+    X1, s = iterate.iter_and_compute_norms(DS, X1, M, step_size, domain, radial) 
+    lifted_pts = iterate.make_lifted_pts(X1, s, domain, norm=False)
     
-    index_pts_in_domain = np.where(np.linalg.norm(X1[-1], axis=1)<=max(np.linalg.norm(domain, axis=1))*1.5)
-    index_pts_out_domain = np.where(np.linalg.norm(X1[-1], axis=1)>max(np.linalg.norm(domain, axis=1))*1.5)
 
-    lifted_pts_in_domain = np.hstack([X1[-1,:,:], s])[index_pts_in_domain]
-    lifted_pts_out_domain = np.hstack([X1[-1,:,:], s-s-1])[index_pts_out_domain]   
-    lifted_pts = np.vstack((lifted_pts_in_domain,lifted_pts_out_domain))   
-
-    
-    diag = iterate.compute_persistance(lifted_pts_in_domain[:,:-1]) 
+    diag = iterate.compute_persistance(lifted_pts) 
     gudhi.plot_persistence_diagram(diag)
     print(diag[:10])
     resolution = float(input("What is the resolution? ")) 
-    labels = iterate.get_labels(lifted_pts_in_domain, resolution)
+    labels = iterate.get_labels(lifted_pts, resolution)
     
-    labeled_pts_in_domain = np.hstack((X0[index_pts_in_domain],np.expand_dims(labels, axis=1)))
-    labeled_pts_out_domain = np.hstack((X0[index_pts_out_domain],-1*np.ones((len(index_pts_out_domain[0]),1))))
-    labeled_pts = np.vstack((labeled_pts_in_domain,labeled_pts_out_domain))
+    labeled_pts = iterate.make_labeled_pts(X0, X1, domain, labels)
 
-    save_formatted_data(labeled_pts_in_domain, num_of_pts)
-    
+    save_formatted_data(labeled_pts, num_of_pts)    
     #np.savetxt("data.csv", labeled_pts, delimiter=',')     # labeled_pts (initial points with labels)
     np.savetxt("images.csv", lifted_pts, delimiter=',')    # lifted_pts (final points with norms)
     

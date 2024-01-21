@@ -5,7 +5,10 @@ Created on Tue Jan  9 16:12:55 2024
 
 @author: paultatasciore
 """
-
+import sys
+sys.path.append("/usr/local/lib/python3.9/site-packages")
+sys.path.append(
+    "/Users/paultatasciore/Library/Python/3.9/lib/python/site-packages")
 import numpy as np
 from scipy.stats import qmc
 from scipy.integrate import odeint
@@ -90,10 +93,32 @@ def compute_persistance(lifted_pts_in_domain):
     return diag
 
 def get_labels(lifted_pts, resolution):
-    tree = cKDTree(lifted_pts[:,:-1])
+    tree = cKDTree(lifted_pts)
     edges = tree.sparse_distance_matrix(tree, max_distance=resolution, output_type="coo_matrix")
     n_components, labels = connected_components(csgraph=edges, directed=False, return_labels=True)
     print('There are ', n_components, 'connected components in the graph.')          
     return labels
+
+def make_lifted_pts(X1, s, domain, norm=False, delay=False, delay_iter=0):
+    index_pts_in_domain = np.where(np.linalg.norm(X1[-1], axis=1)<=max(np.linalg.norm(domain, axis=1))*1.5)
+    index_pts_out_domain = np.where(np.linalg.norm(X1[-1], axis=1)>max(np.linalg.norm(domain, axis=1))*1.5)
+    
+    if norm==True:
+        lifted_pts_in_domain = np.hstack([X1[-1,:,:], s])[index_pts_in_domain]
+        lifted_pts_out_domain = np.hstack([X1[-1,:,:], s-s-1])[index_pts_out_domain]   
+        lifted_pts = np.vstack((lifted_pts_in_domain,lifted_pts_out_domain))  
+    
+    if norm==False:
+        lifted_pts = X1[-1,:,:][index_pts_in_domain] 
+        
+    return lifted_pts
+
+def make_labeled_pts(X0, X1, domain, labels):
+    index_pts_in_domain = np.where(np.linalg.norm(X1[-1], axis=1)<=max(np.linalg.norm(domain, axis=1))*1.5)
+    index_pts_out_domain = np.where(np.linalg.norm(X1[-1], axis=1)>max(np.linalg.norm(domain, axis=1))*1.5)    
+    labeled_pts_in_domain = np.hstack((X0[index_pts_in_domain],np.expand_dims(labels, axis=1)))
+    labeled_pts_out_domain = np.hstack((X0[index_pts_out_domain],-1*np.ones((len(index_pts_out_domain[0]),1))))
+    labeled_pts = np.vstack((labeled_pts_in_domain,labeled_pts_out_domain))
+    return labeled_pts
 
 
