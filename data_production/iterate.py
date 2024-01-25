@@ -16,6 +16,7 @@ from scipy.spatial.distance import directed_hausdorff
 import gudhi
 from scipy.spatial import cKDTree
 from scipy.sparse.csgraph import connected_components
+import matplotlib.pyplot as plt
 
 
 
@@ -130,6 +131,7 @@ def make_labeled_pts(X0, X1, domain, labels):
 def make_resolution(lifted_pts):
     diag = compute_persistance(lifted_pts) 
     gudhi.plot_persistence_diagram(diag)
+    plt.show()
     print(diag[:10])
     resolution = float(input("What is the resolution? ")) 
     return resolution
