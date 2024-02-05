@@ -11,8 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-labeled_pts = np.loadtxt("data.csv")
-lifted_pts = np.loadtxt("images.csv")
+labeled_pts = np.loadtxt("data.csv", delimiter=',')
+lifted_pts = np.loadtxt("images.csv", delimiter=',')
 
 
 

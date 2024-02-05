@@ -16,6 +16,7 @@ from scipy.spatial.distance import directed_hausdorff
 import gudhi
 from scipy.spatial import cKDTree
 from scipy.sparse.csgraph import connected_components
+import matplotlib.pyplot as plt
 
 
 
@@ -93,10 +94,45 @@ def compute_persistance(lifted_pts_in_domain):
     return diag
 
 def get_labels(lifted_pts, resolution):
-    tree = cKDTree(lifted_pts[:,:-1])
+    tree = cKDTree(lifted_pts)
     edges = tree.sparse_distance_matrix(tree, max_distance=resolution, output_type="coo_matrix")
     n_components, labels = connected_components(csgraph=edges, directed=False, return_labels=True)
     print('There are ', n_components, 'connected components in the graph.')          
     return labels
 
+def make_lifted_pts(X1, s, domain, norm=False, delay=False, delay_iter=1):
+    index_pts_in_domain = np.where(np.linalg.norm(X1[-1], axis=1)<=max(np.linalg.norm(domain, axis=1))*1.5)
+    index_pts_out_domain = np.where(np.linalg.norm(X1[-1], axis=1)>max(np.linalg.norm(domain, axis=1))*1.5)
+    
+    if delay==True:
+        lifted_pts = np.hstack([X1[-(i+1),:,:] for i in range(delay_iter)])
+        
+    if delay==False:
+        lifted_pts = X1[-1]
+    
+    if norm==True:
+        lifted_pts_in_domain = np.hstack([lifted_pts, s])[index_pts_in_domain]
+        lifted_pts_out_domain = np.hstack([lifted_pts, s-s-1])[index_pts_out_domain]   
+        lifted_pts = np.vstack((lifted_pts_in_domain,lifted_pts_out_domain))  
+    
+    if norm==False:
+        lifted_pts = lifted_pts[index_pts_in_domain] 
+        
+    return lifted_pts
+
+def make_labeled_pts(X0, X1, domain, labels):
+    index_pts_in_domain = np.where(np.linalg.norm(X1[-1], axis=1)<=max(np.linalg.norm(domain, axis=1))*1.5)
+    index_pts_out_domain = np.where(np.linalg.norm(X1[-1], axis=1)>max(np.linalg.norm(domain, axis=1))*1.5)    
+    labeled_pts_in_domain = np.hstack((X0[index_pts_in_domain],np.expand_dims(labels, axis=1)))
+    labeled_pts_out_domain = np.hstack((X0[index_pts_out_domain],-1*np.ones((len(index_pts_out_domain[0]),1))))
+    labeled_pts = np.vstack((labeled_pts_in_domain,labeled_pts_out_domain))
+    return labeled_pts
+
+def make_resolution(lifted_pts):
+    diag = compute_persistance(lifted_pts) 
+    gudhi.plot_persistence_diagram(diag)
+    plt.show()
+    print(diag[:10])
+    resolution = float(input("What is the resolution? ")) 
+    return resolution
 
