@@ -10,6 +10,8 @@
     'data_bounds': '[-4, 4, -4, 4]',
     'train_data_file': 'data/system3/train.csv',
     'test_data_file': 'data/system3/test.csv',
+    'train_url': 'https://raw.githubusercontent.com/begelb/attractor-id-data/main/system3/train.csv?token=GHSAT0AAAAAACMNABDWLHXPSSRI7DIJVJLUZOBHJMQ',
+    'test_url': 'https://raw.githubusercontent.com/begelb/attractor-id-data/main/system3/test.csv?token=GHSAT0AAAAAACMNABDX6KXRARZXMTS5L7OCZOBHJ2Q',
     'num_labels': 2,
     'network_width_list_for_experiment': '[2, 4, 6, 8, 10]'
 }
