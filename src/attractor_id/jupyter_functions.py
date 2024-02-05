@@ -1,11 +1,11 @@
 import csv
-from src.homology import get_homology_dict_from_model
-from src.train import train_and_test
-from src.network import save_model, load_model, get_batch_size
-from src.figure import make_figure, make_loss_plots
-from src.data import data_set_up
-from src.decomposition import get_decomposition_data
-from src.config import configure
+from .homology import get_homology_dict_from_model
+from .train import train_and_test
+from .network import save_model, load_model, get_batch_size
+from .figure import make_figure, make_loss_plots
+from .data import data_set_up
+from .decomposition import get_decomposition_data
+from .config import configure
 
 def train_classifier(system, N, epochs, example_index=0):
     config_fname = f'config/system{system}.txt'
