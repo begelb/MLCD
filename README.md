@@ -1,13 +1,13 @@
 # attractor-identification-draft
 
-## Requirements
+## Installation
 This code was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/). **The program must be executed using Python<=3.11**.
 
-Compiling the code requires several Python packages. The requirements are listed in ```requirements.txt.``` To install all of the requirements at once after cloning the respository, use the following command:
+After downloading a copy of this repository, navigate to the project folder and use one of the following commands to install the attractor_id package. The first commmand is preferred if you have multiple versions of Python. 
 
-```pip install -r requirements.txt```
+```python -m pip install .```
 
-For homology computations, we use the Python extension [pyCHomP2](https://pypi.org/project/pychomp2/).
+```pip install .```
 
 ## System numbers
 
