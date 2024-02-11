@@ -1,5 +1,5 @@
 [project]
-name = "attractor_identification_draft"
+name = "attractor_id"
 version = "1.0.0"
 description = "Attractor identification project"
 license = {file = "LICENSE.txt"}

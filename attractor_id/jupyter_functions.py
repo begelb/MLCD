@@ -1,4 +1,3 @@
-import csv
 from .homology import get_homology_dict_from_model
 from .train import train_and_test
 from .network import save_model, load_model, get_batch_size

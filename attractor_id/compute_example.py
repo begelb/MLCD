@@ -6,7 +6,7 @@ from .misc import get_list_to_write
 from .figure import make_figure, make_loss_plots
 from .data import data_set_up
 from .decomposition import get_decomposition_data
-from src.config import user_warning_about_N_and_dimension, configure
+from .config import user_warning_about_N_and_dimension, configure
 
 def compute_example(system, N, labeling_threshold_list, example_index=0):
     config_fname = f'config/system{system}.txt'

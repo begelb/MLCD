@@ -1,9 +1,11 @@
 1: Two stable fixed points (straight separatrix) in 2-d
-2: Two stable fixed points (curved separatrix) in 2-d
+2: Two stable fixed points (curved separatrix) in 2-d -- delete
 3: Radial system in 2-d with two labels
 4: Radial system in 2-d with three labels
-5: Two stable fixed points (straight separatrix) in 4-d
+5: Two stable fixed points (straight separatrix) in 4-d -- delete
 6: Two stable fixed points (curved separatrix) in 4-d
-7: EMT hill system in 6-d
+7: EMT hill system in 6-d -- check on domain
 8: Periodic system in 3-d
-9: Ellipsoidal system in 2-d
+9: Ellipsoidal system in 2-d, ...?
+10: something to show failure, 3 fixed points in 2-d from DSGRN
+
