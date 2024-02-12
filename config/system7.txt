@@ -13,5 +13,6 @@
     'train_url': '',
     'test_url': '',
     'num_labels': 2,
-    'network_width_list_for_experiment': '[2, 4, 6, 8, 10]'
+    'network_width_list_for_experiment': '[2, 4, 6, 8, 10]',
+    'using_local_data': True
 }

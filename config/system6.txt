@@ -13,5 +13,6 @@
     'train_url': 'https://raw.githubusercontent.com/begelb/attractor-id-data/main/system6/train.csv?token=GHSAT0AAAAAACMNABDX65WNW5GCEK6W3SNUZOBHMWA',
     'test_url': 'https://raw.githubusercontent.com/begelb/attractor-id-data/main/system6/test.csv?token=GHSAT0AAAAAACMNABDXCXCFPB3KQNQZGAGSZOBHM5Q',
     'num_labels': 2,
-    'network_width_list_for_experiment': '[2, 4, 6, 8, 10]'
+    'network_width_list_for_experiment': '[2, 4, 6, 8, 10]',
+    'using_local_data': True
 }
