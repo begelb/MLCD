@@ -26,12 +26,12 @@ import plot_data
 
 ''' Global variables set by user '''
 
-systems_list = [13] 
+systems_list = [1] 
 num_of_pts = 100
 
 for system in systems_list:
     
-    norm = True
+    norm = False
     delay = (False, 20)               # Delay coord with how many iterations back to include
     useSugres = (False, 3)            # Use Suggested Resolution based on how many std away from median (i.e sigma threshold)
     
