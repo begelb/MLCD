@@ -210,7 +210,11 @@ for system in systems_list:
     dim = exp_info['dim']
     domain = exp_info['domain']
 
-
+    pathfig = f'../output/figures/system{system}/'    
+    isExist = os.path.exists(pathfig)
+    if not isExist:
+       os.makedirs(pathfig)
+        
     fig1 = plt.figure()
     plt.plot(hausdorf_distances)
     plt.title('Hausdorff Disances Between Iterations')
