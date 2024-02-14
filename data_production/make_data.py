@@ -104,6 +104,11 @@ for system in systems_list:
     isExist = os.path.exists(path)
     if not isExist:
        os.makedirs(path)
+
+    pathfig = f'../output/figures/system{system}/'    
+    isExist = os.path.exists(pathfig)
+    if not isExist:
+       os.makedirs(pathfig)
         
     X0 = iterate.init_pts(domain, num_of_pts, grid=iter_grid) 
     
@@ -209,11 +214,6 @@ for system in systems_list:
 
     dim = exp_info['dim']
     domain = exp_info['domain']
-
-    pathfig = f'../output/figures/system{system}/'    
-    isExist = os.path.exists(pathfig)
-    if not isExist:
-       os.makedirs(pathfig)
         
     fig1 = plt.figure()
     plt.plot(hausdorf_distances)
