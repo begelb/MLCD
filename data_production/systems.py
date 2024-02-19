@@ -264,6 +264,48 @@ def Periodic_3d(X, t):
     dydt = F(X, L, U, theta, gamma, n)
     return dydt
 
+domain_fp3 = ((0,3.5),(0,5.5))
+def FP3(y, t):
+    L = [[0.771, 1.331], [0.215, 0.223]]
+    U = [[2.124, 1.585], [1.064, 1.823]]
+    T = [[0.925, 0.523], [2.638, 0.848]]
+
+    # Define theta, gamma, and n
+    L = np.array(L)
+    U = np.array(U)
+    T = np.array(T)
+    
+    D = 2
+    
+    # T = gamma * theta
+    theta = T
+    gamma = np.ones((D,))
+    # theta = T
+    # gamma = np.ones((D,))
+    n = 10
+    
+        # Define Hill model for network
+    def H_minus(x, L, U, theta, n):
+        return L + (U - L) * theta**n / (x**n + theta**n)
+    
+    def H_plus(x, L, U, theta, n):
+        return L + (U - L) * x**n / (x**n + theta**n)
+    
+    def F(X, L, U, theta, gamma, n):
+        Y = np.zeros(X.shape)
+        Y[0] = -gamma[0] * X[0] + ( H_plus(X[0], L[0, 0], U[0, 0], theta[0, 0], n) *
+                                    H_minus(X[1], L[1, 0], U[1, 0], theta[1, 0], n) ) # x : x (~y)
+        Y[1] = -gamma[1] * X[1] + ( H_plus(X[1], L[1, 1], U[1, 1], theta[1, 1], n) *
+                                    H_minus(X[0], L[0, 1], U[0, 1], theta[0, 1], n) ) # y : y (~x)
+        return Y
+    
+    # Map f
+    def f(X):
+        return F(X, L, U, theta, gamma, n)
+    dydt = F(y, L, U, theta, gamma, n)
+    
+    return dydt
+
 # system 9: Ellipsoidal system in 2-d
 
 domain_ellipsoidal = ((-4,4),(-4,4))
@@ -336,43 +378,7 @@ def Leslie(x, dim):
     gx = np.array([(param['th1'] * x[:,0] + param['th2'] * x[:,1]) * np.exp(-param['lam']*(x[:,0] + x[:,1])), param['p1']*x[:,0]])
     return gx.T
 
-domain_iris = ((-10, 10),)*11
-def Iris(x, dim, sys=1): 
-    param = {'bias': True}
 
-
-    def f_NN(X):
-        Neural = NN_class.NN(hidden_layer_size=1, activation='sigmoid', learning_rate=.1, max_iter=1, bias=param['bias'])
-        acc, err = Neural.train_test(load_data.x, load_data.y, initial='custom', init=X[0])
-        weights = Neural.final_weights
-        final = np.append(weights[0][:],weights[1][:])
-        if param['bias']:
-            final = np.append(final,weights[2][:])
-            final = np.append(final,weights[3][:])
-        # final = np.append(final,acc)
-        # final = np.append(final,err)
-        final = np.expand_dims(final, axis=0)
-        # Final = np.array([])
-        # for i in range(len(X)):
-        #     Final = np.append(Final, f(np.expand_dims(X[i], axis=0)))
-        #     print(i)       
-        # X = X[0:i+1,:]
-        # Final = np.reshape(Final, (i+1,13))
-        return final, acc
-               
-    def F(Initial,dim):
-        Final = np.array([])
-        Acc = np.array([])
-        for i in range(len(Initial)):
-            Final = np.append(Final, f_NN(np.expand_dims(Initial[i], axis=0))[0])
-            Acc = np.append(Acc, f_NN(np.expand_dims(Initial[i], axis=0))[1])
-            #print(i)       
-        #Initial = Initial[0:i+1,:]
-        Final = np.reshape(Final, (i+1,dim))
-        return Final, Acc 
-    gx, Acc = F(x,dim)
-    print(Acc)
-    return gx
 # # system 9: Ellipsoidal system in 2-d
 # domain_ellipsoidal = ((-4,4),(-4,4))
 # def Ellipsoidal(y, t):
@@ -409,8 +415,7 @@ systems = {
     Periodic_back : domain_periodic_back,
     Torus : domain_torus,
     Leslie : domain_leslie,
-    Iris : domain_iris
-
+    FP3 : domain_fp3
 }
    
         

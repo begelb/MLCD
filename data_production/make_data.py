@@ -18,7 +18,6 @@ import sys
 import os
 from scipy.spatial.transform import Rotation as R
 import matplotlib.pyplot as plt
-
 import plot_data
 
 
@@ -26,22 +25,23 @@ import plot_data
 
 ''' Global variables set by user '''
 
-systems_list = [1] 
-num_of_pts = 100
+systems_list = [10] 
+num_of_pts = 1000
 
+
+
+''' Global variables that should not be changed by the user '''
 for system in systems_list:
     
-    norm = False
+    norm = False                      # Norm of orbit
     delay = (False, 20)               # Delay coord with how many iterations back to include
-    useSugres = (False, 3)            # Use Suggested Resolution based on how many std away from median (i.e sigma threshold)
-    
+    useSugres = (False, 3)            # Use Suggested Resolution based on how many std away from median (i.e sigma threshold)  
     iter_grid = (False, 2**5+1)       # Sample points on grid with num_pts_per_dim or randomly 
-    max_iter = 100
-    maps = False
+    max_iter = 100                    # Max number of iterations before transient is removed
+    maps = False                      # Set True for maps. False for flows
     save_full_orbit = False           # Save labeled_pts from entire orbit segment from transience 
 
     
-    ''' Global variables that should not be changed by the user '''
     if system == 1:
         DS = systems.Straight
     if system == 2:
@@ -60,6 +60,8 @@ for system in systems_list:
         DS = systems.Periodic_3d
     if system == 9:
         DS = systems.Ellipsoidal
+    if system == 10:
+        DS = systems.FP3
     if system == 13:
         MP = systems.Leslie
         maps = True
@@ -104,7 +106,7 @@ for system in systems_list:
     isExist = os.path.exists(path)
     if not isExist:
        os.makedirs(path)
-
+       
     pathfig = f'../output/figures/system{system}/'    
     isExist = os.path.exists(pathfig)
     if not isExist:
@@ -113,10 +115,9 @@ for system in systems_list:
     X0 = iterate.init_pts(domain, num_of_pts, grid=iter_grid) 
     
     if DS == systems.Ellipsoidal: 
-        
-        a = 2 
-        b = 1
-
+        # ask for dim
+        a = 1 
+        b = 0.5
         r_inv = R.from_euler('z', -45, degrees=True)
         Rotation_inv = r_inv.as_matrix()[:2, :2]
         I = np.identity(dim)
@@ -214,7 +215,8 @@ for system in systems_list:
 
     dim = exp_info['dim']
     domain = exp_info['domain']
-        
+
+       
     fig1 = plt.figure()
     plt.plot(hausdorf_distances)
     plt.title('Hausdorff Disances Between Iterations')

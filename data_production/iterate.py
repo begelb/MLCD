@@ -38,7 +38,7 @@ def init_pts(domain, num_of_pts, grid):
         
     return X0
 
-def iterate_DS_pts(DS, X0, t, domain, radial, stop_out_domain=True):  
+def iterate_DS_pts(DS, X0, t, domain, radial, stop_out_domain=False):  
     dim = len(domain)
     if radial:
         X0 = np.array([[np.sqrt(X0[i,0]**2 + X0[i,1]**2), np.arctan2(X0[i,1],X0[i,0])] for i in range(len(X0))])
@@ -156,7 +156,7 @@ def make_resolution(lifted_pts, dim, system, num_of_pts, path, useSugres):
         diag = compute_persistance(lifted_pts) 
         d = [(0,(0.0,diag[i][1][1]/diag[1][1][1])) for i in range(len(diag))]
         fig = gudhi.plot_persistence_diagram(d).figure
-        fig.savefig(path + "PD.jpg", bbox_inches='tight')
+        fig.savefig(f'../output/figures/system{system}/' + "PD.jpg", bbox_inches='tight')
         plt.show()      
         pd = [d[i][1][1] for i in range(len(d))]
         
