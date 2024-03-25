@@ -2,7 +2,7 @@ import csv
 from .homology import get_homology_dict_from_model
 from .train import train_and_test
 from .network import save_model, load_model, get_batch_size
-from .misc import get_list_to_write
+from .utils import get_list_to_write
 from .figure import make_figure, make_loss_plots
 from .data import data_set_up
 from .decomposition import get_decomposition_data
