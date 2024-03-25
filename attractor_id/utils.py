@@ -5,8 +5,8 @@ def get_initial_list_to_write(config, example_index, N, labeling_threshold, num_
 def get_final_list_to_write(config, initial_list, homology_dict):
 
     # first append the homology of the uncertain region
-    if homology_dict[config.num_labels + 1] is not None:
-        initial_list.append(homology_dict[config.num_labels + 1])
+    if homology_dict[config.num_labels] is not None:
+        initial_list.append(homology_dict[config.num_labels])
     else:
         initial_list.append("Empty region")
 

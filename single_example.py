@@ -4,7 +4,7 @@ from attractor_id.compute_example import compute_example
 
 # system is an integer that refers to which dynamical system the user would like to use
 # system_name = 'straight_separatrix'
-system_number = 1
+system_number = 3
 
 # N is the number of nodes in the hidden layer of the network and must be an integer multiple of the dimension of the system
 N = 4
