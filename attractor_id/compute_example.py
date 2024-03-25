@@ -2,13 +2,14 @@ import csv
 from .homology import get_homology_dict_from_model
 from .train import train_and_test
 from .network import save_model, load_model, get_batch_size
-from .utils import get_list_to_write
+from .utils import get_list_to_write # , system_name_to_number
 from .figure import make_figure, make_loss_plots
 from .data import data_set_up
 from .decomposition import get_decomposition_data
 from .config import user_warning_about_N_and_dimension, configure
 
 def compute_example(system, N, labeling_threshold_list, example_index=0):
+   # system = system_name_to_number(system_name)
     config_fname = f'config/system{system}.txt'
     config = configure(config_fname)
     user_warning_about_N_and_dimension(config, N)

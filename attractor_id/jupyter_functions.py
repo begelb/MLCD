@@ -5,8 +5,10 @@ from .figure import make_figure, make_loss_plots
 from .data import data_set_up
 from .decomposition import get_decomposition_data
 from .config import configure
+#from .utils import system_name_to_number
 
-def train_classifier(system, N, epochs, example_index=0):
+def train_classifier(system_name, N, epochs, example_index=0):
+    system = system_name_to_number(system_name)
     config_fname = f'config/system{system}.txt'
     config = configure(config_fname)
     using_pandas = config.using_pandas
@@ -17,8 +19,8 @@ def train_classifier(system, N, epochs, example_index=0):
     model = load_model(N, config, 1, example_index)
     return model
 
-def compute_homology(system, labeling_threshold, N, model):
-    
+def compute_homology(system_name, labeling_threshold, N, model):
+    system = system_name_to_number(system_name)
     config_fname = f'config/system{system}.txt'
     config = configure(config_fname)
     using_pandas = config.using_pandas
@@ -38,7 +40,8 @@ def compute_homology(system, labeling_threshold, N, model):
 
     return total_hyperplane_list
 
-def make_decomposition_plot(system, N, hyperplane_list, example_index=0):
+def make_decomposition_plot(system_name, N, hyperplane_list, example_index=0):
+    system = system_name_to_number(system_name)
     config_fname = f'config/system{system}.txt'
     config = configure(config_fname)
     if config.dimension != 2:

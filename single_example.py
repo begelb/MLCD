@@ -3,7 +3,8 @@ from attractor_id.compute_example import compute_example
 '''' Global variables set by user '''
 
 # system is an integer that refers to which dynamical system the user would like to use
-system = 1
+# system_name = 'straight_separatrix'
+system_number = 1
 
 # N is the number of nodes in the hidden layer of the network and must be an integer multiple of the dimension of the system
 N = 4
@@ -17,7 +18,7 @@ example_index = 0
 ''' Main code block '''
 
 def main():
-    compute_example(system, N, labeling_threshold_list, 0)
+    compute_example(system_number, N, labeling_threshold_list, 0)
 
 if __name__ == "__main__":
     main()
