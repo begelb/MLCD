@@ -1,0 +1,18 @@
+# Build directories
+build
+
+# Binaries directories
+dist
+*.egg-info
+__pycache__
+
+# macOS files
+.DS_Store
+
+# Jypyter notebook files
+.ipynb_checkpoints
+
+# Backup files
+*~
+
+output
