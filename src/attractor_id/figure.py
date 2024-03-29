@@ -25,7 +25,7 @@ def get_network_value_list(config, dataloader, model):
                 result_list.append(float(pred_thresh[i]))
     return result_list
 
-def make_figure(config, figure_dataloader, model, data, total_hyperplane_list, show, file_name=None, example_index=0):
+def make_figure(config, figure_dataloader, model, data, total_hyperplane_list, show, example_index=0, file_name=None):
     total_hyperplane_list.extend(generate_domain_bounding_hyperplanes(config))
     result_list = get_network_value_list(config, figure_dataloader, model)
     data_bounds = config.data_bounds
