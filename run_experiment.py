@@ -1,5 +1,5 @@
-from attractor_id.config import configure
-from attractor_id.experiment import Experiment
+from src.attractor_id.config import configure
+from src.attractor_id.experiment import Experiment
 import sys 
 
 ''' Global variables set by user '''

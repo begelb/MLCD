@@ -2,7 +2,7 @@
     'system': 1,
     'example_type': 'Two stable fixed points (straight separatrix)',
     'learning_rate': 0.01,
-    'epochs': 100,
+    'epochs': 2,
     'optimizer_choice': 'Adam',
     'verbose': True,
     'make_figures': True,

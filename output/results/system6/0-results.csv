@@ -1,3 +1,0 @@
-ex_num,N,optimizer_choice,learning_rate,epsilon,num_cubes,final_test_loss,hom_uncertain,hom_zero,hom_one,hom_two,hom_three
-0,8,Adam,0.01,0.1,385,0.05983735211193562,"[1, 0, 0, 0, 0]","[1, 0, 0, 0, 0]","[1, 0, 0, 0, 0]"
-0,8,Adam,0.01,0.3,385,0.05983735211193562,"[2, 0, 0, 0, 0]","[2, 0, 0, 0, 0]","[2, 0, 0, 0, 0]"
