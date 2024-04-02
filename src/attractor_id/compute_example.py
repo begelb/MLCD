@@ -24,7 +24,7 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         trained_network, train_loss_list, test_loss_list = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs)
         save_model(trained_network, example_index, config)
         model = load_model(N, config, 1, example_index)
-        sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list = get_decomposition_data(config, N, train_data, example_index)
+        sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list = get_decomposition_data(config, N, train_data, model)
         
         for labeling_threshold in labeling_threshold_list:
             homology_dict, num_cubes_labeled, total_hyperplane_list = get_homology_dict_from_model(config, model, labeling_threshold, sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list)
@@ -34,7 +34,8 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
 
     if config.make_figures:
         model = load_model(N, config, 1, example_index)
-        make_figure(config, figure_dataloader, model, test_data, total_hyperplane_list, False, example_index)
+        f'output/figures/system{config.system}/{example_index}-decomposition.png'
+        make_figure(config, figure_dataloader, model, test_data, total_hyperplane_list, False, file_name)
         make_loss_plots(config, example_index, test_loss_list, train_loss_list)
 
     

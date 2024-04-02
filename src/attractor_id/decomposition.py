@@ -133,9 +133,8 @@ def get_hyperplane_data(config, hyperplane_dict, data_as_tensors, is_boundary_hy
     return list_of_hyperplane_lists, sorted_hyperplane_dict, total_hyperplane_list
 
 
-def get_decomposition_data(config, N, data, example_index=0):
-    cube_reg_model = load_model(N, config, 1, example_index)
-    parameter_dict = get_model_parameters(cube_reg_model)
+def get_decomposition_data(config, N, data, model):
+    parameter_dict = get_model_parameters(model)
     coordinate_to_weights_dict = make_coordinate_to_weights_dict(config, parameter_dict["shared_weight_matrix"], N)
     data_as_tensors = convert_data_to_tensors(data, config.dimension)
     hyperplane_dict, is_boundary_hyperplane_dict = make_hyperplane_dicts(config, coordinate_to_weights_dict, N, parameter_dict["biaslist"], data_as_tensors, parameter_dict["weight_coefficients"])

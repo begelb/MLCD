@@ -25,7 +25,7 @@ def get_network_value_list(config, dataloader, model):
                 result_list.append(float(pred_thresh[i]))
     return result_list
 
-def make_figure(config, figure_dataloader, model, data, total_hyperplane_list, show, example_index=0, file_name=None):
+def make_figure(config, figure_dataloader, model, data, total_hyperplane_list, show, file_name):
     total_hyperplane_list.extend(generate_domain_bounding_hyperplanes(config))
     result_list = get_network_value_list(config, figure_dataloader, model)
     data_bounds = config.data_bounds
@@ -82,8 +82,7 @@ def make_figure(config, figure_dataloader, model, data, total_hyperplane_list, s
     scatter = ax.scatter(scatterx1, scattery1, marker ='o', s = 5, cmap = 'viridis', c = result_list)
     cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.11, format="%.2f")
     cbar.set_label(label = 'Network value on testing data')
-    if file_name is None:
-        file_name = f'output/figures/system{config.system}/{example_index}-decomposition.png'
+
     plt.savefig(file_name)
     if show:
         plt.show()
