@@ -5,7 +5,7 @@ import sys
 ''' Global variables set by user '''
 
 # system is an integer that refers to which dynamical system the user would like to use
-system = 1
+system = 'periodic'
 
 # labeling threshold is the list of labeling thresholds to be used to label the cubes
 labeling_threshold_list = [0.1, 0.2, 0.3, 0.4, 0.49]
@@ -21,7 +21,7 @@ job_index = int(sys.argv[1])
 ''' Main code block '''
 
 def main():
-    config_fname = f'config/system{system}.txt'
+    config_fname = f'config/{system}.txt'
     config = configure(config_fname)
     N_list = config.N_list
     experiment_class = Experiment(N_list)

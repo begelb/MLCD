@@ -58,12 +58,20 @@ def init_label_to_cube_dict(config):
         label_to_cubes_dict[label] = []
     return label_to_cubes_dict
 
+class Cube:
+    def __init__(self, label, vertex_list):
+        self.label = label
+        self.vertex_list = vertex_list
+
 def get_labeled_cubes(config, sorted_hyperplane_dict, list_of_hyperplane_lists, model, labeling_threshold):
 
     # Define the polytope (cube) that represents the domain
     label_to_cubes_dict = init_label_to_cube_dict(config)
 
     num_of_hyperplanes_dict = get_group_index_to_num_hyperplanes_dict(list_of_hyperplane_lists)
+
+
+    cube_list_for_polytope_figure = []
 
     cube_id = torch.zeros(config.dimension, dtype = int)
     number_cubes = 0
@@ -75,6 +83,9 @@ def get_labeled_cubes(config, sorted_hyperplane_dict, list_of_hyperplane_lists, 
         if len(vertex_list) > 0:
             label = get_cube_label(config, vertex_list, model, labeling_threshold)
             label_to_cubes_dict = update_label_to_cubes_dict(label_to_cubes_dict, label, cube_id)
+            if config.dimension == 2:
+                new_cube = Cube(label, vertex_list)
+                cube_list_for_polytope_figure.append(new_cube)
         
         number_cubes += 1
 
@@ -92,4 +103,4 @@ def get_labeled_cubes(config, sorted_hyperplane_dict, list_of_hyperplane_lists, 
 
         cube_id = new_cube_id
 
-    return label_to_cubes_dict
+    return label_to_cubes_dict, cube_list_for_polytope_figure

@@ -12,7 +12,6 @@ class Config:
     def __init__(self, config_fname):
         with open(config_fname) as f:
             config = eval(f.read())
-        self.system = config["system"]
         self.example_type = config["example_type"]
         self.learning_rate = config["learning_rate"]
         self.epochs = config["epochs"]
@@ -28,10 +27,12 @@ class Config:
         self.num_labels = config["num_labels"]
         self.N_list = ast.literal_eval(config["network_width_list_for_experiment"])
         self.using_pandas = not bool(config["using_local_data"])
+        self.results_directory = config["results_directory"]
+        self.models_directory = config["models_directory"]
+        self.figures_directory = config["figures_directory"]
+        self.threshold_prediction = config["threshold_prediction"]
 
     def check_types(self):
-        if type(self.system) is not int:
-            raise Exception("System has the incorrect type. Must be " + str(int) + ". Found a " + str(type(self.system)))
         if type(self.example_type) is not str:
             raise Exception("Example type has the incorrect type. Must be " + str(str) + ". Found a " + str(type(self.example_type)))
         if type(self.learning_rate) is not float:
@@ -68,6 +69,15 @@ class Config:
                 raise Exception("Network width inside network_width_list_for_experiment has the wrong type. Must be " + str(int) + ". Found a " + str(type(N)))
         if type(self.using_pandas) is not bool:
             raise Exception("using_local_data has the wrong type. Must be " + str(bool) + ". Found a " + str(type(self.using_pandas)))
+        if type(self.results_directory) is not str:
+            raise Exception("Results directory has the wrong type. Must be " + str(str) + ". Found a " + str(type(self.results_directory)))
+        if type(self.models_directory) is not str:
+            raise Exception("Models directory has the wrong type. Must be " + str(str) + ". Found a " + str(type(self.models_directory)))
+        if type(self.figures_directory) is not str:
+            raise Exception("Figures directory has the wrong type. Must be " + str(str) + ". Found a " + str(type(self.figures_directory)))
+        if type(self.threshold_prediction) is not bool:
+            raise Exception("Threshold prediction has the wrong type. Must be " + str(bool) + ". Found a " + str(type(self.threshold_prediction)))
+
 
 def user_warning_about_N_and_dimension(config, N):
     if N % config.dimension != 0:

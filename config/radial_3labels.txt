@@ -1,0 +1,21 @@
+{
+    'example_type': 'Radial',
+    'learning_rate': 0.01,
+    'epochs': 100,
+    'optimizer_choice': 'Adam',
+    'verbose': True,
+    'make_figures': True,
+    'dimension': 2,
+    'data_bounds': '[-5, 5, -5, 5]',
+    'train_data_file': 'data/radial_3labels/train.csv',
+    'test_data_file': 'data/radial_3labels/test.csv',
+    'train_url': '',
+    'test_url': '',
+    'num_labels': 3,
+    'network_width_list_for_experiment': '[2, 4, 6, 8, 10]',
+    'using_local_data': True,
+    'results_directory': 'output/results/radial_3labels',
+    'models_directory': 'output/models/radial_3labels',
+    'figures_directory': 'output/figures/radial_3labels',
+    'threshold_prediction': True
+}

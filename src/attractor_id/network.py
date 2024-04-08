@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+import os
 
 def get_batch_size(train_data, percentage):
     return int(len(train_data)*percentage)
@@ -18,11 +19,13 @@ class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
         
         # d is the dimension of the input
         self.d = config.dimension
-        num_labels = config.num_labels
+        self.num_labels = config.num_labels
         data_bounds_list = config.data_bounds
         # N is the width of the first hidden layer
         self.N = N
         self.batch_size = batch_size
+        self.threshold_prediction = config.threshold_prediction
+
 
         # shared_weight_matrix is a d x d matrix with rows made up of the weights that are each shared up to a constant multiple (weight_cofficients) among a set of N//d nodes of the hidden layer
         # shared_weight_matrix is an initialized as a d x d identity matrix
@@ -55,8 +58,8 @@ class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
         self.register_parameter('bias', self.bias)
 
         # define and initialize the unconstrained weights of the neural network, namely the output layers
-        self.layer2 = nn.Linear(self.N, num_labels, bias = True)
-        self.output_layer = nn.Linear(num_labels, 1, bias = True)
+        self.layer2 = nn.Linear(self.N, self.num_labels, bias = True)
+        self.output_layer = nn.Linear(self.num_labels, 1, bias = True)
 
         # define the activation function of the network
         self.hardtanh1 = nn.Hardtanh(min_val = 0, max_val = 1)
@@ -95,11 +98,15 @@ class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
 
         # apply second and final layer weights 
         output = self.output_layer(self.layer2(layer1_output))
-        return output
+        if self.threshold_prediction:
+            return torch.clamp(output, min=0.0, max = float(self.num_labels - 1))
+        
+        else:
+            return output
 
-def load_model(N, config, batch_size, example_index=0):
+def load_model(N, system, config, batch_size, example_index=0):
     cube_reg_model = Regression_Cubical_Network_One_Nonlinearity(N, batch_size, config)
-    cube_reg_model.load_state_dict(torch.load(f'output/models/system{config.system}/{example_index}-model.pth'))
+    cube_reg_model.load_state_dict(torch.load(f'output/models/{system}/{example_index}-model.pth'))
     return cube_reg_model
 
 def get_model_parameters(model):
@@ -126,4 +133,6 @@ def make_coordinate_to_weights_dict(config, shared_weight_matrix, N):
     return coordinate_to_weights_dict
 
 def save_model(model, example_index, config):
-    torch.save(model.state_dict(), f'output/models/system{config.system}/{example_index}-model.pth')
+    if not os.path.exists(config.models_directory):
+        os.makedirs(config.models_directory)
+    torch.save(model.state_dict(), f'{config.models_directory}/{example_index}-model.pth')

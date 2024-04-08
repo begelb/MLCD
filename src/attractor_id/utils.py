@@ -21,22 +21,3 @@ def get_final_list_to_write(config, initial_list, homology_dict):
 def get_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, homology_dict):
     initial_list = get_initial_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list)
     return get_final_list_to_write(config, initial_list, homology_dict)
-
-def system_name_to_number(system_name):
-    if system_name == 'straight_separatrix':
-        return 1
-    if system_name == 'radial_2labels':
-        return 2
-    if system_name == 'radial_3labels':
-        return 3
-    if system_name == 'curved_separatrix':
-        return 4
-    if system_name == 'EMT':
-        return 5
-    if system_name == 'periodic':
-        return 6
-    if system_name == 'ellipsoidal_2d':
-        return 7
-    if system_name == 'DSGRN_2d_network':
-        return 8
-

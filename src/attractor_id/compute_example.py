@@ -2,18 +2,24 @@ import csv
 from .homology import get_homology_dict_from_model
 from .train import train_and_test
 from .network import save_model, load_model, get_batch_size
-from .utils import get_list_to_write # , system_name_to_number
-from .figure import make_figure, make_loss_plots
+from .utils import get_list_to_write
+from .figure import make_decomposition_figure, make_loss_plots, plot_polytopes
 from .data import data_set_up
 from .decomposition import get_decomposition_data
 from .config import user_warning_about_N_and_dimension, configure
+import os
 
 def compute_example(system, N, labeling_threshold_list, example_index=0):
-   # system = system_name_to_number(system_name)
-    config_fname = f'config/system{system}.txt'
+    config_fname = f'config/{system}.txt'
     config = configure(config_fname)
     user_warning_about_N_and_dimension(config, N)
-    with open(f'output/results/system{config.system}/{example_index}-results.csv', 'w', newline='') as file:
+
+    # Make results directory if it does not exist
+    results_directory = config.results_directory
+    if not os.path.exists(results_directory):
+        os.makedirs(results_directory)
+
+    with open(f'{results_directory}/{example_index}-results.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(["ex_num", "N", "optimizer_choice", "learning_rate", "epsilon", "num_cubes", "final_test_loss", "hom_uncertain", "hom_zero", "hom_one", "hom_two", "hom_three"])
 
@@ -23,19 +29,29 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         epochs = config.epochs
         trained_network, train_loss_list, test_loss_list = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs)
         save_model(trained_network, example_index, config)
-        model = load_model(N, config, 1, example_index)
+        model = load_model(N, system, config, 1, example_index)
         sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list = get_decomposition_data(config, N, train_data, model)
         
         for labeling_threshold in labeling_threshold_list:
-            homology_dict, num_cubes_labeled, total_hyperplane_list = get_homology_dict_from_model(config, model, labeling_threshold, sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list)
+            homology_dict, num_cubes_labeled, total_hyperplane_list, cube_list_for_polytope_figure = get_homology_dict_from_model(config, model, labeling_threshold, sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list)
             list_to_write = get_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, homology_dict)
             writer.writerow(list_to_write)
             file.flush()
 
     if config.make_figures:
-        model = load_model(N, config, 1, example_index)
-        f'output/figures/system{config.system}/{example_index}-decomposition.png'
-        make_figure(config, figure_dataloader, model, test_data, total_hyperplane_list, False, file_name)
-        make_loss_plots(config, example_index, test_loss_list, train_loss_list)
 
-    
+        # Make figure directory if it does not exist
+        figures_directory = config.figures_directory
+        if not os.path.exists(figures_directory):
+            os.makedirs(figures_directory)
+
+
+        model = load_model(N, system, config, 1, example_index)
+        decomposition_file_name = f'{figures_directory}/{example_index}-decomposition.png'
+        make_decomposition_figure(config, model, total_hyperplane_list, False, decomposition_file_name)
+
+        make_loss_plots(config, system, example_index, test_loss_list, train_loss_list)
+
+        polytopes_file_name = f'{figures_directory}/{example_index}-polytopes.png'
+        plot_polytopes(config, cube_list_for_polytope_figure, False, polytopes_file_name)
+        

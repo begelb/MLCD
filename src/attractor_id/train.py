@@ -16,9 +16,9 @@ def train_loop(dataloader, model, loss_fn, optimizer, batch_size, num_labels):
         optimizer.zero_grad()
 
         pred = torch.reshape(pred, (batch_size, -1))
-        pred_thresh = torch.clamp(pred, min=0.0, max=float(num_labels - 1))
+      #  pred_thresh = torch.clamp(pred, min=0.0, max=float(num_labels - 1))
 
-        loss = loss_fn(pred_thresh, y)
+        loss = loss_fn(pred, y)
         loss.backward(retain_graph = True)
 
         optimizer.step()
@@ -34,7 +34,7 @@ def test_loop(dataloader, model, loss_fn, num_labels):
         for X, y in dataloader:
             pred = model(X)
             pred_thresh = torch.clamp(pred, min=0.0, max = float(num_labels - 1))
-            test_loss += loss_fn(pred_thresh, y).item()
+            test_loss += loss_fn(pred, y).item()
     test_loss /= num_batches
     return test_loss
     

@@ -1,5 +1,4 @@
 {
-    'system': 5,
     'example_type': 'EMT hill system in 6-d',
     'learning_rate': 0.01,
     'epochs': 5,
@@ -8,11 +7,15 @@
     'make_figures': False,
     'dimension': 6,
     'data_bounds': '[-4.98, 5.03, -1.96, 8.05, -4.85, 5.16, -1.28, 8.72, -4.45, 5.59, -1.39, 8.62]',
-    'train_data_file': 'data/system5/train.csv',
-    'test_data_file': 'data/system5/test.csv',
+    'train_data_file': 'data/EMT/train.csv',
+    'test_data_file': 'data/EMT/test.csv',
     'train_url': '',
     'test_url': '',
     'num_labels': 2,
     'network_width_list_for_experiment': '[2, 4, 6, 8, 10]',
-    'using_local_data': True
+    'using_local_data': True,
+    'results_directory': 'output/results/EMT',
+    'models_directory': 'output/models/EMT',
+    'figures_directory': 'output/results/EMT',
+    'threshold_prediction': False
 }

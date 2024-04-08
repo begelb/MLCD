@@ -1,9 +1,8 @@
 import numpy as np
 from .hyperplane import Hyperplane, data_is_on_one_side_of_hyperplane
 from copy import deepcopy
-from .network import load_model, get_model_parameters, make_coordinate_to_weights_dict
+from .network import get_model_parameters, make_coordinate_to_weights_dict
 from .data import convert_data_to_tensors
-from sys import exit
 
 def add_boundaries(config, hyperplane_list, data_as_tensors, is_boundary_hyperplane_dict):
     d = config.dimension

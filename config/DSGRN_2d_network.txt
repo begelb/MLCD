@@ -1,0 +1,21 @@
+{
+    'example_type': 'DSGRN 2d network',
+    'learning_rate': 0.01,
+    'epochs': 5,
+    'optimizer_choice': 'Adam',
+    'verbose': True,
+    'make_figures': True,
+    'dimension': 2,
+    'data_bounds': '[0, 3.5, 0, 5.5]',
+    'train_data_file': 'data/DSGRN_2d_network/train.csv',
+    'test_data_file': 'data/DSGRN_2d_network/test.csv',
+    'train_url': '',
+    'test_url': '',
+    'num_labels': 3,
+    'network_width_list_for_experiment': '[10, 20]',
+    'using_local_data': True,
+    'results_directory': 'output/results/DSGRN_2d_network',
+    'models_directory': 'output/models/DSGRN_2d_network',
+    'figures_directory': 'output/results/DSGRN_2d_network',
+    'threshold_prediction': True
+}
