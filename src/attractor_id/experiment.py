@@ -14,11 +14,9 @@ class Experiment:
         return parameter_list[example_index]
     
     # num of jobs run should be equal to the number of repetitions per parameter set 
-    def run_experiment(self, job_index, config, repetitions_per_parameter_set, labeling_threshold_list):
+    def run_experiment(self, job_index, system, repetitions_per_parameter_set, labeling_threshold_list):
         parameter_list = self.generate_parameter_lists()
         for param_index in range(len(parameter_list)):
             example_index = param_index * repetitions_per_parameter_set + job_index
             N = parameter_list[param_index][0]
-            compute_example(config, example_index, N, labeling_threshold_list)
-        
-
+            compute_example(system, N, labeling_threshold_list, example_index)
