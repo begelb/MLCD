@@ -7,6 +7,19 @@ import sys
 # system is an integer that refers to which dynamical system the user would like to use
 system = 'periodic'
 
+''' 
+The following systems are implemented:
+- 'straight_separatrix'
+- 'radial_2labels'
+- 'radial_3labels'
+- 'curved_separatrix'
+- 'EMT'
+- 'periodic'
+- 'ellipsoidal_2d'
+- 'DSGRN_2d_network' 
+'''
+
+
 # labeling threshold is the list of labeling thresholds to be used to label the cubes
 labeling_threshold_list = [0.1, 0.2, 0.3, 0.4, 0.49]
 

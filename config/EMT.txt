@@ -16,6 +16,6 @@
     'using_local_data': True,
     'results_directory': 'output/results/EMT',
     'models_directory': 'output/models/EMT',
-    'figures_directory': 'output/results/EMT',
+    'figures_directory': 'output/figures/EMT',
     'threshold_prediction': False
 }

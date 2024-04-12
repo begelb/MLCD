@@ -5,7 +5,6 @@ import numpy as np
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Polygon
 import matplotlib.patches as mpatches
-from .data import convert_data_to_tensors
 
 def generate_domain_bounding_hyperplanes(config):
     data_bounds_list = config.data_bounds
@@ -51,8 +50,8 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
     extra_room_x = 0
     #extra_room_y = height * 0.05
     extra_room_y = 0
-    ax.set(xlim=(x_min - extra_room_x, x_max + extra_room_x), xticks=np.arange(x_min, x_max, step=1),
-        ylim=(y_min - extra_room_y, y_max + extra_room_y), yticks=np.arange(y_min, y_max, step=1))
+    ax.set(xlim=(x_min - extra_room_x, x_max + extra_room_x), xticks=np.arange(x_min + 1, x_max, step=1),
+        ylim=(y_min - extra_room_y, y_max + extra_room_y), yticks=np.arange(y_min + 1, y_max, step=1))
     #ax.set_title(f'Learned Decomposition of Phase Space')
     ax.set_xlabel('x', fontsize = 22)
     ax.set_ylabel('y', fontsize = 22)
@@ -108,9 +107,9 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
 
     for hyperplane in total_hyperplane_list:
         if np.isclose(np.asarray(hyperplane.normal_vec[1]), np.asarray([0])):
-            plt.axvline(x = -hyperplane.bias/hyperplane.normal_vec[0], ymin = y_min, ymax = y_max, c = 'w', linewidth=3)
+            plt.axvline(x = -hyperplane.bias/hyperplane.normal_vec[0], ymin = y_min, ymax = y_max, c = 'w', linewidth=5)
         elif np.isclose(np.asarray(hyperplane.normal_vec[0]), np.asarray([0])):
-            plt.axhline(y = -hyperplane.bias/hyperplane.normal_vec[1], xmin = x_min, xmax = x_max, c = 'w', linewidth=3)
+            plt.axhline(y = -hyperplane.bias/hyperplane.normal_vec[1], xmin = x_min, xmax = x_max, c = 'w', linewidth=5)
         else:
             normal_vec_0 = np.dot(np.asarray(hyperplane.normal_vec), np.asarray([1, 0]))
             normal_vec_1 = np.dot(np.asarray(hyperplane.normal_vec), np.asarray([0, 1]))
@@ -120,7 +119,7 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
             m = float(slope)
             x = np.linspace(x_min, x_max, 10)
             y = m * x + b
-            ax.plot(x, y, c = 'w', linewidth = 5)
+            ax.plot(x, y, c = 'w', linewidth = 3)
 
     scatter = ax.scatter(scatterx, scattery, marker ='o', s = 6, cmap = 'viridis', c = result_list, alpha = 1)
     cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.13, format="%.2f")
@@ -208,8 +207,8 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name):
 
     ax = fig.add_subplot(111)
 
-    ax.set(xlim=(x_min - extra_room_x, x_max + extra_room_x), xticks=np.arange(x_min - extra_room_x, x_max + extra_room_x, step=1),
-        ylim=(y_min - extra_room_y, y_max + extra_room_y), yticks=np.arange(y_min - extra_room_y, y_max + extra_room_y, step=1))
+    ax.set(xlim=(x_min - extra_room_x, x_max + extra_room_x), xticks=np.arange(1 + x_min - extra_room_x, x_max + extra_room_x, step=1),
+        ylim=(y_min - extra_room_y, y_max + extra_room_y), yticks=np.arange(1 + y_min - extra_room_y, y_max + extra_room_y, step=1))
   #  ax.set_title(f'Labeled Cubical Decomposition of Phase Space', fontsize = 18)
     plt.xticks(fontsize=18)
     plt.yticks(fontsize=18)
@@ -225,10 +224,10 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name):
         label = cube.label
         color, hatch = label_to_polytope_color_and_hatch(config, label)
 
-        ax.fill(x, y, facecolor=color, edgecolor='white', linewidth=5, hatch=hatch)
+        ax.fill(x, y, facecolor=color, edgecolor='white', linewidth=3, hatch=hatch)
 
     box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width, box.height * 0.8])
+    ax.set_position([box.x0, box.y0, box.width, box.height*0.8])
 
     plt.subplots_adjust(left=0.1, bottom=0.25, top=0.9, right = 0.9)
 
@@ -239,7 +238,7 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name):
         circ1 = mpatches.Patch(facecolor=color_1,hatch=hatch_1,edgecolor='white',label='Label 1')
         color_u, hatch_u = label_to_polytope_color_and_hatch(config, 2)
         circu = mpatches.Patch(facecolor=color_u,hatch=hatch_u,edgecolor='white',label='Uncertain')
-        ax.legend(handles = [circ0, circ1, circu], loc='lower center', fontsize=22, bbox_to_anchor=(0.5, 0.06),
+        ax.legend(handles = [circ0, circ1, circu], loc='lower center', fontsize=22, bbox_to_anchor=(0.5, 0.03),
     bbox_transform=fig.transFigure, fancybox=True, facecolor='white', framealpha=1, ncol=3)
         
     if config.num_labels == 3:
@@ -251,7 +250,8 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name):
         circ2 = mpatches.Patch(facecolor=color_2,hatch=hatch_2,label='Label 2')
         color_u, hatch_u = label_to_polytope_color_and_hatch(config, 3)
         circu = mpatches.Patch(facecolor=color_u,hatch=hatch_u,label='Uncertain')
-        ax.legend(handles = [circ0, circ1, circ2, circu], loc='center right', fontsize=22)
+        ax.legend(handles = [circ0, circ1, circ2, circu], loc='lower center', fontsize=20, bbox_to_anchor=(0.5, 0.06),
+    bbox_transform=fig.transFigure, fancybox=True, facecolor='white', framealpha=1, ncol=4)
 
     # Put a legend to the right of the current axis
 

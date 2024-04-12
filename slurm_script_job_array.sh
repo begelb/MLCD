@@ -18,7 +18,7 @@
 # Load necessary modules
 # module purge
 # module load intel/19.0.3
-cd /home/bg545/attractor_id/
+cd /home/bg545/attractor_id/attractor_identification_draft/
 
 # Run python script with input data. The variable ${SLURM_ARRAY_TASK_ID}
 # is the array task id and varies from 0 to 99 in this example.
