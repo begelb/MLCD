@@ -1,5 +1,5 @@
 {
-    'example_type': 'Periodic system in 3-d',
+    'example_type': 'Periodic system in 3d',
     'learning_rate': 0.01,
     'epochs': 5,
     'optimizer_choice': 'Adam',

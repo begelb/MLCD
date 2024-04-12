@@ -1,0 +1,21 @@
+{
+    'example_type': 'Ellipsoidal system in 5d',
+    'learning_rate': 0.01,
+    'epochs': 2000,
+    'optimizer_choice': 'Adam',
+    'verbose': True,
+    'make_figures': True,
+    'dimension': 5,
+    'data_bounds': '[-4, 4, -4, 4, -4, 4, -4, 4, -4, 4]',
+    'train_data_file': 'data/ellipsoidal_5d/train.csv',
+    'test_data_file': 'data/ellipsoidal_5d/test.csv',
+    'train_url': '',
+    'test_url': '',
+    'num_labels': 2,
+    'network_width_list_for_experiment': '[10, 20]',
+    'using_local_data': True,
+    'results_directory': 'output/results/ellipsoidal_5d',
+    'models_directory': 'output/models/ellipsoidal_5d',
+    'figures_directory': 'output/figures/ellipsoidal_5d',
+    'threshold_prediction': True
+}

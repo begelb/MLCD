@@ -16,8 +16,8 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
 
     # Make results directory if it does not exist
     results_directory = config.results_directory
-    if not os.path.isdir(results_directory):
-        os.makedirs(results_directory)
+    #if not os.path.exists(results_directory):
+    #    os.makedirs(results_directory)
 
     with open(f'{results_directory}/{example_index}-results.csv', 'w', newline='') as file:
         writer = csv.writer(file)
@@ -42,8 +42,8 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
 
         # Make figure directory if it does not exist
         figures_directory = config.figures_directory
-        if not os.path.isdir(figures_directory):
-            os.makedirs(figures_directory)
+       # if not os.path.exists(figures_directory):
+       #     os.makedirs(figures_directory)
 
 
         model = load_model(N, system, config, 1, example_index)

@@ -1,0 +1,21 @@
+{
+    'example_type': 'Ellipsoidal system in 4d',
+    'learning_rate': 0.01,
+    'epochs': 2000,
+    'optimizer_choice': 'Adam',
+    'verbose': True,
+    'make_figures': True,
+    'dimension': 4,
+    'data_bounds': '[-4, 4, -4, 4, -4, 4, -4, 4]',
+    'train_data_file': 'data/ellipsoidal_4d/train.csv',
+    'test_data_file': 'data/ellipsoidal_4d/test.csv',
+    'train_url': '',
+    'test_url': '',
+    'num_labels': 2,
+    'network_width_list_for_experiment': '[8, 16]',
+    'using_local_data': True,
+    'results_directory': 'output/results/ellipsoidal_4d',
+    'models_directory': 'output/models/ellipsoidal_4d',
+    'figures_directory': 'output/figures/ellipsoidal_4d',
+    'threshold_prediction': True
+}
