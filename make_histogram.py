@@ -71,7 +71,7 @@ def check_homology_3(correct_hom_uncertain, correct_hom_zero, correct_hom_one, c
         checkpoint_3 = True
     return all([checkpoint_u, checkpoint_0, checkpoint_1, checkpoint_2, checkpoint_3])
 
-concatenated_results_filename = f'concatenated_results/results-{system}.csv'
+concatenated_results_filename = f'concatenated_results/results-{system}'
 
 if system == 'periodic':
     possible_N_list = [12, 15, 18, 21, 24]
