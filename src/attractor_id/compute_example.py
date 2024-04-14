@@ -45,13 +45,15 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         if not os.path.isdir(figures_directory):
             os.makedirs(figures_directory)
 
-
-        model = load_model(N, system, config, 1, example_index)
-        decomposition_file_name = f'{figures_directory}/{example_index}-decomposition.png'
-        make_decomposition_figure(config, model, total_hyperplane_list, False, decomposition_file_name)
-
         make_loss_plots(config, system, example_index, test_loss_list, train_loss_list)
 
-        polytopes_file_name = f'{figures_directory}/{example_index}-polytopes.png'
-        plot_polytopes(config, cube_list_for_polytope_figure, False, polytopes_file_name)
+        if config.dimension == 2:
+            model = load_model(N, system, config, 1, example_index)
+            decomposition_file_name = f'{figures_directory}/{example_index}-decomposition.png'
+            make_decomposition_figure(config, model, total_hyperplane_list, False, decomposition_file_name)
+
+            polytopes_file_name = f'{figures_directory}/{example_index}-polytopes.png'
+            plot_polytopes(config, cube_list_for_polytope_figure, False, polytopes_file_name)
+
+
         

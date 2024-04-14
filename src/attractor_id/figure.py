@@ -142,10 +142,10 @@ def make_loss_plots(config, system, example_index, test_loss_list, train_loss_li
     timelist=list(range(1,config.epochs+1))
 
     plt.subplots_adjust(left=0.2, bottom=0.2, top=0.9, right = 0.9)
-    if config.epochs > 100:
-        step = config.epochs/100
-    else:
-        step = config.epochs/10
+   # if config.epochs > 100:
+      #  step = config.epochs/100
+   # else:
+    step = config.epochs/10
     ax.set(xticks=np.arange(0, config.epochs+1, step=step))
     ax.plot(timelist, test_loss_list, linewidth = 1.2, c = 'blueviolet', linestyle = 'dashed', label = 'Test Loss')
     ax.plot(timelist, train_loss_list, linewidth = 1, c = 'darkorange', label = 'Train Loss')
@@ -203,7 +203,7 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name):
 
     plt.style.use('_mpl-gallery-nogrid')
 
-    fig = plt.figure(figsize=(10, 10 * ratio + 2))
+    fig = plt.figure(figsize=(10, 10 * ratio + 1))
 
     ax = fig.add_subplot(111)
 

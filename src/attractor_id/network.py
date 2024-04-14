@@ -133,6 +133,6 @@ def make_coordinate_to_weights_dict(config, shared_weight_matrix, N):
     return coordinate_to_weights_dict
 
 def save_model(model, example_index, config):
-  #  if not os.path.exists(config.models_directory):
-  #      os.makedirs(config.models_directory)
+    if not os.path.exists(config.models_directory):
+        os.makedirs(config.models_directory)
     torch.save(model.state_dict(), f'{config.models_directory}/{example_index}-model.pth')

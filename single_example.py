@@ -11,16 +11,20 @@ The following systems are implemented:
 - 'EMT'
 - 'periodic'
 - 'ellipsoidal_2d'
+- 'ellipsoidal_3d'
+- 'ellipsoidal_4d'
+- 'ellipsoidal_5d'
+- 'ellipsoidal_6d'
 - 'DSGRN_2d_network' 
 '''
 
-system = 'radial_2labels'
+system = 'ellipsoidal_3d'
 
 # N is the number of nodes in the hidden layer of the network and must be an integer multiple of the dimension of the system
 N = 9
 
 # labeling threshold is the list of labeling thresholds to be used to label the cubes
-labeling_threshold_list = [0.3]
+labeling_threshold_list = [0.49]
 
 # example index gives an integer-valued name to the computation, which corresponds to file names in the folder output
 example_index = 0
