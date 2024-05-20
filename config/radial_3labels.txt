@@ -17,5 +17,6 @@
     'results_directory': 'output/results/radial_3labels',
     'models_directory': 'output/models/radial_3labels',
     'figures_directory': 'output/figures/radial_3labels',
-    'threshold_prediction': True
+    'threshold_prediction': True,
+    'batch_size': 1000
 }

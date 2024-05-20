@@ -17,5 +17,6 @@
     'results_directory': 'output/results/periodic',
     'models_directory': 'output/models/periodic',
     'figures_directory': 'output/figures/periodic',
-    'threshold_prediction': True
+    'threshold_prediction': True,
+    'batch_size': 1000
 }

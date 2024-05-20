@@ -17,5 +17,6 @@
     'results_directory': 'output/results/EMT',
     'models_directory': 'output/models/EMT',
     'figures_directory': 'output/results/EMT',
-    'threshold_prediction': False
+    'threshold_prediction': False,
+    'batch_size': 10000
 }

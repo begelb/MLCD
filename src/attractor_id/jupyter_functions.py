@@ -1,5 +1,5 @@
 from .homology import get_homology_dict_from_model
-from .train import train_and_test
+from .train import train_and_test, compute_accuracy
 from .network import load_model, get_batch_size, Regression_Cubical_Network_One_Nonlinearity
 from .figure import make_decomposition_figure, plot_polytopes
 from .data import data_set_up
@@ -22,7 +22,10 @@ def train_classifier(system, N, epochs, file_name):
     config = configure(config_fname)
     using_pandas = config.using_pandas
     train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
-    batch_size = get_batch_size(train_data, percentage = 0.1)
+  #  if len(train_data)%10 == 0:
+    batch_size = config.batch_size
+  #  else:
+   #     batch_size = 1000 #get_batch_size(train_data, percentage = 0.1)
     trained_network, train_loss_list, test_loss_list = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs)
     save_model(trained_network, file_name)
     model = load_model(system, N, file_name)
@@ -67,3 +70,13 @@ def make_polytope_plot(system, cube_list, file_name):
     if config.dimension != 2:
         return 'The system has dimension greater than 2, so a plot was not produced.'
     plot_polytopes(config, cube_list, True, file_name)
+
+
+def accuracy(system, model, labeling_threshold):
+    config_fname = f'config/{system}.txt'
+    config = configure(config_fname)
+    using_pandas = config.using_pandas
+    train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
+    accuracy = compute_accuracy(model, figure_dataloader, config, labeling_threshold)
+    print('Accuracy using labeling threshold on test dataset: ', accuracy)
+    return accuracy

@@ -16,6 +16,9 @@ def train_loop(dataloader, model, loss_fn, optimizer, batch_size, num_labels):
         optimizer.zero_grad()
 
         pred = torch.reshape(pred, (batch_size, -1))
+        
+       # print('pred: ', pred)
+       # print('y: ', y)
       #  pred_thresh = torch.clamp(pred, min=0.0, max=float(num_labels - 1))
 
         loss = loss_fn(pred, y)
@@ -66,3 +69,24 @@ def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epo
             print(f"Train loss: {loss_train:>7f}")
 
     return model, train_loss_list, test_loss_list
+
+def compute_accuracy(model, dataloader, config, labeling_threshold):
+    num_labels = config.num_labels
+    num_batches = len(dataloader)
+    correct_num = 0
+    total_samples = 0
+    with torch.no_grad():
+        for batch, (X, y) in enumerate(dataloader):
+            pred = model(X)
+            pred_thresh = torch.clamp(pred, min=0.0, max = float(num_labels - 1))
+
+            for index, elmt in enumerate(pred_thresh):
+                prediction = elmt[0]
+                label = y[index][0]
+
+                if label - labeling_threshold <= prediction <= label + labeling_threshold:
+                    correct_num += 1
+                total_samples += 1
+
+    accuracy = correct_num/total_samples
+    return accuracy

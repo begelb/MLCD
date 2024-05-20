@@ -16,18 +16,21 @@ The following systems are implemented:
 - 'ellipsoidal_5d'
 - 'ellipsoidal_6d'
 - 'DSGRN_2d_network' 
+- 'leslie'
+- 'periodic_3labels'
+- 'iris'
 '''
 
-system = 'ellipsoidal_3d'
+system = 'leslie'
 
 # N is the number of nodes in the hidden layer of the network and must be an integer multiple of the dimension of the system
-N = 9
+N = 24
 
 # labeling threshold is the list of labeling thresholds to be used to label the cubes
-labeling_threshold_list = [0.49]
+labeling_threshold_list = [0.3]
 
 # example index gives an integer-valued name to the computation, which corresponds to file names in the folder output
-example_index = 0
+example_index = 2
 
 ''' Main code block '''
 

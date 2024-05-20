@@ -25,7 +25,7 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
 
         using_pandas = config.using_pandas
         train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas = using_pandas)
-        batch_size = get_batch_size(train_data, percentage = 0.1)
+        batch_size = config.batch_size
         epochs = config.epochs
         trained_network, train_loss_list, test_loss_list = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs)
         save_model(trained_network, example_index, config)

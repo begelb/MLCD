@@ -1,0 +1,21 @@
+{
+    'example_type': 'Failure example',
+    'learning_rate': 0.01,
+    'epochs': 100,
+    'optimizer_choice': 'Adam',
+    'verbose': True,
+    'make_figures': True,
+    'dimension': 2,
+    'data_bounds': '[0, 1, 0, 1]',
+    'train_data_file': 'data/straight_separatrix/train.csv',
+    'test_data_file': 'data/straight_separatrix/test.csv',
+    'train_url': '',
+    'test_url': '',
+    'num_labels': 4,
+    'network_width_list_for_experiment': '[2, 4, 6, 8, 10]',
+    'using_local_data': True,
+    'results_directory': 'output/results/failure_example',
+    'models_directory': 'output/models/failure_example',
+    'figures_directory': 'output/figures/failure_example',
+    'threshold_prediction': True
+}

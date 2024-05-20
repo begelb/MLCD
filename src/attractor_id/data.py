@@ -64,7 +64,7 @@ def data_set_up(config, using_pandas = False):
         train_dataset = DatasetFromPandas(df_train)
         test_dataset = DatasetFromPandas(df_test)
 
-        batch_size = len(df_train)//10
+        batch_size = config.batch_size
 
         train_data = DatasetFromPandas(df_train).data
         test_data = DatasetFromPandas(df_test).data
@@ -80,7 +80,10 @@ def data_set_up(config, using_pandas = False):
 
         test_data = test_dataset.data
 
-        batch_size = len(train_data)//10
+      #  if len(train_data)%10 == 0:
+        batch_size = config.batch_size
+       # else:
+        #    batch_size = 1000
 
     train_dataloader = DataLoader(train_dataset, batch_size = batch_size, shuffle=True)
     test_dataloader = DataLoader(test_dataset, batch_size = batch_size, shuffle=True)

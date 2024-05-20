@@ -17,5 +17,6 @@
     'results_directory': 'output/results/DSGRN_2d_network',
     'models_directory': 'output/models/DSGRN_2d_network',
     'figures_directory': 'output/figures/DSGRN_2d_network',
-    'threshold_prediction': True
+    'threshold_prediction': True,
+    'batch_size': 1000
 }

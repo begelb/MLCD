@@ -1,7 +1,7 @@
 import csv
 from .homology import get_homology_dict_from_model
-from .train import train_and_test
-from .network import save_model, load_model, get_batch_size
+from .train import train_and_test, compute_accuracy
+from .network import save_model, load_model
 from .utils import get_list_to_write
 from .figure import make_decomposition_figure, make_loss_plots, plot_polytopes
 from .data import data_set_up
@@ -21,11 +21,11 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
 
     with open(f'{results_directory}/{example_index}-results.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["ex_num", "N", "optimizer_choice", "learning_rate", "epsilon", "num_cubes", "final_test_loss", "hom_uncertain", "hom_zero", "hom_one", "hom_two", "hom_three"])
+        writer.writerow(["ex_num", "N", "optimizer_choice", "learning_rate", "epsilon", "num_cubes", "final_test_loss", "test_accuracy", "hom_uncertain", "hom_zero", "hom_one", "hom_two", "hom_three"])
 
         using_pandas = config.using_pandas
         train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas = using_pandas)
-        batch_size = get_batch_size(train_data, percentage = 0.1)
+        batch_size = config.batch_size
         epochs = config.epochs
         trained_network, train_loss_list, test_loss_list = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs)
         save_model(trained_network, example_index, config)
@@ -34,7 +34,8 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         
         for labeling_threshold in labeling_threshold_list:
             homology_dict, num_cubes_labeled, total_hyperplane_list, cube_list_for_polytope_figure = get_homology_dict_from_model(config, model, labeling_threshold, sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list)
-            list_to_write = get_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, homology_dict)
+            accuracy = compute_accuracy(model, figure_dataloader, config, labeling_threshold)
+            list_to_write = get_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, homology_dict, accuracy)
             writer.writerow(list_to_write)
             file.flush()
 

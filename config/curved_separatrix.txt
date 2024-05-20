@@ -17,5 +17,6 @@
     'results_directory': 'output/results/curved_separatrix',
     'models_directory': 'output/models/curved_separatrix',
     'figures_directory': 'output/results/curved_separatrix',
-    'threshold_prediction': False
+    'threshold_prediction': False,
+    'batch_size': 1000
 }

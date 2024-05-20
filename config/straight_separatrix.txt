@@ -17,5 +17,6 @@
     'results_directory': 'output/results/straight_separatrix',
     'models_directory': 'output/models/straight_separatrix',
     'figures_directory': 'output/figures/straight_separatrix',
-    'threshold_prediction': True
+    'threshold_prediction': True,
+    'batch_size': 1000
 }
