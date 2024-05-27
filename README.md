@@ -9,9 +9,6 @@ After downloading a copy of this repository, navigate to the project folder and 
 
 ```pip install .```
 
-## System numbers
-
-See ```data/system_number_meanings.txt``` for a dictionary of the system integer labels to the qualitative descriptions of these systems. 
 
 ## How to use the code available in a Jupyter notebook
 The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, it is possible to:
@@ -21,17 +18,17 @@ The main functionality of the code is available in ```learn_decomposition.ipynb`
 
 ## How to create your own data
 Data for each system is already produced and contained in the ```data``` directory.
-To produce new data, one can run ```data_production/make_data.py```. Choose the system number and the number of initial points, and a persistence diagram will be produced. From this, it is necessary to choose an appropriate threshold, and then the data will be saved as ```data.csv```, which one can split into a training/testing set.
+To produce new data, one can run ```data_production/make_data.py```. Choose the system number and the number of initial points, and a persistence diagram will be produced. From this, it is necessary to choose an appropriate threshold, and then the data will be saved as ```data.csv```, which one can split into a training and testing set.
 
 ## System configurations
 
-Variable that are system specific or which we expect to be changed infrequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and numbered by the corresponding system. With the exception of the Jupyter notebook, ```learn_decomposition.ipynb```, all computations use local copies of the training and testing datasets with paths specified in the configuration file. By default, the paths are specified with the provided data.
+Variable that are system specific or which we expect to be changed infrequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and named by the corresponding system. With the exception of the Jupyter notebook, ```learn_decomposition.ipynb```, all computations use local copies of the training and testing datasets with paths specified in the configuration file. By default, the paths are specified with the provided data. The variable data_bounds specifies the domain of the data. The final decomposition of phase space is intersected with this domain. The set $[0, 1] \times [0, 1]$ should be written as $[0, 1, 0, 1]$. If threshold_prediction = True, then the result of the neural network is thresholded between $0$ and $K-1$ where $K$ is the number of labels. If weak_weight_share = True, then the network is constrained so that parallel hyperplanes correspond to weights that vary by *trainable* constant multiples, which are initialized all equal to one. If weak_weight_share = False, then these constant multiples are *not trainable* and thus remain equal to one throughout the duration of training.
 
 ## Alternative way to compute a single example
 As an alternative to the Jupyter notebook, it is possible to compute a single example using the file ``` single_example.py ```. 
 
 At the top of the file, under "Global variables set by user", it is possible to change:
-- the system number,
+- the system name,
 - the number of nodes in the hidden layer of the neural network,
 - the list of labeling thresholds, and
 - the integer name that refers to the example.

@@ -54,7 +54,6 @@ class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
         
         # we multiply self.bias by self.weight_coefficient component-wise
         self.bias = nn.Parameter(torch.rand(self.N)*(bias_initial_lower_bounds - bias_initial_upper_bounds) - bias_initial_lower_bounds)
-        #print('self.bias', self.bias)
         self.register_parameter('bias', self.bias)
 
         # define and initialize the unconstrained weights of the neural network, namely the output layers

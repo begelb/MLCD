@@ -5,7 +5,6 @@ Acknowledgement: This configuration set-up is based on the GitHub repository "MO
 '''
 
 import ast
-from sys import exit
 
 class Config:
 
@@ -32,6 +31,7 @@ class Config:
         self.figures_directory = config["figures_directory"]
         self.threshold_prediction = config["threshold_prediction"]
         self.batch_size = config["batch_size"]
+        self.weak_weight_share = config["weak_weight_share"]
 
     def check_types(self):
         if type(self.example_type) is not str:
@@ -80,6 +80,8 @@ class Config:
             raise Exception("Threshold prediction has the wrong type. Must be " + str(bool) + ". Found a " + str(type(self.threshold_prediction)))
         if type(self.batch_size) is not int:
             raise Exception("Batch size has the wrong type. Must be " + str(int) + ". Found a " + str(type(self.batch_size)))
+        if type(self.weak_weight_share) is not bool:
+            raise Exception("Weak_weight_share has the wrong type. Must be " + str(bool) + ". Found a " + str(type(self.weak_weight_share)))
 
 def user_warning_about_N_and_dimension(config, N):
     if N % config.dimension != 0:

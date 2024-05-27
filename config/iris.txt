@@ -18,5 +18,6 @@
     'models_directory': 'output/models/iris',
     'figures_directory': 'output/figures/iris',
     'threshold_prediction': True,
-    'batch_size': 100
+    'batch_size': 100,
+    'weak_weight_share': False
 }

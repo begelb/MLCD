@@ -120,11 +120,11 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
         plt.show()
     plt.close(fig1)
 
-def make_loss_plots(config, system, example_index, test_loss_list, train_loss_list):
+def make_loss_plots(config, system, test_loss_list, train_loss_list, file_name, show):
     fig2 = plt.figure(figsize=(15,5))
     ax = fig2.add_subplot(111)
     example_type = config.example_type
-    ax.set_title('Test and train loss: '+ example_type + f' (Example {example_index})')
+    ax.set_title('Test and train loss: '+ example_type)
     ax.set_xlabel('Epoch Number')
     ax.set_ylabel('Loss')
 
@@ -139,8 +139,11 @@ def make_loss_plots(config, system, example_index, test_loss_list, train_loss_li
     ax.plot(timelist, test_loss_list, linewidth = 1.2, c = 'blueviolet', linestyle = 'dashed', label = 'Test Loss')
     ax.plot(timelist, train_loss_list, linewidth = 1, c = 'darkorange', label = 'Train Loss')
     ax.legend()
-    filename = f'output/figures/{system}/{example_index}-loss.png'
-    plt.savefig(filename)
+
+    if show:
+        plt.show()
+
+    plt.savefig(file_name)
     plt.close(fig2)
 
 def label_to_polytope_color_and_hatch(config, label):

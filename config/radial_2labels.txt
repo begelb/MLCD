@@ -18,5 +18,6 @@
     'models_directory': 'output/models/radial_2labels',
     'figures_directory': 'output/figures/radial_2labels',
     'threshold_prediction': True,
-    'batch_size': 100
+    'batch_size': 100,
+    'weak_weight_share': False
 }

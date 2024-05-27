@@ -18,5 +18,6 @@
     'models_directory': 'output/models/leslie',
     'figures_directory': 'output/figures/leslie',
     'threshold_prediction': True,
-    'batch_size': 400
+    'batch_size': 400,
+    'weak_weight_share': False
 }

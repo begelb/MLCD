@@ -1,7 +1,7 @@
 from .homology import get_homology_dict_from_model
 from .train import train_and_test, compute_accuracy
 from .network import load_model, get_batch_size, Regression_Cubical_Network_One_Nonlinearity
-from .figure import make_decomposition_figure, plot_polytopes
+from .figure import make_decomposition_figure, plot_polytopes, make_loss_plots
 from .data import data_set_up
 from .decomposition import get_decomposition_data
 from .config import configure
@@ -29,7 +29,7 @@ def train_classifier(system, N, epochs, file_name):
     trained_network, train_loss_list, test_loss_list = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs)
     save_model(trained_network, file_name)
     model = load_model(system, N, file_name)
-    return model
+    return model, train_loss_list, test_loss_list
 
 def compute_homology(system, labeling_threshold, N, model):
     config_fname = f'config/{system}.txt'
@@ -71,6 +71,11 @@ def make_polytope_plot(system, cube_list, file_name):
         return 'The system has dimension greater than 2, so a plot was not produced.'
     plot_polytopes(config, cube_list, True, file_name)
 
+def plot_loss(system, test_loss_list, train_loss_list, file_name):
+    config_fname = f'config/{system}.txt'
+    config = configure(config_fname)
+    fname = file_name + '.png'
+    make_loss_plots(config, system, test_loss_list, train_loss_list, fname, True)
 
 def accuracy(system, model, labeling_threshold):
     config_fname = f'config/{system}.txt'

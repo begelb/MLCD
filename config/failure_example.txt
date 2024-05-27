@@ -17,5 +17,7 @@
     'results_directory': 'output/results/failure_example',
     'models_directory': 'output/models/failure_example',
     'figures_directory': 'output/figures/failure_example',
-    'threshold_prediction': True
+    'threshold_prediction': True,
+    'batch_size': 1000,
+    'weak_weight_share': False
 }

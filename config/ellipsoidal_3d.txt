@@ -18,5 +18,6 @@
     'models_directory': 'output/models/ellipsoidal_3d',
     'figures_directory': 'output/figures/ellipsoidal_3d',
     'threshold_prediction': True,
-    'batch_size': 2000
+    'batch_size': 2000,
+    'weak_weight_share': False
 }
