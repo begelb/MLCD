@@ -31,7 +31,7 @@ for system in systems_list:
     useSugres = (False, 3)    # Use Suggested Resolution based on how many std away from median (i.e sigma threshold)
     
     iter_grid = (False, 10)       # 2**5+1 Sample points on grid with num_pts_per_dim or randomly 
-    max_iter = 20
+    max_iter = 100
     maps = False
     MP = None
     
