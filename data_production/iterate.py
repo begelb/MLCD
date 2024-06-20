@@ -60,9 +60,9 @@ def iterate_DS_pts(DS, X0, t, domain, radial, stop_out_domain=False):
 def iterate_MP_pts(MP, X0, domain):
     dim = len(domain)
     X_total = X0
-    X = MP(X0, dim)
+    X, acc = MP(X0, dim)
     X_total = np.vstack((X_total, X)).reshape(2, len(X0), dim)
-    return X_total
+    return X_total, acc
     
 
 
@@ -114,8 +114,11 @@ def make_lifted_pts(X1, s, norm, delay):
 def make_resolution(lifted_pts, dim, system, num_of_pts, path, useSugres):
     if lifted_pts.shape[1]==dim:
         diag = compute_persistance(lifted_pts) 
+        
+        #d = [(0,(0.0,diag[i][1][1]/diag[1][1][1])) for i in range(len(diag))]
+
         fig = gudhi.plot_persistence_diagram(diag).figure
-        fig.savefig(f'../output/figures/system{system}/' + "PD.jpg", bbox_inches='tight')
+        fig.savefig(path + "PD.jpg", bbox_inches='tight')
         plt.show()
         pd = [diag[i][1][1] for i in range(len(diag))]
         
@@ -149,14 +152,14 @@ def make_resolution(lifted_pts, dim, system, num_of_pts, path, useSugres):
         print("Suggested Resolution:", sugres)
         
         if useSugres[0]==False:
-            resolution = float(input("Choose a resolution: ")) 
+            resolution = float(input("Choose a resolution: ")) #* diag[1][1][1]
         else:
-            resolution = sugres 
+            resolution = sugres #* diag[1][1][1]
     else:
         diag = compute_persistance(lifted_pts) 
         d = [(0,(0.0,diag[i][1][1]/diag[1][1][1])) for i in range(len(diag))]
         fig = gudhi.plot_persistence_diagram(d).figure
-        fig.savefig(f'../output/figures/system{system}/' + "PD.jpg", bbox_inches='tight')
+        fig.savefig(path + "PD.jpg", bbox_inches='tight')
         plt.show()      
         pd = [d[i][1][1] for i in range(len(d))]
         

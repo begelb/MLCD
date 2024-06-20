@@ -9,6 +9,8 @@ Created on Tue Jan  9 15:46:20 2024
 
 
 import numpy as np
+import NN_class
+import load_data
 
 
 # system 1: Two stable fixed points (straight separatrix) in 2-d
@@ -264,6 +266,153 @@ def Periodic_3d(X, t):
     dydt = F(X, L, U, theta, gamma, n)
     return dydt
 
+# system 9: Ellipsoidal system in 2-d
+
+domain_ellipsoidal = ((-4,4),(-4,4))
+def Ellipsoidal(y, t):
+    # Ellipsoidal System
+
+    r = np.linalg.norm(y)
+    r_dot = - r * (r-1) * (r-2) * (r-3) 
+
+    x_term = y[0]/r
+    y_term = y[1]/r
+
+    x0 = r_dot*x_term - y[1]
+    x1 = r_dot*y_term + y[0]
+    
+    dydt = np.array([x0,x1])
+    
+    return dydt
+
+domain_periodic = ((0,7),(0.5,6))
+def Periodic(y,t):
+    # Marcio Example 1   
+    r = 1
+    K = 10
+    m = 0.54
+    a = 1.25
+    b = -1.65
+    s = 0.4
+    y0 = r * y[0] * (1 - y[0] / K) - (m * y[1] * y[0]**2) /(a * y[0]**2 + b * y[0] + 1)
+    y1 = s * y[1] * (1 - y[1] / y[0])
+    dydt = np.array([y0, y1])
+    return dydt
+
+domain_periodic_back = ((0,7),(0.5,6))
+def Periodic_back(y,t):
+    r = 1
+    K = 10
+    m = 0.54
+    a = 1.25
+    b = -1.65
+    s = 0.4
+    y0 = r * y[0] * (1 - y[0] / K) - (m * y[1] * y[0]**2) /(a * y[0]**2 + b * y[0] + 1)
+    y1 = s * y[1] * (1 - y[1] / y[0])
+    dydt = np.array([y0, y1])
+    return -dydt
+
+domain_torus = ((-2.5,2.5), (-0.2,0.2), (-0.3,0.3), (-1.4,0.1), (-10,10))
+#domain_torus = ((-1.5,1.5), (-1.5,1.5), (-1.5,1.5), (-1.5,1.5), (-1.5,1.5))
+
+def Torus(y,t):
+    # Marcio Example 1   
+    rho = 1.2e-6
+    phi = 1 / 0.026
+    c = 0.56 # 1.55
+
+    y0 = y[1] - rho * np.sinh(phi * y[2])
+    y1 = y[2] - y[1]
+    y2 = y[3]
+    y3 = y[4]
+    y4 = -c * y[4] - rho * np.sinh(phi * y[3]) - 5 * y[2] - 5 * y[1] - 0.1 * y[0]             
+    dydt = np.array([y0, y1, y2, y3, y4])
+    return dydt
+
+domain_leslie = ((0, 74), (0, 52))
+def Leslie(x, dim):   
+    f = 20
+    param = {'lam': 0.1, 'th1': f, 'th2': f, 'p1': 0.7}
+
+    # 2d Leslie    
+    gx = np.array([(param['th1'] * x[:,0] + param['th2'] * x[:,1]) * np.exp(-param['lam']*(x[:,0] + x[:,1])), param['p1']*x[:,0]])
+    return gx.T
+
+domain_iris = ((-1, 1),)*11
+def Iris(x, dim, sys=1): 
+    param = {'bias': True}
+
+
+    def f_NN(X):
+        Neural = NN_class.NN(hidden_layer_size=1, activation='relu', learning_rate=1, max_iter=1, bias=param['bias'])
+        acc, err = Neural.train_test(load_data.x, load_data.y, initial='custom', init=X[0])
+        weights = Neural.final_weights
+        final = np.append(weights[0][:],weights[1][:])
+        if param['bias']:
+            final = np.append(final,weights[2][:])
+            final = np.append(final,weights[3][:])
+        # final = np.append(final,acc)
+        # final = np.append(final,err)
+        final = np.expand_dims(final, axis=0)
+        # Final = np.array([])
+        # for i in range(len(X)):
+        #     Final = np.append(Final, f(np.expand_dims(X[i], axis=0)))
+        #     print(i)       
+        # X = X[0:i+1,:]
+        # Final = np.reshape(Final, (i+1,13))
+        return final, acc
+               
+    def F(Initial,dim):
+        Final = np.array([])
+        Acc = np.array([])
+        for i in range(len(Initial)):
+            Final = np.append(Final, f_NN(np.expand_dims(Initial[i], axis=0))[0])
+            Acc = np.append(Acc, f_NN(np.expand_dims(Initial[i], axis=0))[1])
+            #print(i)       
+        #Initial = Initial[0:i+1,:]
+        Final = np.reshape(Final, (i+1,dim))
+        return Final, Acc 
+    gx, Acc = F(x,dim)
+    print(Acc)
+    return gx, Acc
+# # system 9: Ellipsoidal system in 2-d
+# domain_ellipsoidal = ((-4,4),(-4,4))
+# def Ellipsoidal(y, t):
+#     # Ellipsoidal System
+    
+#     r = np.linalg.norm(y)
+#     r_dot = - r * (r-1) * (r-2) * (r-3) #np.sqrt(a**2 * np.sin(y[1])**2 + b**2 * np.cos(y[1])**2)
+
+#     x_term = y[0]/r
+#     y_term = y[1]/r
+
+#     x0 = r_dot*x_term - y[1]
+#     x1 = r_dot*y_term + y[0]
+    
+#     dydt = np.array([x0,x1])
+    
+#     #dydt = np.array([np.sqrt(dydt[0]**2 + dydt[1]**2), np.arctan2(dydt[1],dydt[0])])
+    
+#     #np.array([[[y[0] * np.cos(y[1]), y[0] * np.sin(y[1])]
+    
+#     return dydt
+
+domain_lorentz = ((-20,20),(-20,20),(-20,20))
+def Lorentz(y, t):
+    sigma = 10
+    beta = 8/3
+    r=12 #12 20
+
+    
+    x0 = sigma * (y[1] - y[0])
+    x1 = r*y[0] - y[1] - y[0]*y[2]
+    x2 = y[0]*y[1] - beta*y[2]
+    
+    
+    dydt = np.array([x0,x1,x2])
+    
+    return dydt
+
 domain_fp3 = ((0,3.5),(0,5.5))
 def FP3(y, t):
     L = [[0.771, 1.331], [0.215, 0.223]]
@@ -306,100 +455,37 @@ def FP3(y, t):
     
     return dydt
 
-# system 9: Ellipsoidal system in 2-d
 
-domain_ellipsoidal = ((-4,4),(-4,4))
-def Ellipsoidal(y, t):
-    # Ellipsoidal System
+domain_inf = ((0.0,0.3),(-0.5,.5))    
+def Inf(y, t):     
+      xd = y[0] * np.sin(1.0/y[0])
+      yd = -y[1]
+      dydt = [xd, yd]
+      return dydt
 
-    r = np.linalg.norm(y)
-    r_dot = - r * (r-1) * (r-2) * (r-3) 
-
-    x_term = y[0]/r
-    y_term = y[1]/r
-
-    x0 = r_dot*x_term - y[1]
-    x1 = r_dot*y_term + y[0]
-    
-    dydt = np.array([x0,x1])
-    
+domain_memristive = ((-0.6,0.6),(-0.2,0.2),(-0.2,0.2))
+def Memristive(y, t):
+    a = 0.5
+    b = 0.8
+    c = 0.6
+    d = 7.0
+    k = 1.0
+    s = 0.0
+    r = (y[0]**2 - s*y[0] - 2) * y[1]
+    y0 = y[1]
+    y1 = d * y[2]
+    y2 = -a * y[2] + b * y[0] - c * y[0]**3 + k * r
+    dydt = np.array([y0,y1,y2])
     return dydt
 
-domain_periodic = ((0,7),(0,6))
-def Periodic(y,t):
-    # Marcio Example 1   
-    r = 1
-    K = 10
-    m = 0.54
-    a = 1.25
-    b = -1.65
-    s = 0.4
-    y0 = r * y[0] * (1 - y[0] / K) - (m * y[1] * y[0]**2) /(a * y[0]**2 + b * y[0] + 1)
-    y1 = s * y[1] * (1 - y[1] / y[0])
-    dydt = np.array([y0, y1])
+domain_delay = ((-4,4),(0,5))
+def Delay(y, t):
+
+    y0 = 2*y[0] - 1.1*y[0]*y[1]
+    y1 = -y[1] + 0.9*y[0]*y[1]
+    dydt = np.array([y0,y1])
     return dydt
 
-domain_periodic_back = ((0,7),(0,6))
-def Periodic_back(y,t):
-    r = 1
-    K = 10
-    m = 0.54
-    a = 1.25
-    b = -1.65
-    s = 0.4
-    y0 = r * y[0] * (1 - y[0] / K) - (m * y[1] * y[0]**2) /(a * y[0]**2 + b * y[0] + 1)
-    y1 = s * y[1] * (1 - y[1] / y[0])
-    dydt = np.array([y0, y1])
-    return -dydt
-
-domain_torus = ((-2.5,2.5), (-0.2,0.2), (-0.3,0.3), (-1.4,0.1), (-10,10))
-#domain_torus = ((-1.5,1.5), (-1.5,1.5), (-1.5,1.5), (-1.5,1.5), (-1.5,1.5))
-
-def Torus(y,t):
-    # Marcio Example 1   
-    rho = 1.2e-6
-    phi = 1 / 0.026
-    c = 0.56 # 1.55
-
-    y0 = y[1] - rho * np.sinh(phi * y[2])
-    y1 = y[2] - y[1]
-    y2 = y[3]
-    y3 = y[4]
-    y4 = -c * y[4] - rho * np.sinh(phi * y[3]) - 5 * y[2] - 5 * y[1] - 0.1 * y[0]             
-    dydt = np.array([y0, y1, y2, y3, y4])
-    return dydt
-
-domain_leslie = ((0, 74), (0, 52))
-def Leslie(x, dim):   
-    f = 20
-    param = {'lam': 0.1, 'th1': f, 'th2': f, 'p1': 0.7}
-
-    # 2d Leslie    
-    gx = np.array([(param['th1'] * x[:,0] + param['th2'] * x[:,1]) * np.exp(-param['lam']*(x[:,0] + x[:,1])), param['p1']*x[:,0]])
-    return gx.T
-
-
-# # system 9: Ellipsoidal system in 2-d
-# domain_ellipsoidal = ((-4,4),(-4,4))
-# def Ellipsoidal(y, t):
-#     # Ellipsoidal System
-    
-#     r = np.linalg.norm(y)
-#     r_dot = - r * (r-1) * (r-2) * (r-3) #np.sqrt(a**2 * np.sin(y[1])**2 + b**2 * np.cos(y[1])**2)
-
-#     x_term = y[0]/r
-#     y_term = y[1]/r
-
-#     x0 = r_dot*x_term - y[1]
-#     x1 = r_dot*y_term + y[0]
-    
-#     dydt = np.array([x0,x1])
-    
-#     #dydt = np.array([np.sqrt(dydt[0]**2 + dydt[1]**2), np.arctan2(dydt[1],dydt[0])])
-    
-#     #np.array([[[y[0] * np.cos(y[1]), y[0] * np.sin(y[1])]
-    
-#     return dydt
 
 systems = {
     Straight : domain_straight, 
@@ -415,7 +501,14 @@ systems = {
     Periodic_back : domain_periodic_back,
     Torus : domain_torus,
     Leslie : domain_leslie,
-    FP3 : domain_fp3
+    Iris : domain_iris,
+    Lorentz : domain_lorentz,
+    FP3 : domain_fp3,
+    Inf : domain_inf,
+    Memristive : domain_memristive,
+    Delay : domain_delay
+
+
 }
    
         

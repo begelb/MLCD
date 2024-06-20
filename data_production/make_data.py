@@ -16,32 +16,27 @@ from format_data import save_formatted_data
 import pickle
 import sys 
 import os
-from scipy.spatial.transform import Rotation as R
-import matplotlib.pyplot as plt
 import plot_data
-
 
 
 
 ''' Global variables set by user '''
 
-systems_list = [10] 
-num_of_pts = 1000
-
-
-
-''' Global variables that should not be changed by the user '''
+systems_list = [1] 
 for system in systems_list:
+    num_of_pts = 1000
     
-    norm = False                      # Norm of orbit
-    delay = (False, 20)               # Delay coord with how many iterations back to include
-    useSugres = (False, 3)            # Use Suggested Resolution based on how many std away from median (i.e sigma threshold)  
-    iter_grid = (False, 2**5+1)       # Sample points on grid with num_pts_per_dim or randomly 
-    max_iter = 100                    # Max number of iterations before transient is removed
-    maps = False                      # Set True for maps. False for flows
-    save_full_orbit = False           # Save labeled_pts from entire orbit segment from transience 
-
+    norm = False
+    delay = (False, 3)        # Delay coord with how many iterations back to include
+    useSugres = (False, 3)    # Use Suggested Resolution based on how many std away from median (i.e sigma threshold)
     
+    iter_grid = (False, 10)       # 2**5+1 Sample points on grid with num_pts_per_dim or randomly 
+    max_iter = 20
+    maps = False
+    MP = None
+    
+    
+    ''' Global variables that should not be changed by the user '''
     if system == 1:
         DS = systems.Straight
     if system == 2:
@@ -61,16 +56,32 @@ for system in systems_list:
     if system == 9:
         DS = systems.Ellipsoidal
     if system == 10:
-        DS = systems.FP3
+        DS = systems.Periodic
+    if system == 11:
+        DS = systems.Periodic_back
+    if system == 12:
+        DS = systems.Torus
     if system == 13:
         MP = systems.Leslie
         maps = True
         DS = []
-        
+    if system == 14:
+        MP = systems.Iris
+        maps = True
+        DS = []
+    if system == 15:
+        DS = systems.Lorentz
+    if system == 16:
+        DS = systems.FP3 
+    if system == 17:
+        DS = systems.Inf
+    if system == 18:
+        DS = systems.Memristive
     if maps:
         domain = systems.systems[MP]
     else:
         domain = systems.systems[DS]
+        
 
 
     dim = len(domain)
@@ -97,37 +108,27 @@ for system in systems_list:
     
     
     # if dne make one
-    sys_path = '../data2/'    
+    sys_path = 'systems/'    
     isExist = os.path.exists(sys_path)
     if not isExist:
        os.makedirs(sys_path)
        
-    path = f'../data2/system{system}/'    
+    base_path = f'systems/{system}/'    
+    isExist = os.path.exists(base_path)
+    if not isExist:
+       os.makedirs(base_path)
+       
+    path = f'systems/{system}/{num_of_pts}pts/'    
     isExist = os.path.exists(path)
     if not isExist:
        os.makedirs(path)
-       
-    pathfig = f'../output/figures/system{system}/'    
-    isExist = os.path.exists(pathfig)
-    if not isExist:
-       os.makedirs(pathfig)
+    
         
     X0 = iterate.init_pts(domain, num_of_pts, grid=iter_grid) 
     
-    if DS == systems.Ellipsoidal: 
-        # ask for dim
-        a = 1 
-        b = 0.5
-        r_inv = R.from_euler('z', -45, degrees=True)
-        Rotation_inv = r_inv.as_matrix()[:2, :2]
-        I = np.identity(dim)
-        I[0:2, 0:2] = Rotation_inv
-        D_inv = np.array([[1/a,0], [0,1/b]])
-        T_inv = D_inv @ Rotation_inv
-        X0 = (T_inv @ X0.T).T
-        
     if maps:
-        X1 = iterate.iterate_MP_pts(MP, X0, domain)
+        X1, acc = iterate.iterate_MP_pts(MP, X0, domain)
+        #X1 = X1[:,:,0:7]
         
     else:
         t = np.linspace(0,step_size,2)         
@@ -136,11 +137,16 @@ for system in systems_list:
    
     hausdorf_distances = [iterate.hausdorf(X1[0],X1[1])]
     X01 = [X1]
+    plot_data.plot2d_simple(X0, 'Iteration number 0')
+    it = 1
     while len(hausdorf_distances)<max_iter and hausdorf_distances[-1]>eps:  
         if maps:
-            X1 = iterate.iterate_MP_pts(MP, X1[1], domain)
+            X1, acc = iterate.iterate_MP_pts(MP, X1[1], domain)
         else:
             X1 = iterate.iterate_DS_pts(DS, X1[1], t, domain, radial)
+            plot_data.plot2d_simple(X1[1], f'Iteration number {it}')
+            it+=1
+            
         hausdorf_distances.append(iterate.hausdorf(X1[0],X1[1]))
         X01.append(X1[1])
     
@@ -149,29 +155,29 @@ for system in systems_list:
         X02 = []
         X2 = X1
         for i in range(100):
-            X2 = iterate.iterate_MP_pts(MP, X2[-1], domain)
-            X02.append(X2[1])
+            X2, acc = iterate.iterate_MP_pts(MP, X2[-1], domain)
+            X02.append(X2[1])#[:,0:7])
+            
         X2= np.array(X02).reshape(100,num_of_pts,dim)
+        
+
     else:
         M = 100 * len(hausdorf_distances)             
         t = np.linspace(0,M*step_size,M+1)    
         X2 = iterate.iterate_DS_pts(DS, X1[-1], t, domain, radial)          
-        
-    if DS == systems.Ellipsoidal: 
-        r = R.from_euler('z', 45, degrees=True)
-        Rotation = r.as_matrix()[:2, :2]
-        I = np.identity(dim)
-        I[0:2, 0:2] = Rotation
-        D = np.array([[a,0], [0,b]])
-        T = Rotation @ D  
-        X0 = (T @ X0.T).T
-        X1 = np.array([(T @ X1[i].T).T for i in range(len(X1))])
-        X2 = np.array([(T @ X2[i].T).T for i in range(len(X2))])
+    if MP == systems.Iris: 
+        X3=X2    
+        bias = X2[-1,:,7:]
+        bias0 = X0[:,7:]
+        X2 = X2[:,:,0:7]
+        X1 = X1[:,:,0:7]
+        X0 = X0[:,0:7]
+        dim=7
     
     s = iterate.compute_norms(X2)
   
     lifted_pts = iterate.make_lifted_pts(X2, s, norm=norm, delay=delay) 
-    index_in_domain = np.array([[domain[i][0] <= lifted_pts[j,:dim][i] <= domain[i][1] for i in range(dim)] for j in range(len(lifted_pts))]).all(1)
+    index_in_domain = np.array([[domain[i][0]-100 <= lifted_pts[j,:dim][i] <= domain[i][1]+100 for i in range(dim)] for j in range(len(lifted_pts))]).all(1)
     lifted_pts[[not(i) for i in index_in_domain],-1] = -1 
     resolution, res = iterate.make_resolution(lifted_pts[index_in_domain], dim, system, num_of_pts, path, useSugres)
     labels, n_components = iterate.get_labels(lifted_pts[index_in_domain], resolution)
@@ -182,54 +188,29 @@ for system in systems_list:
     Labels = np.empty(len(lifted_pts))
     Labels[index_in_domain] = labels
     Labels[[not(i) for i in index_in_domain]] = -1
-        
-    ## Save labeled_pts from entire orbit segment from transience 
-    if save_full_orbit:
-        X11 = [X01[0][0,:,:], X01[0][1,:,:], *X01[1:]]
-        X11 = np.array(X11).reshape(num_of_pts*(len(hausdorf_distances)+1),dim)
-        labeled_pts = np.hstack((X11,np.tile(Labels, (len(hausdorf_distances)+1)).reshape(-1,1)))  
-
+    
     ## Save labeled_pts from end points of orbit segment 
-    else:
-        labeled_pts = np.hstack((X0,Labels.reshape(-1,1)))
+    labeled_pts = np.hstack((X0,Labels.reshape(-1,1)))
+    
+    ## Save labeled_pts from entire orbit segment from transience 
+    # X11 = [X01[0][0,:,:], X01[0][1,:,:], *X01[1:]]
+    # X11 = np.array(X11).reshape(num_of_pts*(len(hausdorf_distances)+1),dim)
+    # labeled_pts = np.hstack((X11,np.tile(Labels, (len(hausdorf_distances)+1)).reshape(-1,1)))  
 
     exp_info['resolution'] = resolution
     exp_info['n_components'] = n_components
               
     save_formatted_data(labeled_pts, len(labeled_pts), path)    
-    #np.savetxt(path + 'lifted.csv', lifted_pts, delimiter=',')   
-    #np.savetxt(path + 'hausdorf_distances.csv', hausdorf_distances, delimiter=',')    
+    np.savetxt(path + 'lifted.csv', lifted_pts, delimiter=',')   
+    np.savetxt(path + 'hausdorf_distances.csv', hausdorf_distances, delimiter=',')  
+
+    
+    if MP == systems.Iris:
+        np.savetxt(path + 'acc.csv', np.array([acc,Labels]).T, delimiter=',')   
+
     
     with open(path + 'exp_info.pickle', 'wb') as handle:
         pickle.dump(exp_info, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-
-    with open(f'../data2/system{system}/exp_info.pickle', 'rb') as handle:
-        exp_info = pickle.load(handle)
-        
-        
-    labeled_pts = np.loadtxt(f"../data2/system{system}/data.csv", delimiter=',')
-    #lifted_pts = np.loadtxt(f"systems/{system}/{num_of_pts}pts/lifted.csv", delimiter=',')
-    #hausdorf_distances = np.loadtxt(f"systems/{system}/{num_of_pts}pts/hausdorf_distances.csv", delimiter=',')
-
-
-    dim = exp_info['dim']
-    domain = exp_info['domain']
-
-       
-    fig1 = plt.figure()
-    plt.plot(hausdorf_distances)
-    plt.title('Hausdorff Disances Between Iterations')
-    fig1.savefig(f"../output/figures/system{system}/Hausdorff_Disances_Between_Iterations.jpg", bbox_inches='tight')
-    plt.show()
-
-    index_in_domain = np.array([[domain[i][0] <= lifted_pts[j,:dim][i] <= domain[i][1] for i in range(dim)] for j in range(len(lifted_pts))]).all(1)
     
-    
-    plot_data.plot2d(labeled_pts[:num_of_pts][index_in_domain], labeled_pts[:num_of_pts][:,-1][index_in_domain], f"../output/figures/system{system}", system, title="Initial Points with Attractor Color")     
-    plot_data.plot2d(lifted_pts[-num_of_pts:][index_in_domain], labeled_pts[-num_of_pts:][:,-1][index_in_domain], f"../output/figures/system{system}", system, title="Final Points with Attractor Color")
-
-    #if dim==2 and lifted_pts.shape[1]!=dim:
-        #plot3d(lifted_pts[-num_of_pts:][index_in_domain], labeled_pts[-num_of_pts:][:,-1][index_in_domain], f"systems/{system}/{num_of_pts}pts", title="Final Points with Attractor Color 3D") 
-        #plot3d(labeled_pts[-num_of_pts:][index_in_domain], labeled_pts[-num_of_pts:][:,-1][index_in_domain], f"systems/{system}/{num_of_pts}pts", title="Initial Points with Attractor Color 3D")     
+      
                 
