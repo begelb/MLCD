@@ -120,7 +120,7 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
         plt.show()
     plt.close(fig1)
 
-def make_loss_plots(config, system, test_loss_list, train_loss_list, file_name, show):
+def make_loss_plots(config, test_loss_list, train_loss_list, file_name, show):
     fig2 = plt.figure(figsize=(15,5))
     ax = fig2.add_subplot(111)
     example_type = config.example_type
@@ -128,14 +128,12 @@ def make_loss_plots(config, system, test_loss_list, train_loss_list, file_name, 
     ax.set_xlabel('Epoch Number')
     ax.set_ylabel('Loss')
 
-    timelist=list(range(1,config.epochs+1))
+    timelist=list(range(1,len(test_loss_list)+1))
 
     plt.subplots_adjust(left=0.2, bottom=0.2, top=0.9, right = 0.9)
-   # if config.epochs > 100:
-      #  step = config.epochs/100
-   # else:
+
     step = config.epochs/10
-    ax.set(xticks=np.arange(0, config.epochs+1, step=step))
+    ax.set(xticks=np.arange(0, len(test_loss_list), step=step))
     ax.plot(timelist, test_loss_list, linewidth = 1.2, c = 'blueviolet', linestyle = 'dashed', label = 'Test Loss')
     ax.plot(timelist, train_loss_list, linewidth = 1, c = 'darkorange', label = 'Train Loss')
     ax.legend()

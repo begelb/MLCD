@@ -50,7 +50,7 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         
         loss_plot_file_name = f'output/figures/{system}/{example_index}-loss.png'
 
-        make_loss_plots(config, system, test_loss_list, train_loss_list, loss_plot_file_name, False)
+        make_loss_plots(config, test_loss_list, train_loss_list, loss_plot_file_name, False)
 
         if config.dimension == 2:
             model = load_model(N, system, config, 1, example_index)

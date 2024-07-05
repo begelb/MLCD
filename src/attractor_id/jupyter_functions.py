@@ -77,7 +77,7 @@ def plot_loss(system, test_loss_list, train_loss_list, file_name):
     config_fname = f'config/{system}.txt'
     config = configure(config_fname)
     fname = file_name + '.png'
-    make_loss_plots(config, system, test_loss_list, train_loss_list, fname, True)
+    make_loss_plots(config, test_loss_list, train_loss_list, fname, True)
 
 def accuracy(system, model, labeling_threshold):
     config_fname = f'config/{system}.txt'
