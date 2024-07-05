@@ -22,7 +22,7 @@ import plot_data
 
 ''' Global variables set by user '''
 
-systems_list = [1] 
+systems_list = [8] 
 for system in systems_list:
     num_of_pts = 1000
     
@@ -144,7 +144,7 @@ for system in systems_list:
             X1, acc = iterate.iterate_MP_pts(MP, X1[1], domain)
         else:
             X1 = iterate.iterate_DS_pts(DS, X1[1], t, domain, radial)
-            plot_data.plot2d_simple(X1[1], f'Iteration number {it}')
+            #plot_data.plot2d_simple(X1[1], f'Iteration number {it}')
             it+=1
             
         hausdorf_distances.append(iterate.hausdorf(X1[0],X1[1]))

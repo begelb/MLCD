@@ -1,5 +1,5 @@
-def get_initial_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, accuracy):
-    initial_list = [example_index, N, config.optimizer_choice, config.learning_rate, labeling_threshold, num_cubes_labeled, test_loss_list[-1], accuracy]
+def get_initial_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, accuracy, restart_count):
+    initial_list = [example_index, N, config.optimizer_choice, config.learning_rate, labeling_threshold, num_cubes_labeled, test_loss_list[-1], accuracy, restart_count]
     return initial_list
 
 def get_final_list_to_write(config, initial_list, homology_dict):
@@ -18,6 +18,6 @@ def get_final_list_to_write(config, initial_list, homology_dict):
             initial_list.append("Empty region")
     return initial_list
 
-def get_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, homology_dict, accuracy):
-    initial_list = get_initial_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, accuracy)
+def get_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, homology_dict, accuracy, restart_count):
+    initial_list = get_initial_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, accuracy, restart_count)
     return get_final_list_to_write(config, initial_list, homology_dict)

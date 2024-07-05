@@ -24,9 +24,11 @@ def train_classifier(system, N, epochs, file_name):
     train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
   #  if len(train_data)%10 == 0:
     batch_size = config.batch_size
+    patience = config.patience
+    reduction_thresh = 0.1
   #  else:
    #     batch_size = 1000 #get_batch_size(train_data, percentage = 0.1)
-    trained_network, train_loss_list, test_loss_list = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs)
+    trained_network, train_loss_list, test_loss_list, restart_count = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience, reduction_thresh)
     save_model(trained_network, file_name)
     model = load_model(system, N, file_name)
     return model, train_loss_list, test_loss_list

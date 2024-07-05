@@ -48,9 +48,3 @@ def data_is_on_one_side_of_hyperplane(hyperplane, data_as_tensors, d):
         return False
     else:
         return True
-    
-''' Given a point and normal vector, return the hyperplane with that normal vector through the point '''
-def make_hyperplane(point, normal_vector):
-    # Let n denote the normal vector and b denote the bias
-    # Then the hyperplane equation is given by <n, x> + b = 0, so b = - <n, x>
-    return Hyperplane(normal_vector, -np.dot(normal_vector, point))

@@ -9,8 +9,8 @@ Created on Tue Jan  9 15:46:20 2024
 
 
 import numpy as np
-import NN_class
-import load_data
+#import NN_class
+#import load_data
 
 
 # system 1: Two stable fixed points (straight separatrix) in 2-d

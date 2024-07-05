@@ -19,5 +19,6 @@
     'figures_directory': 'output/figures/periodic_3labels',
     'threshold_prediction': True,
     'batch_size': 1000,
-    'weak_weight_share': False
+    'weak_weight_share': False,
+    'patience': 100
 }

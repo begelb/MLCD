@@ -8,7 +8,8 @@ def evaluate_regression_network(config, x, model):
     with torch.no_grad():
         d = config.dimension
         num_labels = config.num_labels
-        result = torch.clamp(model(x.clone().detach().view(1, d)), min = 0.0, max = float(num_labels) - 1)
+        result = model(x.clone().detach().view(1, d))
+       # result = torch.clamp(model(x.clone().detach().view(1, d)), min = 0.0, max = float(num_labels) - 1)
     return float(result)
 
 def get_cube_label(config, vertex_list, model, labeling_threshold):
