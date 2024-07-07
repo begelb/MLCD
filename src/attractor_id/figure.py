@@ -143,7 +143,7 @@ def make_loss_plots(config, test_loss_list, train_loss_list, file_name, show):
 
     timelist=list(range(1,len(test_loss_list)+1))
 
-    plt.subplots_adjust(left=0.12, bottom=0.2, top=0.9, right = 0.15)
+    plt.subplots_adjust(left=0.2, bottom=0.2, top=0.9, right = 0.9)
 
     step = config.epochs/10
     ax.set(xticks=np.arange(0, len(test_loss_list), step=step))
@@ -285,13 +285,13 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name, syste
         
     if config.num_labels == 3:
         color_0, hatch_0 = label_to_polytope_color_and_hatch(config, 0)
-        circ0 = mpatches.Patch(facecolor=color_0,hatch=hatch_0,label='N(A\u2080)')
+        circ0 = mpatches.Patch(facecolor=color_0,hatch=hatch_0,edgecolor='white',label='N(A\u2080)')
         color_1, hatch_1 = label_to_polytope_color_and_hatch(config, 1)
-        circ1 = mpatches.Patch(facecolor=color_1,hatch=hatch_1,label='N(A\u2081)')
+        circ1 = mpatches.Patch(facecolor=color_1,hatch=hatch_1,edgecolor='white',label='N(A\u2081)')
         color_2, hatch_2 = label_to_polytope_color_and_hatch(config, 2)
-        circ2 = mpatches.Patch(facecolor=color_2,hatch=hatch_2,label='N(A\u2082)')
+        circ2 = mpatches.Patch(facecolor=color_2,hatch=hatch_2,edgecolor='white',label='N(A\u2082)')
         color_u, hatch_u = label_to_polytope_color_and_hatch(config, 3)
-        circu = mpatches.Patch(facecolor=color_u,hatch=hatch_u,label='U')
+        circu = mpatches.Patch(facecolor=color_u,hatch=hatch_u,edgecolor='white',label='U')
       #  ax.legend(handles = [circ0, circ1, circ2, circu], loc='lower center', fontsize=30, bbox_to_anchor=(0.5, 0.06), prop=font_properties,
       #  bbox_transform=fig.transFigure, fancybox=True, facecolor='white', framealpha=1, ncol=2)
 
