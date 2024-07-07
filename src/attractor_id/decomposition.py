@@ -57,7 +57,7 @@ def sort_hyperplanes_and_remove_unnecessary_hyperplanes(hyperplane_list, is_boun
     if len(refined_list) == 0: # This covers the case when all hyperplanes are boundary hyperplanes
         refined_list.append(sorted_list[0])
         refined_list.append(sorted_list[-1])
-        raise Exception('The learned cubical complex does not intersect the domain. Program terminated.')
+        #raise Exception('The learned cubical complex does not intersect the domain. Program terminated.')
 
     # Resort the new list of hyperplanes by bias
     final_list = sort_hyperplanes_by_bias(refined_list)
