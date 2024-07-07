@@ -28,7 +28,7 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         batch_size = config.batch_size
         epochs = config.epochs
         patience = config.patience
-        reduction_thresh = 0.1
+        reduction_thresh = 0.5
         trained_network, train_loss_list, test_loss_list, restart_count = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience, reduction_thresh)
         save_model(trained_network, example_index, config)
         model = load_model(N, system, config, 1, example_index)
