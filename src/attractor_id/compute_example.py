@@ -55,10 +55,10 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         if config.dimension == 2:
             model = load_model(N, system, config, 1, example_index)
             decomposition_file_name = f'{figures_directory}/{example_index}-decomposition.png'
-            make_decomposition_figure(config, model, total_hyperplane_list, False, decomposition_file_name)
+            make_decomposition_figure(config, model, total_hyperplane_list, False, decomposition_file_name, system)
 
             polytopes_file_name = f'{figures_directory}/{example_index}-polytopes.png'
-            plot_polytopes(config, cube_list_for_polytope_figure, False, polytopes_file_name)
+            plot_polytopes(config, cube_list_for_polytope_figure, False, polytopes_file_name, system)
 
 
         

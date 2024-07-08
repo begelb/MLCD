@@ -64,7 +64,7 @@ def make_decomposition_plot(system, hyperplane_list, model, file_name):
     config = configure(config_fname)
     if config.dimension != 2:
         return 'The system has dimension greater than 2, so a plot was not produced.'
-    make_decomposition_figure(config, model, hyperplane_list, True, file_name)
+    make_decomposition_figure(config, model, hyperplane_list, True, file_name, system)
 
 def make_polytope_plot(system, cube_list, file_name):
     config_fname = f'config/{system}.txt'
