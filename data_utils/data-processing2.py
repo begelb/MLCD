@@ -8,12 +8,12 @@ This file is used to convert Paul's data format to Brittany's data format.
 dim = 5
 t = 'train'
 
-h = open(f'data/ellipsoidal_{dim}d_newdata/{t}.csv', 'w')
+h = open(f'data/ellipsoidal_larger_domain_{dim}d/{t}.csv', 'w')
 # create the csv writer
 writer = csv.writer(h)
 
 data_list = []
-with open(f'data/ellipsoidal_{dim}d_newdata/nf_{t}.csv', newline='') as f:
+with open(f'data/ellipsoidal_larger_domain_{dim}d/nf_{t}.csv', newline='') as f:
     reader = csv.reader(f)
     for row in reader:
         row_list = []
