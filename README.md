@@ -62,7 +62,9 @@ At the top of ```run_experiment.py```, under "Global variables set by user", it 
 By default, the only parameter that is varied is the width of the neural network hidden layer. The lists of hidden layer widths for each system are specified in the ```.txt``` files located in the folder ```config```.
 
 ## Acknowledgements
-- The file ```amarel_cluster_code/slurm_script_job_array.sh``` was copied from the GitHub repository [cluster-help](https://github.com/marciogameiro/cluster-help) written by **Marcio Gameiro** (2020) and available under MIT License. Small modifications to the file were made. See LICENSE.md for copyright information pertaining to this file. 
+- The file ```slurm_script_job_array.sh``` was copied from the GitHub repository [cluster-help](https://github.com/marciogameiro/cluster-help) written by **Marcio Gameiro** (2020) and available under MIT License. Small modifications to the file were made. See LICENSE.md for copyright information pertaining to this file.
+
+- The functions used to produce the stacked histograms are copied from [the matplotlib documentation](https://matplotlib.org/stable/gallery/lines_bars_and_markers/filled_step.html)
 
 - The file ```src/config.py``` and the files inside ```config``` are based on the contents of the GitHub repository [MORALS: Morse Graph-aided discovery of Regions of Attraction in a learned Latent Space](https://github.com/Ewerton-Vieira/MORALS/tree/main) written by **Ewerton Vieira, Aravind Sivaramakrishnan, and Sumanth Tangirala** (2023) and available under MIT License. See LICENSE.md for copyright information pertaining to these files.
 
