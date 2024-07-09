@@ -4,7 +4,7 @@ from torch import nn
 from .network import Regression_Cubical_Network_One_Nonlinearity, get_optimizer
 
 def loss_reduction(init_loss, final_loss, threshold):
-    reduction = (init_loss - final_loss)/final_loss
+    reduction = (init_loss - final_loss)/init_loss
     if reduction > threshold:
         return True
     else:
