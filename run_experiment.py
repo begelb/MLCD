@@ -27,10 +27,6 @@ labeling_threshold_list = [0.1, 0.2, 0.3, 0.4, 0.49]
 # so, if line 13 of slurm_script_job_array.sh is #SBATCH --array=0-499, then repetitions_per_parameter_set should be 500
 repetitions_per_parameter_set = 100
 
-# reduction_threshold * 100 is the percentage decrease of the training loss between the first and final epoch that must be observed in order to continue the computation
-# if this criterion is not met, the training restarts (at different initial conditions)
-reduction_threshold = 0.1
-
 ''' Global variables that should not be changed by the user '''
 # job index is read from the job_array controlled by slurm_script_job_array.sh
 job_index = int(sys.argv[1])
@@ -42,7 +38,7 @@ def main():
     config = configure(config_fname)
     N_list = config.N_list
     experiment_class = Experiment(N_list)
-    experiment_class.run_experiment(job_index, system, repetitions_per_parameter_set, labeling_threshold_list, reduction_threshold)
+    experiment_class.run_experiment(job_index, system, repetitions_per_parameter_set, labeling_threshold_list)
 if __name__ == "__main__":
     main()
 
