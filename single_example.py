@@ -32,6 +32,9 @@ labeling_threshold_list = [0.49]
 # example index gives an integer-valued name to the computation, which corresponds to file names in the folder output
 example_index = 4
 
+# reduction_threshold * 100 is the percentage decrease of the training loss between the first and final epoch that must be observed in order to continue the computation
+# if this criterion is not met, the training restarts (at different initial conditions)
+
 ''' Main code block '''
 
 def main():

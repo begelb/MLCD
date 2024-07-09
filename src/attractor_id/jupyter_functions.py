@@ -28,7 +28,7 @@ def train_classifier(system, N, epochs, file_name):
     reduction_thresh = 0.1
   #  else:
    #     batch_size = 1000 #get_batch_size(train_data, percentage = 0.1)
-    trained_network, train_loss_list, test_loss_list, restart_count = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience, reduction_thresh)
+    trained_network, train_loss_list, test_loss_list, restart_count = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience)
     save_model(trained_network, file_name)
     model = load_model(system, N, file_name)
     return model, train_loss_list, test_loss_list
@@ -71,7 +71,7 @@ def make_polytope_plot(system, cube_list, file_name):
     config = configure(config_fname)
     if config.dimension != 2:
         return 'The system has dimension greater than 2, so a plot was not produced.'
-    plot_polytopes(config, cube_list, True, file_name)
+    plot_polytopes(config, cube_list, True, file_name, system)
 
 def plot_loss(system, test_loss_list, train_loss_list, file_name):
     config_fname = f'config/{system}.txt'

@@ -115,6 +115,8 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
 
     scatter = ax.scatter(scatterx, scattery, marker ='o', s = 6, cmap = 'viridis', c = result_list, alpha = 1)
 
+    if system == 'straight_separatrix':
+        cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.13, format="%.1f", anchor = (0.5, 0.0), ticks = [0.0, 0.5, 1.0])
     if system == 'radial_2labels':
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.13, format="%.1f", anchor = (0.5, 0.0), ticks = [0.0, 0.5, 1.0])
     if system == 'ellipsoidal_2d':

@@ -49,7 +49,7 @@ def test_loop(dataloader, model, loss_fn, num_labels):
     test_loss /= num_batches
     return test_loss
     
-def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience, reduction_thresh):
+def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience):
 
     restart_count = 0
 
@@ -91,7 +91,7 @@ def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epo
                     print('stopping patience')
 
                     # Check if the train loss reduced by at least reduction_thresh * 100 percent
-                    loss_reduced = loss_reduction(train_loss_list[0], train_loss_list[-1], reduction_thresh)
+                    loss_reduced = loss_reduction(train_loss_list[0], train_loss_list[-1], config.reduction_threshold)
                     if loss_reduced:
                         return model, train_loss_list, test_loss_list, restart_count
                     else:
@@ -100,7 +100,7 @@ def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epo
                 else:
                     print('not stopping patience')
         else: 
-            loss_reduced = loss_reduction(train_loss_list[0], train_loss_list[-1], reduction_thresh)
+            loss_reduced = loss_reduction(train_loss_list[0], train_loss_list[-1], config.reduction_threshold)
             if loss_reduced:
                 return model, train_loss_list, test_loss_list, restart_count
             else:

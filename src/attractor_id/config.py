@@ -33,6 +33,7 @@ class Config:
         self.batch_size = config["batch_size"]
         self.weak_weight_share = config["weak_weight_share"]
         self.patience = config["patience"]
+        self.reduction_threshold = config["reduction_threshold"]
 
     def check_types(self):
         if type(self.example_type) is not str:
@@ -85,6 +86,8 @@ class Config:
             raise Exception("Weak_weight_share has the wrong type. Must be " + str(bool) + ". Found a " + str(type(self.weak_weight_share)))
         if type(self.patience) is not int:
             raise Exception("Patience has the wrong type. Must be a  " + str(int) + ". Found a " + str(type(self.patience)))
+        if type(self.reduction_threshold) is not float:
+            raise Exception("Reduction_threshold has the wrong type. Must be " + str(float) + ". Found a " + str(type(self.reduction_threshold)))
 
 def user_warning_about_N_and_dimension(config, N):
     if N % config.dimension != 0:

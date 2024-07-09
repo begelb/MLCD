@@ -20,5 +20,6 @@
     'threshold_prediction': False,
     'batch_size': 10000,
     'weak_weight_share': False,
-    'patience': 100
+    'patience': 100,
+    'reduction_threshold': 0.1
 }
