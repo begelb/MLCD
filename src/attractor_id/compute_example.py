@@ -19,20 +19,28 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
     if not os.path.isdir(results_directory):
         os.makedirs(results_directory)
 
+    decomposition_intersects_domain = False
+
     with open(f'{results_directory}/{example_index}-results.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(["ex_num", "N", "optimizer_choice", "learning_rate", "patience", "epochs", "batch_size", "weak_weight_share", "threshold_prediction", "reduction_threshold", "restart_count", "epsilon", "num_cubes", "final_test_loss", "test_accuracy", "hom_uncertain", "hom_zero", "hom_one", "hom_two", "hom_three"])
 
         using_pandas = config.using_pandas
-        train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas = using_pandas)
         batch_size = config.batch_size
         epochs = config.epochs
         patience = config.patience
-        trained_network, train_loss_list, test_loss_list, restart_count = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience)
-        save_model(trained_network, example_index, config)
-        model = load_model(N, system, config, 1, example_index)
-        sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list = get_decomposition_data(config, N, train_data, model)
+
+        train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas = using_pandas)
         
+        while not decomposition_intersects_domain:
+            trained_network, train_loss_list, test_loss_list, restart_count = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience)
+            save_model(trained_network, example_index, config)
+            model = load_model(N, system, config, 1, example_index)
+            sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list = get_decomposition_data(config, N, train_data, model)
+        
+            if len(total_hyperplane_list) > 2 * config.dimension:
+                decomposition_intersects_domain = True
+
         for labeling_threshold in labeling_threshold_list:
             homology_dict, num_cubes_labeled, total_hyperplane_list, cube_list_for_polytope_figure = get_homology_dict_from_model(config, model, labeling_threshold, sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list)
             accuracy = compute_accuracy(model, figure_dataloader, config, labeling_threshold)
