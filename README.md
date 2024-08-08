@@ -5,10 +5,10 @@ This code was developed using [Python 3.9.6](https://www.python.org/downloads/re
 
 After downloading a copy of the repository, navigate to the project folder and use one of the following commands to install the attractor_id package. The first commmand is preferred if you have multiple versions of Python. 
 
-Installation Command Option 1 (preferred): 
+**Installation Command Option 1 (preferred)**: 
 ```python -m pip install .```
 
-Installation Command Option 2:
+**Installation Command Option 2**:
 ```pip install .```
 
 
