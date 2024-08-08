@@ -15,7 +15,7 @@ After downloading a copy of the repository, navigate to the project folder and u
 
 ## How to use the code available in a Jupyter notebook
 The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, it is possible to:
-- Train a neural network using the data from the paper
+- Train a cubical neural network using the data from the paper
 - Produce a plot of the learned function and cubical decomposition of phase space,
 - Produce a plot of the labeled cubes, and
 - Compute homology of labeled regions that are approximations of attracting neighborhoods.
