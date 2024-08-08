@@ -3,7 +3,7 @@
 ## Installation
 This code was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/). **The program must be executed using Python<=3.11**.
 
-After downloading a copy of this repository, navigate to the project folder and use one of the following commands to install the attractor_id package. The first commmand is preferred if you have multiple versions of Python. 
+After downloading a copy of the repository, navigate to the project folder and use one of the following commands to install the attractor_id package. The first commmand is preferred if you have multiple versions of Python. 
 
 ```python -m pip install .```
 
