@@ -15,15 +15,15 @@ After downloading a copy of the repository, navigate to the project folder and u
 ## How to use the code available in a Jupyter notebook
 The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, it is possible to:
 - Train a neural network using the data from the paper
-- Compute homology of labeled regions from the learned decomposition of phase space, and
-- Produce a plot of the decomposition. 
+- Produce a plot of the learned function and cubical decomposition of phase space,
+- Produce a plot of the labeled cubes, and
+- Compute homology of labeled regions that are approximations of attracting neighborhoods.
 
 ## How to create your own data
 Data for each system is already produced and contained in the ```data``` directory.
 To produce new data, one can run ```data_production/make_data.py```. Choose the system number and the number of initial points, and a persistence diagram will be produced. From this, it is necessary to choose an appropriate threshold, and then the data will be saved as ```data.csv```, which one can split into a training and testing set.
 
 ## System configurations
-
 Variables that are system specific or which we expect to be changed infrequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and named by the corresponding system. With the exception of the Jupyter notebook, ```learn_decomposition.ipynb```, all computations use local copies of the training and testing datasets with paths specified in the configuration file. By default, the paths are specified with the provided data.
 
 The variable data_bounds specifies the domain of the data. The final decomposition of phase space is intersected with this domain. The set $[0, 1] \times [0, 1]$ should be written as $[0, 1, 0, 1]$.
