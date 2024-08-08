@@ -26,7 +26,7 @@ To produce new data, one can run ```data_production/make_data.py```. Choose the 
 ## System configurations
 Variables that are system specific or which we expect to be changed infrequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and named by the corresponding system. With the exception of the Jupyter notebook, ```learn_decomposition.ipynb```, all computations use local copies of the training and testing datasets with paths specified in the configuration file. By default, the paths are specified with the provided data.
 
-The variable data_bounds specifies the domain of the data. The final decomposition of phase space is intersected with this domain. The set $[0, 1] \times [0, 1]$ should be written as $[0, 1, 0, 1]$.
+The variable data_bounds specifies the domain of the data. The final decomposition of phase space is intersected with this domain. The set $[0, 1] \times [0, 1]$ should be written as $[[0, 1], [0, 1]]$.
 
 If threshold_prediction = True, then the result of the neural network is thresholded between $0$ and $K-1$ where $K$ is the number of labels.
 
