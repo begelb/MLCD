@@ -28,11 +28,13 @@ Variables that are system specific or which we expect to be changed infrequently
 
 The variable data_bounds specifies the domain of the data. The final decomposition of phase space is intersected with this domain. The set $[0, 1] \times [0, 1]$ should be written as $[[0, 1], [0, 1]]$.
 
-If threshold_prediction = True, then the result of the neural network is thresholded between $0$ and $K-1$ where $K$ is the number of labels.
+If ```threshold_prediction = True```, then as in the paper, the result of the neural network is thresholded between $0$ and $K-1$ where $K$ is the number of labels.
 
-If weak_weight_share = True, then the network is constrained so that parallel hyperplanes correspond to weights that vary by *trainable* constant multiples, which are initialized all equal to one. If weak_weight_share = False, then these constant multiples are *not trainable* and thus remain equal to one throughout the duration of training.
+If ```weak_weight_share = True```, then the network is constrained so that parallel hyperplanes correspond to weights that vary by *trainable* constant multiples, which are initialized all equal to one. If ```weak_weight_share = False```, then these constant multiples are *not trainable* and thus remain equal to one throughout the duration of training. The results of the paper were produced with ```weak_weight_share = False```.
 
-The parameter reduction_threshold is the proportional decrease of the training loss between the first and final epoch that must be observed in order to continue the computation to the step of obtaining the decomposition. If this criterion is not met, the training restarts (at different initial conditions). For example, setting reduction_threshold = 0.1 means that the training loss must decrease by 10% throughout the duration of training in order to continue. 
+The parameter ```reduction_threshold``` corresponds to $\beta$ in the paper: it is the proportional decrease of the training loss between the first and final epoch that must be observed in order to continue the computation to the step of obtaining the decomposition. If this criterion is not met, the training restarts (at different initial conditions). For example, setting reduction_threshold = 0.1 means that the training loss must decrease by 10% throughout the duration of training in order to continue.
+
+The parameter ```patience``` corresponds to $\rho$ in the paper: it controls an early stopping criterion for the training process.
 
 ## Alternative way to compute a single example
 As an alternative to the Jupyter notebook, it is possible to compute a single example using the file ``` single_example.py ```. 
