@@ -1,4 +1,4 @@
-# attractor-identification-draft
+# Machine-Learned Cubical Decomposition (MLCD)
 
 
 ## Installation
