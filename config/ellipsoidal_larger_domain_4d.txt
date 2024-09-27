@@ -6,7 +6,7 @@
     'verbose': True,
     'make_figures': True,
     'dimension': 4,
-    'data_bounds': '[-10, 10, -10, 10, -10, 10, -10, 10]',
+    'data_bounds': '[[-10, 10], [-10, 10], [-10, 10], [-10, 10]]',
     'train_data_file': 'data/ellipsoidal_larger_domain_4d/train.csv',
     'test_data_file': 'data/ellipsoidal_larger_domain_4d/test.csv',
     'train_url': '',

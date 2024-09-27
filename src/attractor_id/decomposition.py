@@ -8,23 +8,34 @@ def add_boundaries(config, hyperplane_list, data_as_tensors, is_boundary_hyperpl
     d = config.dimension
     data_bounds_list = config.data_bounds
     normal = hyperplane_list[0].normal_vec
-    lower_bound = data_bounds_list[d]
-    upper_bound = data_bounds_list[d+1]
+
+    # Initialize two hyperplanes that are parallel to the hyperplanes in hyperplane list
+    lower_bound = data_bounds_list[0][0]
+    upper_bound = data_bounds_list[0][1]
+    # The arguments lower_bound - 1 and upper_boundary + 1 are relatively arbitrary here
+    # It is not a mistake to use the bounds of the first dimension for all dimensions
+    # The goal is to start not too close to the origin so that move_outer_boundary finishes quickly
     neg_boundary = Hyperplane(normal, lower_bound - 1)
     pos_boundary = Hyperplane(normal, upper_bound + 1)
-    new_pos_hyperplane = move_outer_boundary(neg_boundary, data_as_tensors, d)
-    new_neg_hyperplane = move_outer_boundary(pos_boundary, data_as_tensors, d)
+
+    # Move the hyperplanes until they are outside the domain
+    new_pos_hyperplane = move_outer_boundary(neg_boundary, data_as_tensors)
+    new_neg_hyperplane = move_outer_boundary(pos_boundary, data_as_tensors)
+
+    # Add the hyperplanes to hyperplane list and is_boundary_hyperplane_dict
     hyperplane_list.append(new_pos_hyperplane)
     hyperplane_list.append(new_neg_hyperplane)
     is_boundary_hyperplane_dict[new_neg_hyperplane] = True
     is_boundary_hyperplane_dict[new_pos_hyperplane] = True
+
+    # Return updated hyperplane_list and updated is_boundary_hyperplane_dict
     return hyperplane_list, is_boundary_hyperplane_dict
 
-def move_outer_boundary(hyperplane, data_as_tensors, d):
+def move_outer_boundary(hyperplane, data_as_tensors):
     KeepMoving = True
     while KeepMoving:
-        hyperplane = hyperplane.move_away_from_zero(percentage = 10)
-        if data_is_on_one_side_of_hyperplane(hyperplane, data_as_tensors, d):
+        hyperplane = hyperplane.move_away_from_origin(percentage = 10)
+        if data_is_on_one_side_of_hyperplane(hyperplane, data_as_tensors):
             KeepMoving = False
     return hyperplane
 
@@ -111,7 +122,7 @@ def make_hyperplane_dicts(config, c_tensor_dict, N, biaslist, data_as_tensors, w
             total_hyperplane_list.extend(new_hyperplane_list)
             hyperplane_list.extend(new_hyperplane_list)
             for H in new_hyperplane_list:
-                if data_is_on_one_side_of_hyperplane(H, data_as_tensors, d):
+                if data_is_on_one_side_of_hyperplane(H, data_as_tensors):
                     is_boundary_hyperplane_dict[H] = True
                 else:
                     is_boundary_hyperplane_dict[H] = False

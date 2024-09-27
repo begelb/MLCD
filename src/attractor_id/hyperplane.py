@@ -5,6 +5,7 @@ class Hyperplane:
     def __init__(self, normal_vector, bias):
         self.normal_vec = normal_vector
         self.bias = bias
+        # the hyperplane is given by the equation <x, normal_vec> + bias = 0
 
     def eval_hyperplane(self, vec):
         return np.dot(np.asarray(vec), np.asarray(self.normal_vec)) + self.bias
@@ -12,7 +13,7 @@ class Hyperplane:
     def unit_normal(self):
         return np.asarray(self.normal_vec, dtype = float) * float(1/np.linalg.norm(self.normal_vec))
 
-    def move_away_from_zero(self, percentage):
+    def move_away_from_origin(self, percentage):
         b = self.bias
         new_b = b*percentage
         return Hyperplane(self.normal_vec, new_b)
@@ -27,7 +28,7 @@ def hyperplane_intersection(hyperplane_list, d):
     # solve and return the system of linear equations Nx = b
     return torch.linalg.solve(N, b)
 
-def data_is_on_one_side_of_hyperplane(hyperplane, data_as_tensors, d):
+def data_is_on_one_side_of_hyperplane(hyperplane, data_as_tensors):
 
     # We will keep track of the sign of the data points when evaluated at the hyperplane equation, and ultimately return True if all the signs are the same and False if at least two signs are different
 

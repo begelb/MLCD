@@ -1,3 +1,5 @@
+''' The functions in this file are used to make the lists that are written to the results file '''
+
 def get_initial_list_to_write(config, example_index, N, labeling_threshold, num_cubes_labeled, test_loss_list, accuracy, restart_count):
     initial_list = [example_index, N, config.optimizer_choice, config.learning_rate, config.patience, config.epochs, config.batch_size, config.weak_weight_share, config.threshold_prediction, config.reduction_threshold, restart_count, labeling_threshold, num_cubes_labeled, test_loss_list[-1], accuracy]
     return initial_list

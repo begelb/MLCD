@@ -1,12 +1,12 @@
 {
     'example_type': 'Ellipsoidal system in 2d',
     'learning_rate': 0.01,
-    'epochs': 1000,
+    'epochs': 10,
     'optimizer_choice': 'Adam',
     'verbose': True,
     'make_figures': True,
     'dimension': 2,
-    'data_bounds': '[-4, 4, -4, 4]',
+    'data_bounds': '[[-4.75, 4.75], [-4, 4]]',
     'train_data_file': 'data/ellipsoidal_2d/train.csv',
     'test_data_file': 'data/ellipsoidal_2d/test.csv',
     'train_url': '',
@@ -20,6 +20,6 @@
     'threshold_prediction': True,
     'batch_size': 1000,
     'weak_weight_share': False,
-    'patience': 100,
+    'patience': 3,
     'reduction_threshold': 0.1
 }

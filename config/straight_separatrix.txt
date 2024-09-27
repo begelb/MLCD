@@ -1,12 +1,12 @@
 {
     'example_type': 'Two stable fixed points (straight separatrix)',
     'learning_rate': 0.01,
-    'epochs': 100,
+    'epochs': 10,
     'optimizer_choice': 'Adam',
     'verbose': True,
     'make_figures': True,
     'dimension': 2,
-    'data_bounds': '[-2, 2, -3.5, 3.5]',
+    'data_bounds': '[[-2, 2], [-3.5, 3.5]]',
     'train_data_file': 'data/straight_separatrix/train.csv',
     'test_data_file': 'data/straight_separatrix/test.csv',
     'train_url': '',
@@ -20,5 +20,6 @@
     'threshold_prediction': True,
     'batch_size': 1000,
     'weak_weight_share': False,
-    'patience': 10
+    'patience': 3,
+    'reduction_threshold': 0.1
 }
