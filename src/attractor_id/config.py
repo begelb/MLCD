@@ -52,9 +52,10 @@ class Config:
             raise Exception("Dimension has the incorrect type. Must be " + str(int) + ". Found a " + str(type(self.dimension)))
         if type(self.data_bounds) is not list:
             raise Exception("Data bounds has the incorrect type. Must be " + str(list) + ". Found a " + str(type(self.data_bounds)))
-        for bound in self.data_bounds:
-            if type(bound) is not float and type(bound) is not int:
-                raise Exception("Data bounds list element has the incorrect type. Must be " + str(float) + " or " + str(int) + ". Found a " + str(type(bound)))
+        for list_for_dimension in self.data_bounds:
+            for bound in list_for_dimension:
+                if type(bound) is not float and type(bound) is not int:
+                    raise Exception("Data bounds list element has the incorrect type. Must be " + str(float) + " or " + str(int) + ". Found a " + str(type(bound)))
         if type(self.train_data_file) is not str:
             raise Exception("Train data file has the incorrect type. Must be " + str(str) + " Found a " + str(type(self.train_data_file)))
         if type(self.test_data_file) is not str:

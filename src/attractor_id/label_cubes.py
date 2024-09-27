@@ -2,17 +2,18 @@ import torch
 from .decomposition import get_group_index_to_num_hyperplanes_dict
 from .cube import get_cube_as_polytope, get_cube_vertices_for_labeling
 from .decomposition import next_cube_index
+from .cube import Cube
 
-''' Function that returns output of regression network for a given input after applying thresholding '''
+# Evaluate the regression network model at a single point x
 def evaluate_regression_network(config, x, model):
     with torch.no_grad():
         d = config.dimension
-        num_labels = config.num_labels
         result = model(x.clone().detach().view(1, d))
-       # result = torch.clamp(model(x.clone().detach().view(1, d)), min = 0.0, max = float(num_labels) - 1)
     return float(result)
 
+# Label a cube given a list of vertices, a regression network model, and a labeling threhsold
 def get_cube_label(config, vertex_list, model, labeling_threshold):
+    # Instantiate a list to keep track of the label of each vertex of the cube
     label_list = []
 
     for vertex in vertex_list:
@@ -20,21 +21,30 @@ def get_cube_label(config, vertex_list, model, labeling_threshold):
         if not isinstance(vertex, torch.Tensor):
             # Convert vertex to a tensor
             vertex = torch.tensor(vertex)
+        # Evaluate the network at the vertex
         network_value_at_vertex = evaluate_regression_network(config, vertex, model)
 
         has_label = False
+        
+        # For each possible label, check if the network value is within epsilon of the label
         for label in range(config.num_labels):
             if label - labeling_threshold <= network_value_at_vertex <= label + labeling_threshold:
+                # If the criterion is met, then break
+                # Add the label to the label_list
                 label_list.append(label)
                 has_label = True
                 break
 
+        # If the network value is not within labeling_threshold of any of the labels, then give the uncertain label
         if not has_label:
             label_list.append(config.num_labels)
 
+    # Check if the label vertices agree
     label_set = list(set(label_list))
+    # If the label vertices do not agree, return the uncertain label
     if len(label_set) > 1:
         return config.num_labels
+    # Otherwise, return the label at which they agree
     elif len(label_set) == 1:
         return label_set[0]
 
@@ -59,18 +69,12 @@ def init_label_to_cube_dict(config):
         label_to_cubes_dict[label] = []
     return label_to_cubes_dict
 
-class Cube:
-    def __init__(self, label, vertex_list):
-        self.label = label
-        self.vertex_list = vertex_list
-
 def get_labeled_cubes(config, sorted_hyperplane_dict, list_of_hyperplane_lists, model, labeling_threshold):
 
     # Define the polytope (cube) that represents the domain
     label_to_cubes_dict = init_label_to_cube_dict(config)
 
     num_of_hyperplanes_dict = get_group_index_to_num_hyperplanes_dict(list_of_hyperplane_lists)
-
 
     cube_list_for_polytope_figure = []
 

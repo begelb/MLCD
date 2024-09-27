@@ -6,7 +6,7 @@
     'verbose': True,
     'make_figures': True,
     'dimension': 2,
-    'data_bounds': '[-4, 4, -4, 4]',
+    'data_bounds': '[[-4, 4], [-4, 4]]',
     'train_data_file': 'data/radial_2labels/train.csv',
     'test_data_file': 'data/radial_2labels/test.csv',
     'train_url': '',
