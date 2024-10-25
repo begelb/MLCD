@@ -1,4 +1,4 @@
-# Machine-Learned Cubical Decomposition (MLCD)
+# Machine-Learned Cubical Decomposition (MLCD) of Phase Space
 
 
 ## Installation
