@@ -1,4 +1,4 @@
-# Machine-Learned Cubical Decomposition (MLCD) of Phase Space
+# Machine-Learned Cubical Decomposition (MLCD) of Phase Space for Attracting Neighborhood Approximation
 
 
 ## Installation
