@@ -129,6 +129,9 @@ def make_hyperplane_dicts(config, c_tensor_dict, N, biaslist, data_as_tensors, w
         hyperplane_dict[k] = hyperplane_list
     return hyperplane_dict, is_boundary_hyperplane_dict
 
+''' Will write a new version of the following two functions '''
+
+
 def get_hyperplane_data(config, hyperplane_dict, data_as_tensors, is_boundary_hyperplane_dict):
     list_of_hyperplane_lists = []
     sorted_hyperplane_dict = dict()
@@ -142,12 +145,22 @@ def get_hyperplane_data(config, hyperplane_dict, data_as_tensors, is_boundary_hy
         sorted_hyperplane_dict[k] = sorted_hyperplane_list_with_single_boundaries
     return list_of_hyperplane_lists, sorted_hyperplane_dict, total_hyperplane_list
 
+def get_hyperplane_dict(config, N, data, model):
+    parameter_dict = get_model_parameters(model)
+    coordinate_to_weights_dict = make_coordinate_to_weights_dict(config, parameter_dict["shared_weight_matrix"], N)
+    data_as_tensors = convert_data_to_tensors(data, config.dimension)
+    hyperplane_dict, is_boundary_hyperplane_dict = make_hyperplane_dicts(config, coordinate_to_weights_dict, N, parameter_dict["biaslist"], data_as_tensors, parameter_dict["weight_coefficients"])
+    return hyperplane_dict, is_boundary_hyperplane_dict
 
 def get_decomposition_data(config, N, data, model):
     parameter_dict = get_model_parameters(model)
     coordinate_to_weights_dict = make_coordinate_to_weights_dict(config, parameter_dict["shared_weight_matrix"], N)
     data_as_tensors = convert_data_to_tensors(data, config.dimension)
     hyperplane_dict, is_boundary_hyperplane_dict = make_hyperplane_dicts(config, coordinate_to_weights_dict, N, parameter_dict["biaslist"], data_as_tensors, parameter_dict["weight_coefficients"])
+    # can do the above for the networks separately
+    # then put the results together into one hyperplane_dict and one is_boundary_hyperplane_dict
+    # then do the next function for those inputs
+    # from there it will be possible to pass to the remaining functions as written
     list_of_hyperplane_lists, sorted_hyperplane_dict, total_hyperplane_list = get_hyperplane_data(config, hyperplane_dict, data_as_tensors, is_boundary_hyperplane_dict)
 
     return sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list

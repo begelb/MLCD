@@ -14,7 +14,7 @@ def get_optimizer(config, model):
         return torch.optim.Adagrad(model.parameters(), learning_rate)
     
 class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
-    def __init__(self, N, batch_size, config):
+    def __init__(self, N, batch_size, config, init_shared_weight_matrix):
         super(Regression_Cubical_Network_One_Nonlinearity, self).__init__()
         
         # d is the dimension of the input
@@ -30,7 +30,7 @@ class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
 
         # shared_weight_matrix is a d x d matrix with rows made up of the weights that are each shared up to a constant multiple (weight_cofficients) among a set of N//d nodes of the hidden layer
         # shared_weight_matrix is an initialized as a d x d identity matrix
-        self.shared_weight_matrix =  nn.Parameter(torch.eye(self.d), requires_grad=True)
+        self.shared_weight_matrix =  init_shared_weight_matrix #nn.Parameter(torch.eye(self.d), requires_grad=True)
         # register shared_weight_matrix so that it can be accessed using this name at any point
         self.register_parameter('shared_weight_matrix', self.shared_weight_matrix)
 
@@ -52,8 +52,8 @@ class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
         bias_initial_lower_bounds = torch.zeros(N)
         bias_initial_upper_bounds = torch.zeros(N)
         for i in range(self.d):
-            bias_initial_lower_bounds[hidden_node_keys == i] = torch.tensor(data_bounds_list[i*2], dtype=torch.float)
-            bias_initial_upper_bounds[hidden_node_keys == i] = torch.tensor(data_bounds_list[i*2 + 1], dtype=torch.float)
+            bias_initial_lower_bounds[hidden_node_keys == i] = torch.tensor(data_bounds_list[i][0], dtype=torch.float)
+            bias_initial_upper_bounds[hidden_node_keys == i] = torch.tensor(data_bounds_list[i][1], dtype=torch.float)
         
         # each bias is the negation of a hyperplane offset, which is why the next line might look unnatural
         self.bias = nn.Parameter(torch.rand(self.N)*(bias_initial_lower_bounds - bias_initial_upper_bounds) - bias_initial_lower_bounds)
@@ -106,8 +106,8 @@ class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
         else:
             return output
 
-def load_model(N, system, config, batch_size, example_index=0):
-    cube_reg_model = Regression_Cubical_Network_One_Nonlinearity(N, batch_size, config)
+def load_model(N, system, config, batch_size, init_shared_weight_matrix, example_index=0):
+    cube_reg_model = Regression_Cubical_Network_One_Nonlinearity(N, batch_size, config, init_shared_weight_matrix)
     cube_reg_model.load_state_dict(torch.load(f'output/models/{system}/{example_index}-model.pth'))
     return cube_reg_model
 

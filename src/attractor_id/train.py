@@ -49,7 +49,7 @@ def test_loop(dataloader, model, loss_fn, num_labels):
     test_loss /= num_batches
     return test_loss
     
-def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience):
+def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience, init_shared_weight_matrix):
 
     restart_count = 0
 
@@ -61,7 +61,7 @@ def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epo
 
         ''' Set up neural network and training variables'''
         loss_fn = nn.MSELoss()
-        model = Regression_Cubical_Network_One_Nonlinearity(N, batch_size, config)
+        model = Regression_Cubical_Network_One_Nonlinearity(N, batch_size, config, init_shared_weight_matrix)
         optimizer = get_optimizer(config, model)
 
         test_loss_list = []
@@ -83,9 +83,9 @@ def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epo
                 print(f"Train loss: {loss_train:>7f}")
 
             # Early stopping condition compares the current test loss mean over 'patience' epochs to the test loss mean over 'patience' epochs at the last step
-            # If the test loss mean has increased, then stop training
+            # If the test loss mean has increased or stayed the same, then stop training
             if epoch_number >= patience:
-                if np.mean(test_loss_list[-patience:]) > np.mean(test_loss_list[-patience-1:-1]):
+                if np.mean(test_loss_list[-patience:]) >= np.mean(test_loss_list[-patience-1:-1]):
                     # Check if the train loss reduced by at least reduction_thresh * 100 percent
                     loss_reduced = loss_reduction(train_loss_list[0], train_loss_list[-1], config.reduction_threshold)
                     if loss_reduced:
@@ -99,6 +99,39 @@ def train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epo
                 return model, train_loss_list, test_loss_list, restart_count
             else:
                 restart_count += 1
+
+def compute_accuracy_ensemble(model1, model2, model3, dataloader, config, labeling_threshold):
+    num_labels = config.num_labels
+    num_batches = len(dataloader)
+    correct_num = 0
+    total_samples = 0
+    with torch.no_grad():
+        for batch, (X, y) in enumerate(dataloader):
+            pred1 = torch.clamp(model1(X), 0.0, 1.0)
+            pred2 = torch.clamp(model2(X), 0.0, 1.0)
+            pred3 = torch.clamp(model3(X), 0.0, 1.0)
+
+            # Stack the predictions along a new dimension
+            preds = torch.stack([pred1, pred2, pred3], dim=0)
+
+            # Find the index of the max prediction along the stacked dimension
+            max_indices = torch.argmax(preds, dim=0)
+
+            print(preds[:, :10])
+            print(max_indices[:10])
+            print(y[:10])
+
+            for index, elmt in enumerate(max_indices):
+                predicted_label = elmt[0].item()
+                true_label = int(y[index][0].item())
+
+                if predicted_label == true_label:
+                    correct_num += 1
+
+                total_samples += 1
+
+    accuracy = correct_num/total_samples
+    return accuracy
 
 def compute_accuracy(model, dataloader, config, labeling_threshold):
     num_labels = config.num_labels

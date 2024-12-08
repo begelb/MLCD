@@ -229,6 +229,150 @@ def generate_domain_bounding_hyperplanes(config):
     return domain_bounding_hyperplanes
 
 ''' Plot the cubical decomposition together with a colormap depicting the learned function '''
+def make_ensemble_decomposition_figure(config, model1, model2, model3, total_hyperplane_list, show, file_name, system):
+
+    if system == 'straight_separatrix':
+        font_size = 30
+    else:
+        font_size = 28
+    # Set font properties
+    font = {'family' : 'serif',
+            'size'   : font_size}
+    plt.rc('font', **font)
+
+    # Add hyperplanes that support the rectangular domain to the list of hyperplanes to plot
+    total_hyperplane_list.extend(generate_domain_bounding_hyperplanes(config))
+
+    # Set layout properties
+    x_min, x_max, y_min, y_max = get_x_y_min_max(config)
+    width = float(x_max - x_min)
+    height = float(y_max - y_min)
+    ratio = width/height
+    plt.style.use('_mpl-gallery-nogrid')
+
+    if system == 'ellipsoidal_2d':
+        fig1 = plt.figure(figsize = (7.25, 8.5))
+    elif system == 'radial_2labels':
+        fig1 = plt.figure(figsize = (7.25, 8.5))
+    elif system == 'radial_3labels':
+        fig1 = plt.figure(figsize = (7.25, 8))
+    elif system == 'straight_separatrix':
+        fig1 = plt.figure(figsize = (8, 7))
+        #fig1 = plt.figure(figsize=(10 + 4, 10 * ratio + 4.75))
+    else:
+        #fig1 = plt.figure(figsize=(10 + 2, 10 * ratio + 4.75))
+       # fig1 = plt.figure(figsize=(10 + 2, 10 * ratio + 4.75))
+        fig1 = plt.figure(figsize = (7, 7))
+    
+    ax = fig1.add_subplot(111)
+
+    # Adjust layout and set axis properties 
+    step = 2
+
+    if system == 'straight_separatrix':
+        plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
+        ax.set(xlim=(x_min, x_max), xticks=[-2, 0, 2],
+            ylim=(y_min, y_max), yticks=[-3, 0, 3])
+    elif system == 'ellipsoidal_2d':
+        plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
+        ax.set(xlim=(x_min, x_max), xticks=[-4, -2, 0, 2, 4],
+            ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
+    elif system == 'radial_2labels':
+        plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
+        ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
+            ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
+    elif system == 'radial_3labels':
+        plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
+        ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
+            ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
+    else:
+        #plt.subplots_adjust(left=0.19, bottom=0.25, top=0.9, right = 0.9)
+        plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
+        ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
+            ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    plt.xticks()
+    plt.yticks()
+
+    # Plot points on a uniform grid and color according to the value of the network
+    scatterx = []
+    scattery = []
+    subdivisions = 250
+    result_list = []
+    for i in range(subdivisions):
+        x = x_min + (width/subdivisions) * i
+        for j in range(subdivisions):
+            y = y_min + (height/subdivisions) * j
+            scatterx.append(float(x))
+            scattery.append(float(y))
+
+            values = np.zeros(2)
+            values[0] += float(x)
+            values[1] += float(y)
+            data_tensor = torch.tensor(np.asarray([values]), dtype = torch.float32)
+            pred1 = float(model1(data_tensor)[0])
+            pred2 = float(model2(data_tensor)[0])
+            pred3 = float(model3(data_tensor)[0])
+
+            if pred1 >= pred2 and pred1 >= pred3:
+                pred = pred1
+            
+            elif pred2 >= pred1 and pred2 >= pred3:
+                pred = pred2 + 1
+
+            elif pred3 >= pred1 and pred3 >= pred2:
+                pred = pred3 + 1
+            
+            result_list.append(pred)
+    scatter = ax.scatter(scatterx, scattery, marker ='o', s = 6, cmap = 'viridis', c = result_list, alpha = 1)
+
+    # Plot lines with width determinted by total number
+    if len(total_hyperplane_list) > 24:
+        linewidth = 3
+    else:
+        linewidth = 5
+    for hyperplane in total_hyperplane_list:
+        # Plot vertical and horizontal lines
+        if np.isclose(np.asarray(hyperplane.normal_vec[1]), np.asarray([0])):
+            plt.axvline(x = -hyperplane.bias/hyperplane.normal_vec[0], ymin = y_min, ymax = y_max, c = 'w', linewidth=linewidth)
+        elif np.isclose(np.asarray(hyperplane.normal_vec[0]), np.asarray([0])):
+            plt.axhline(y = -hyperplane.bias/hyperplane.normal_vec[1], xmin = x_min, xmax = x_max, c = 'w', linewidth=linewidth)
+        # Plot all other lines
+        else:
+            # Compute slope and y-intercept
+            normal_vec_0 = np.dot(np.asarray(hyperplane.normal_vec), np.asarray([1, 0]))
+            normal_vec_1 = np.dot(np.asarray(hyperplane.normal_vec), np.asarray([0, 1]))
+            yintercept = -hyperplane.bias/normal_vec_1
+            slope = -normal_vec_0/normal_vec_1 
+            b = float(yintercept)
+            m = float(slope)
+            # Plot line using equation
+            x = np.linspace(x_min, x_max, 10)
+            y = m * x + b
+            ax.plot(x, y, c = 'w', linewidth = linewidth)
+
+    # Add colorbar
+    if system == 'radial_3labels':
+        cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.13, format="%.1f", anchor = (0.5, 0.0))
+    elif system == 'straight_separatrix':
+        cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
+    elif system == 'ellipsoidal_2d':
+        cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
+    elif system == 'radial_2labels':
+        cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
+    cbar.ax.tick_params()
+
+    # Save figure as png and svg file
+    plt.savefig(file_name + '.png')
+  #  plt.savefig(file_name + '.svg')
+
+    # Show and close figure
+    if show:
+        plt.show()
+    plt.close(fig1)
+
+''' Plot the cubical decomposition together with a colormap depicting the learned function '''
 def make_decomposition_figure(config, model, total_hyperplane_list, show, file_name, system):
 
     if system == 'straight_separatrix':

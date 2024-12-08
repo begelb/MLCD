@@ -52,6 +52,70 @@ class MyDataset(Dataset):
         label = torch.ones(1, dtype=torch.float32) * label
         return point, label
     
+class DatasetForOneVRest(Dataset):
+    # spotlight class is the class which is highlighted (the "one") versus the other classes 
+    def __init__(self, spotlight_class, d, annotations_file):
+        self.d = d
+        self.spotlight_class = spotlight_class
+        with open(annotations_file, newline='') as f:
+            reader = csv.reader(f)
+            self.data = list(reader)
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        data_point = self.data[idx]
+        point = torch.zeros(self.d)
+        for i in range(0, self.d):
+            point[i] = float(data_point[i])
+        original_label = int(round(float(data_point[self.d])))
+
+        # if the label in the dataset corresponds to the spotlight_class, then it is given a final label of 1
+        # otherwise, it is given a final label of 0
+        if original_label == self.spotlight_class:
+            label = 1
+        else:
+            label = 0
+        label = torch.ones(1, dtype=torch.float32) * label
+        return point, label
+    
+class EnsembleData():
+    def __init__(self, config):
+        d = config.dimension
+
+        batch_size = config.batch_size
+
+        train_dataloaders_dict = dict()
+        test_dataloaders_dict = dict()
+
+        train_data_file = config.train_data_file
+        test_data_file = config.test_data_file
+
+        for spotlight_label in range(config.num_labels):
+            train_dataset = DatasetForOneVRest(spotlight_label, d, train_data_file)
+            test_dataset = DatasetForOneVRest(spotlight_label, d, test_data_file)
+
+            train_dataloader = DataLoader(train_dataset, batch_size = batch_size, shuffle=True)
+            test_dataloader = DataLoader(test_dataset, batch_size = batch_size, shuffle=True)
+
+            train_dataloaders_dict[spotlight_label] = train_dataloader
+            test_dataloaders_dict[spotlight_label] = test_dataloader
+            
+        all_data_train = MyDataset(d, train_data_file)
+        all_data_test = MyDataset(d, test_data_file)
+
+        all_train_data = all_data_train.data # do this function where it is needed instead
+
+        all_test_dataloader = DataLoader(all_data_test, batch_size = batch_size, shuffle=True)
+        figure_dataloader = DataLoader(all_data_train, batch_size = batch_size, shuffle = False)
+
+        self.train_dataloaders_dict = train_dataloaders_dict
+        self.test_dataloaders_dict = test_dataloaders_dict
+        self.all_test_dataloader = all_test_dataloader
+        self.figure_dataloader = figure_dataloader
+        self.all_train_data = all_train_data
+
 def data_set_up(config, using_pandas = False):
     d = config.dimension
 
@@ -90,19 +154,6 @@ def data_set_up(config, using_pandas = False):
     figure_dataloader = DataLoader(test_dataset, batch_size = 1, shuffle = False)
 
     return train_data, test_data, train_dataloader, test_dataloader, figure_dataloader
-
-def point_inside_domain(point, data_bounds_list, d):
-    tolerance = 1e-4
-    pt_inside_domain_Bool_tracker = []
-    for i in range(d):
-        if float(point[i]) + tolerance < data_bounds_list[2*i] or float(point[i]) - tolerance > data_bounds_list[2*i+1]:
-            pt_inside_domain_Bool_tracker.append(False)
-        else:
-            pt_inside_domain_Bool_tracker.append(True)
-    if all(pt_inside_domain_Bool_tracker):
-        return True
-    else:
-        return False
     
 def convert_data_to_tensors(data, d):
     data_tensor_list = []
