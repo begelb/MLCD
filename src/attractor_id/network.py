@@ -52,8 +52,8 @@ class Regression_Cubical_Network_One_Nonlinearity(nn.Module):
         bias_initial_lower_bounds = torch.zeros(N)
         bias_initial_upper_bounds = torch.zeros(N)
         for i in range(self.d):
-            bias_initial_lower_bounds[hidden_node_keys == i] = torch.tensor(data_bounds_list[i*2], dtype=torch.float)
-            bias_initial_upper_bounds[hidden_node_keys == i] = torch.tensor(data_bounds_list[i*2 + 1], dtype=torch.float)
+            bias_initial_lower_bounds[hidden_node_keys == i] = torch.tensor(data_bounds_list[i][0], dtype=torch.float)
+            bias_initial_upper_bounds[hidden_node_keys == i] = torch.tensor(data_bounds_list[i][1], dtype=torch.float)
         
         # each bias is the negation of a hyperplane offset, which is why the next line might look unnatural
         self.bias = nn.Parameter(torch.rand(self.N)*(bias_initial_lower_bounds - bias_initial_upper_bounds) - bias_initial_lower_bounds)

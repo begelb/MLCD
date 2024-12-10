@@ -34,23 +34,36 @@ class DatasetFromPandas(Dataset):
         return point, label
 
 class MyDataset(Dataset):
-    def __init__(self, d, annotations_file):
-        self.d = d
-        with open(annotations_file, newline='') as f:
-            reader = csv.reader(f)
-            self.data = list(reader)
+    def __init__(self, dimension, annotations_file):
+        self.d = dimension
+        self.data = np.loadtxt(annotations_file, delimiter=',', dtype=np.float32)
+        self.features = torch.tensor(self.data[:, :self.d], dtype=torch.float32)
+        self.labels = torch.tensor(self.data[:, self.d].round(), dtype=torch.float32).unsqueeze(1)
 
     def __len__(self):
-        return len(self.data)
+        return len(self.features)
 
     def __getitem__(self, idx):
-        data_point = self.data[idx]
-        point = torch.zeros(self.d)
-        for i in range(0, self.d):
-            point[i] = float(data_point[i])
-        label = int(round(float(data_point[self.d])))
-        label = torch.ones(1, dtype=torch.float32) * label
-        return point, label
+        return self.features[idx], self.labels[idx]
+
+# class MyDataset(Dataset):
+#     def __init__(self, d, annotations_file):
+#         self.d = d
+#         with open(annotations_file, newline='') as f:
+#             reader = csv.reader(f)
+#             self.data = list(reader)
+
+#     def __len__(self):
+#         return len(self.data)
+
+#     def __getitem__(self, idx):
+#         data_point = self.data[idx]
+#         point = torch.zeros(self.d)
+#         for i in range(0, self.d):
+#             point[i] = float(data_point[i])
+#         label = int(round(float(data_point[self.d])))
+#         label = torch.ones(1, dtype=torch.float32) * label
+#         return point, label
     
 def data_set_up(config, using_pandas = False):
     d = config.dimension
@@ -80,10 +93,7 @@ def data_set_up(config, using_pandas = False):
 
         test_data = test_dataset.data
 
-      #  if len(train_data)%10 == 0:
         batch_size = config.batch_size
-       # else:
-        #    batch_size = 1000
 
     train_dataloader = DataLoader(train_dataset, batch_size = batch_size, shuffle=True)
     test_dataloader = DataLoader(test_dataset, batch_size = batch_size, shuffle=True)
@@ -95,7 +105,7 @@ def point_inside_domain(point, data_bounds_list, d):
     tolerance = 1e-4
     pt_inside_domain_Bool_tracker = []
     for i in range(d):
-        if float(point[i]) + tolerance < data_bounds_list[2*i] or float(point[i]) - tolerance > data_bounds_list[2*i+1]:
+        if float(point[i]) + tolerance < data_bounds_list[i][0] or float(point[i]) - tolerance > data_bounds_list[i][1]:
             pt_inside_domain_Bool_tracker.append(False)
         else:
             pt_inside_domain_Bool_tracker.append(True)
@@ -105,11 +115,7 @@ def point_inside_domain(point, data_bounds_list, d):
         return False
     
 def convert_data_to_tensors(data, d):
-    data_tensor_list = []
-    for l in range(0, len(data)):
-        data_point = data[l]
-        data_tensor = np.zeros(d)
-        for k in range(0, d):
-            data_tensor[k] += float(data_point[k])
-        data_tensor_list.append(data_tensor)
+    
+    data_tensor_list = np.array(data[:, :d], dtype=np.float32)
+
     return data_tensor_list
