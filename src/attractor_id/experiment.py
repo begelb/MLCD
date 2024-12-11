@@ -16,9 +16,9 @@ class Experiment:
         return parameter_list[example_index]
     
     # in the slurm script, the number of jobs in the array should be equal to the number of repetitions per parameter set 
-    def run_experiment(self, job_index, system, repetitions_per_parameter_set, labeling_threshold_list, reduction_threshold):
+    def run_experiment(self, job_index, system, repetitions_per_parameter_set, labeling_threshold_list):
         parameter_list = self.generate_parameter_lists()
         for param_index in range(len(parameter_list)):
             example_index = param_index * repetitions_per_parameter_set + job_index
             N = parameter_list[param_index][0]
-            compute_example(system, N, labeling_threshold_list, reduction_threshold, example_index)
+            compute_example(system, N, labeling_threshold_list, example_index)

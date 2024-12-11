@@ -30,7 +30,7 @@ example_index = 4
 ''' Main code block '''
 
 def main():
-    compute_example(system, N, labeling_threshold_list, example_index)
+    compute_example(system, N, labeling_threshold_list, train_only = True, example_index = example_index)
 
 if __name__ == "__main__":
     main()

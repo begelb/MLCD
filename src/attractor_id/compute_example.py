@@ -9,7 +9,7 @@ from .decomposition import get_decomposition_data
 from .config import user_warning_about_N_and_dimension, configure
 import os
 
-def compute_example(system, N, labeling_threshold_list, example_index=0):
+def compute_example(system, N, labeling_threshold_list, train_only=False, example_index=0):
     config_fname = f'config/{system}.txt'
     config = configure(config_fname)
     user_warning_about_N_and_dimension(config, N)
@@ -35,6 +35,8 @@ def compute_example(system, N, labeling_threshold_list, example_index=0):
         while not decomposition_intersects_domain:
             trained_network, train_loss_list, test_loss_list, restart_count = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience)
             save_model(trained_network, example_index, config)
+            if train_only:
+                return
             model = load_model(N, system, config, 1, example_index)
             sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list = get_decomposition_data(config, N, train_data, model)
         

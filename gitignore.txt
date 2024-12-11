@@ -4,7 +4,8 @@ build
 # Binaries directories
 dist
 *.egg-info
-__pycache__
+__pycache__/
+*.pyc
 
 # macOS files
 .DS_Store
@@ -15,4 +16,8 @@ __pycache__
 # Backup files
 *~
 
-output
+output/
+data/
+src/attractor_id/__pycache__/
+test.py
+*.pth
