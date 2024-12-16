@@ -21,4 +21,4 @@ class Experiment:
         for param_index in range(len(parameter_list)):
             example_index = param_index * repetitions_per_parameter_set + job_index
             N = parameter_list[param_index][0]
-            compute_example(system, N, labeling_threshold_list, example_index)
+            compute_example(system, N, labeling_threshold_list, False, example_index)
