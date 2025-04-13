@@ -1,10 +1,8 @@
-import torch 
 import matplotlib.pyplot as plt
 import numpy as np
 from functools import partial
 import itertools
 from cycler import cycler
-import matplotlib.pyplot as plt
 
 ''' filled_hist and stack_hist are taken from the following link: https://matplotlib.org/stable/gallery/lines_bars_and_markers/filled_step.html '''
 
@@ -188,7 +186,7 @@ def plot_loss_histogram(loss_success_list, loss_failure_list, train_or_test_str,
         hist_max = max(loss_success_list)
 
     # set up histogram function to fixed bins
-    edges = np.linspace(hist_min, hist_max, 30, endpoint=True)
+    edges = np.linspace(hist_min, hist_max, 32, endpoint=True)
     hist_func = partial(np.histogram, bins=edges)
 
     # set up style cycles

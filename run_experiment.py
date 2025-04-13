@@ -1,5 +1,5 @@
-from src.attractor_id.config import configure
-from src.attractor_id.experiment import Experiment
+from attractor_id.config import configure
+from attractor_id.experiment import Experiment
 import sys 
 
 ''' This is a script to run an experiment using Slurm Workload Manager, specifically the file slurm_script_job_array.sh '''
@@ -20,7 +20,7 @@ The following systems are implemented:
 - 'straight_separatrix'
 '''
 
-system = 'radial_3labels'
+system = 'straight_separatrix'
 
 # labeling threshold is the list of labeling thresholds to be used to label the cubes
 labeling_threshold_list = [0.1, 0.2, 0.3, 0.4, 0.49]

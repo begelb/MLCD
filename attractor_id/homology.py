@@ -1,5 +1,5 @@
+import pychomp
 from .label_cubes import get_labeled_cubes, get_num_cubes_labeled
-import pychomp #2 as pychomp
 
 def get_homology_dict_from_model(config, model, labeling_threshold, sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list):
     label_to_cubes_dict, cube_list_for_polytope_figure = get_labeled_cubes(config, sorted_hyperplane_dict, list_of_hyperplane_lists, model, labeling_threshold)

@@ -16,8 +16,12 @@ __pycache__/
 # Backup files
 *~
 
+test_models/
 output/
 data/
-src/attractor_id/__pycache__/
+attractor_id/__pycache__/
 test.py
 *.pth
+attractor_id.egg-info
+concatenated_results/
+paper_figures_with_models/

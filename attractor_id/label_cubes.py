@@ -1,8 +1,6 @@
 import torch
-from .decomposition import get_group_index_to_num_hyperplanes_dict
-from .cube import get_cube_as_polytope, get_cube_vertices_for_labeling
-from .decomposition import next_cube_index
-from .cube import Cube
+from .decomposition import get_group_index_to_num_hyperplanes_dict, next_cube_index
+from .cube import get_cube_as_polytope, get_cube_vertices_for_labeling, Cube
 
 # Evaluate the regression network model at a single point x
 def evaluate_regression_network(config, x, model):

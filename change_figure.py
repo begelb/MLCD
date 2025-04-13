@@ -1,4 +1,4 @@
-from src.attractor_id.change_figure_src import change_figure
+from attractor_id.change_figure_src import change_figure
 
 '''' Global variables set by user '''
 
@@ -25,8 +25,8 @@ system = 'radial_3labels'
 
 if system == 'radial_3labels':
    # N = 8 for example_index = 7, N = 10 for example_index = 97
-    N = 8
-    example_index = 7
+    N = 3
+    example_index = 97
     model_fname = f'paper_figures_with_models/radial_3labels/{example_index}-model.pth'
 
 if system == 'radial_2labels':
@@ -57,7 +57,7 @@ labeling_threshold_list = [0.49]
 '''
 
 def main():
-    change_figure(system, N, labeling_threshold_list, example_index, False, True, False, False, model_fname)
+    change_figure(system, N, labeling_threshold_list, example_index, decomposition=True, polytopes=False, data=False, multicolor=False, model_file_name=model_fname)
     #change_figure(system, N, labeling_threshold_list, example_index, False, False, True, model_fname)
     #change_figure(system, N, labeling_threshold_list, example_index, False, True, False, model_fname)
     #change_figure(system, N, labeling_threshold_list, example_index, True, True, False, model_fname)
