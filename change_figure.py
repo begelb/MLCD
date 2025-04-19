@@ -1,4 +1,4 @@
-from attractor_id.change_figure_src import change_figure
+from src.attractor_id.change_figure_src import change_figure
 
 '''' Global variables set by user '''
 
@@ -25,7 +25,7 @@ system = 'radial_3labels'
 
 if system == 'radial_3labels':
    # N = 8 for example_index = 7, N = 10 for example_index = 97
-    N = 3
+    N = 10
     example_index = 97
     model_fname = f'paper_figures_with_models/radial_3labels/{example_index}-model.pth'
 

@@ -8,7 +8,7 @@ from .data import data_set_up
 from .decomposition import get_decomposition_data
 from .config import user_warning_about_N_and_dimension, configure
 import os
-from .network import Regression_Cubical_Network_One_Nonlinearity
+from .network_old import Regression_Cubical_Network_One_Nonlinearity
 import torch
 
 def change_figure(system, N, labeling_threshold_list, example_index, decomposition, polytopes, data, multicolor, model_file_name):

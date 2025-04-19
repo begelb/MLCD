@@ -314,7 +314,7 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
             pred = model(data_tensor)
             result_list.append(float(pred[0]))
     scatter = ax.scatter(scatterx, scattery, marker ='o', s = 6, cmap = 'viridis', c = result_list, alpha = 1)
-    max_y = max(scattery)
+    max_network_value = max(result_list)
     # Plot lines with width determinted by total number
     if len(total_hyperplane_list) > 24:
         linewidth = 3
@@ -342,7 +342,8 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
 
     # Add colorbar
     if system == 'radial_3labels':
-        cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.13, format="%.1f", anchor = (0.5, 0.0), ticks = [0.0, 0.5, 1.0, 1.5, max_y])
+        print('max: ', max_network_value)
+        cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.13, format="%.0f", anchor = (0.5, 0.0), ticks = [0.0, 1.0, max_network_value])
     elif system == 'straight_separatrix':
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
     elif system == 'ellipsoidal_2d':
