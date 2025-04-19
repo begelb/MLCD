@@ -1,4 +1,4 @@
-from attractor_id.compute_example import compute_example
+from src.attractor_id.compute_example import compute_example
 
 '''' Global variables set by user '''
 

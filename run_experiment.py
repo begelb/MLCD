@@ -1,5 +1,5 @@
-from attractor_id.config import configure
-from attractor_id.experiment import Experiment
+from .src.attractor_id.config import configure
+from .src.attractor_id.experiment import Experiment
 import sys 
 
 ''' This is a script to run an experiment using Slurm Workload Manager, specifically the file slurm_script_job_array.sh '''
