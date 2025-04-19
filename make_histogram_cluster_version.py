@@ -22,6 +22,7 @@ def plot_results(sorted_numbers, sorted_bools, file_path):
     
     plt.figure(figsize=(8, 6))
     # straight_separatrix use 8.5
+    plt.xlim(0, 100)
 
     plt.rc('font', **font)
 
@@ -37,19 +38,12 @@ def plot_results(sorted_numbers, sorted_bools, file_path):
     # Plot successes first (background)
     plt.scatter(success_x, success_y, c='#7AD151FF', marker='+', s=80)
 
-    # for i, (num, label) in enumerate(zip(sorted_numbers, sorted_bools)):
-    #     color = '#7AD151FF' if label else '#440154FF'
-    #     marker = 'o' if label else '^'  
-    #     plt.scatter(i, num, c=color, marker=marker, s = 60)
-
 # edgecolors = black
     plt.xlabel("Trial")
     plt.ylabel("Test loss")
 
-   # plt.xticks([])  # Remove x-axis ticks
+
     plt.yticks(np.linspace(min(sorted_numbers), max(sorted_numbers), num=5))
-    #plt.gca().yaxis.set_major_locator(MaxNLocator(nbins=5))
-    #plt.gca().xaxis.set_major_locator(MaxNLocator(nbins=3))
     plt.xticks([0, 50, 100])
     plt.gca().yaxis.set_major_formatter(FuncFormatter(format_ticks))
 
@@ -57,8 +51,7 @@ def plot_results(sorted_numbers, sorted_bools, file_path):
     plt.scatter([], [], c='#7AD151FF', marker='+', label="Success", s=150)
     plt.scatter([], [], c='#440154FF', marker='^', label="Failure", s=80)
     plt.legend()
-    #plt.title("Scatter Plot of Successes and Failures")
-   # plt.show()
+
     plt.tight_layout()
     plt.savefig(file_path)
 
