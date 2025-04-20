@@ -6,6 +6,7 @@ from .data import data_set_up
 from .decomposition import get_decomposition_data
 from .config import configure
 import torch
+import numpy as np
 
 def get_config_from_system_name(system):
     config_fname = f'config/{system}.txt'
@@ -39,7 +40,11 @@ def train_classifier(system, N, epochs, file_name, config_file):
 def compute_homology(system, labeling_threshold, N, model, config_file):
     config = configure(config_file)
     using_pandas = config.using_pandas
+
     train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
+
+    if using_pandas:
+        train_data = np.array(train_data)
 
     sorted_hyperplane_dict, list_of_hyperplane_lists, total_hyperplane_list = get_decomposition_data(config, N, train_data, model)
         
