@@ -15,14 +15,14 @@ def get_config_from_system_name(system):
 def save_model(model, file_name):
     torch.save(model.state_dict(), f'{file_name}.pth')
 
-def load_model(system, N, file_name):
-    config = get_config_from_system_name(system)
+def load_model(system, N, file_name, config_file):
+    config = configure(config_file)
     cube_reg_model = Regression_Cubical_Network_One_Nonlinearity(N, 1, config)
     cube_reg_model.load_state_dict(torch.load(f'{file_name}.pth'))
     return cube_reg_model
 
-def train_classifier(system, N, epochs, file_name):
-    config = get_config_from_system_name(system)
+def train_classifier(system, N, epochs, file_name, config_file):
+    config = configure(config_file)
     using_pandas = config.using_pandas
     train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
   #  if len(train_data)%10 == 0:
@@ -33,11 +33,11 @@ def train_classifier(system, N, epochs, file_name):
    #     batch_size = 1000 #get_batch_size(train_data, percentage = 0.1)
     trained_network, train_loss_list, test_loss_list, restart_count = train_and_test(config, N, train_dataloader, test_dataloader, batch_size, epochs, patience)
     save_model(trained_network, file_name)
-    model = load_model(system, N, file_name)
+    model = load_model(system, N, file_name, config_file)
     return model, train_loss_list, test_loss_list
 
-def compute_homology(system, labeling_threshold, N, model):
-    config = get_config_from_system_name(system)
+def compute_homology(system, labeling_threshold, N, model, config_file):
+    config = configure(config_file)
     using_pandas = config.using_pandas
     train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
 
@@ -61,25 +61,25 @@ def compute_homology(system, labeling_threshold, N, model):
 
     return total_hyperplane_list, cube_list_for_polytope_figure
 
-def make_decomposition_plot(system, hyperplane_list, model, file_name):
-    config = get_config_from_system_name(system)
+def make_decomposition_plot(system, hyperplane_list, model, file_name, config_file):
+    config = configure(config_file)
     if config.dimension != 2:
         return 'The system has dimension greater than 2, so a plot was not produced.'
     make_decomposition_figure(config, model, hyperplane_list, True, file_name, system)
 
-def make_polytope_plot(system, cube_list, file_name):
-    config = get_config_from_system_name(system)
+def make_polytope_plot(system, cube_list, file_name, config_file):
+    config = configure(config_file)
     if config.dimension != 2:
         return 'The system has dimension greater than 2, so a plot was not produced.'
     plot_polytopes(config, cube_list, True, file_name, system)
 
-def plot_loss(system, test_loss_list, train_loss_list, file_name):
-    config = get_config_from_system_name(system)
+def plot_loss(system, test_loss_list, train_loss_list, file_name, config_file):
+    config = configure(config_file)
     fname = file_name + '.png'
     make_loss_plots(config, test_loss_list, train_loss_list, fname, True)
 
-def accuracy(system, model, labeling_threshold):
-    config = get_config_from_system_name(system)
+def accuracy(system, model, labeling_threshold, config_file):
+    config = configure(config_file)
     using_pandas = config.using_pandas
     train_data, test_data, train_dataloader, test_dataloader, figure_dataloader = data_set_up(config, using_pandas)
     accuracy = compute_accuracy(model, figure_dataloader, config, labeling_threshold)
