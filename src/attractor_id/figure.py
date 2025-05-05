@@ -90,7 +90,7 @@ def plot_data(system, config, file_name):
     ratio = width/height
     plt.style.use('_mpl-gallery-nogrid')
 
-    if system == 'ellipsoidal_2d':
+    if system == 'ellipsoidal_bistable_2d':
         fig1 = plt.figure(figsize = (7.25, 8))
     elif system == 'radial_bistable':
         fig1 = plt.figure(figsize = (7.25, 8.5))
@@ -109,7 +109,7 @@ def plot_data(system, config, file_name):
     ax.set_position([box.x0, box.y0, box.width, box.height*0.8])
 
     # Adjust layout and set xticks and yticks
-    if system == 'ellipsoidal_2d':
+    if system == 'ellipsoidal_bistable_2d':
         plt.subplots_adjust(left=0.19, bottom=0.3, top=0.9, right = 0.9)
         step = 2
         ax.set(xlim=(x_min, x_max), xticks=[-4, -2, 0, 2, 4],
@@ -167,7 +167,7 @@ def plot_data(system, config, file_name):
     # Set marker size
     if system == 'radial_bistable':
         marker_size = 90
-    if system == 'ellipsoidal_2d':
+    if system == 'ellipsoidal_bistable_2d':
         marker_size = 90
     if system == 'radial_tristable':
         marker_size = 90
@@ -185,7 +185,7 @@ def plot_data(system, config, file_name):
     
     if system == 'linear_separatrix':
         number_columns = 2
-    elif system == 'ellipsoidal_2d':
+    elif system == 'ellipsoidal_bistable_2d':
         number_columns = 2
     elif system == 'radial_bistable':
         number_columns = 2
@@ -250,7 +250,7 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
     ratio = width/height
     plt.style.use('_mpl-gallery-nogrid')
 
-    if system == 'ellipsoidal_2d':
+    if system == 'ellipsoidal_bistable_2d':
         fig1 = plt.figure(figsize = (7.25, 8.5))
     elif system == 'radial_bistable':
         fig1 = plt.figure(figsize = (7.25, 8.5))
@@ -273,7 +273,7 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
         plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
         ax.set(xlim=(x_min, x_max), xticks=[-2, 0, 2],
             ylim=(y_min, y_max), yticks=[-3, 0, 3])
-    elif system == 'ellipsoidal_2d':
+    elif system == 'ellipsoidal_bistable_2d':
         plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
         ax.set(xlim=(x_min, x_max), xticks=[-4, -2, 0, 2, 4],
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
@@ -346,7 +346,7 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.13, format="%.0f", anchor = (0.5, 0.0), ticks = [0.0, 1.0, max_network_value])
     elif system == 'linear_separatrix':
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
-    elif system == 'ellipsoidal_2d':
+    elif system == 'ellipsoidal_bistable_2d':
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
     elif system == 'radial_bistable':
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
@@ -488,7 +488,7 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name, syste
     height = float(y_max - y_min)
     ratio = width/height
     plt.style.use('_mpl-gallery-nogrid')
-    if system == 'ellipsoidal_2d':
+    if system == 'ellipsoidal_bistable_2d':
         fig = plt.figure(figsize = (7.25, 8.5))
         #For making plot without legend
         #fig = plt.figure(figsize = (6, 6))
@@ -516,7 +516,7 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name, syste
     if system == 'linear_separatrix':
         ax.set(xlim=(x_min, x_max), xticks=[-2, 0, 2],
             ylim=(y_min, y_max), yticks=[-3, 0, 3])
-    elif system == 'ellipsoidal_2d':
+    elif system == 'ellipsoidal_bistable_2d':
         ax.set(xlim=(x_min, x_max), xticks=[-4, -2, 0, 2, 4],
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
     elif system == 'radial_bistable':
