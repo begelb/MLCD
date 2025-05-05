@@ -57,10 +57,6 @@ Models will be saved in ```output/models```.
 ### Homology results
 The homology results will be saved in ```output/results```.
 
-
-## Reproducing experiment
-To run the experiments described in the paper, we used [Slurm Workload Manager](https://slurm.schedmd.com/overview.html) and the script ``` amarel_cluster_code/slurm_script_job_array.sh ```.
-
 ## Acknowledgements
 - The file ```slurm_script_job_array.sh``` was copied from the GitHub repository [cluster-help](https://github.com/marciogameiro/cluster-help) written by **Marcio Gameiro** (2020) and available under MIT License. Small modifications to the file were made. See LICENSE.md for copyright information pertaining to this file.
 
