@@ -25,3 +25,5 @@ test.py
 attractor_id.egg-info
 concatenated_results/
 paper_figures_with_models/
+config/
+extra/
