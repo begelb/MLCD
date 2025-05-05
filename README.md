@@ -1,7 +1,7 @@
 # Machine-Learned Cubical Decomposition (MLCD) of Phase Space for Identifying Attracting Neighborhoods
 
 ## Google Colab
-The code is available on a [Google colab notebook]([url](https://colab.research.google.com/drive/1teYPxaoI0IuQCSlEQuJ9zy43vhqGUqWD?usp=sharing)), which does not require local installation to run. The data is automatically read from [a Github repository that hosts the data]([url](https://github.com/begelb/MLCD-data)). 
+The code is available on a [Google colab notebook](https://colab.research.google.com/drive/1teYPxaoI0IuQCSlEQuJ9zy43vhqGUqWD?usp=sharing), which does not require local installation to run. The data is automatically read from [a Github repository that hosts the data](https://github.com/begelb/MLCD-data). 
 
 ## Installation
 This code was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/). **The program must be executed using Python<=3.11**.
