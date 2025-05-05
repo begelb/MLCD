@@ -1,5 +1,7 @@
 # Machine-Learned Cubical Decomposition (MLCD) of Phase Space for Identifying Attracting Neighborhoods
 
+## Google Colab: run MLCD with no local installation
+The code is available on a [Google colab notebook](https://colab.research.google.com/drive/1teYPxaoI0IuQCSlEQuJ9zy43vhqGUqWD?usp=sharing), which does not require local installation to run. The data is automatically read from [a Github repository that hosts the data](https://github.com/begelb/MLCD-data). 
 
 ## Installation
 This code was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/). **The program must be executed using Python<=3.11**.
@@ -13,7 +15,7 @@ After downloading a copy of the repository, navigate to the project folder and u
 ```pip install .```
 
 
-## How to use the code available in a Jupyter notebook
+## Running the code locally in a Jupyter notebook
 The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, it is possible to:
 - Train a cubical neural network using the data from the paper
 - Produce a plot of the learned function and cubical decomposition of phase space,
@@ -54,10 +56,6 @@ Models will be saved in ```output/models```.
 
 ### Homology results
 The homology results will be saved in ```output/results```.
-
-
-## How to run an experiment
-To run the experiments described in the paper, we used [Slurm Workload Manager](https://slurm.schedmd.com/overview.html) and the script ``` amarel_cluster_code/slurm_script_job_array.sh ```.
 
 ## Acknowledgements
 - The file ```slurm_script_job_array.sh``` was copied from the GitHub repository [cluster-help](https://github.com/marciogameiro/cluster-help) written by **Marcio Gameiro** (2020) and available under MIT License. Small modifications to the file were made. See LICENSE.md for copyright information pertaining to this file.
