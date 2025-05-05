@@ -363,6 +363,9 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
 
 ''' Plot the change of the test and train loss over the epochs of training '''
 def make_loss_plots(config, test_loss_list, train_loss_list, file_name, show):
+    font = {'family' : 'serif',
+            'size'   : 25}
+    plt.rc('font', **font)
     # Adjust plot layout
     fig = plt.figure(figsize=(15,5))
     ax = fig.add_subplot(111)
