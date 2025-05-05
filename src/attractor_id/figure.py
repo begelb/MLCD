@@ -74,7 +74,7 @@ def get_x_y_min_max(config):
 def plot_data(system, config, file_name):
 
     # Set figure font
-    if system == 'straight_separatrix':
+    if system == 'linear_separatrix':
         font_size = 30
     else:
         font_size = 28
@@ -92,11 +92,11 @@ def plot_data(system, config, file_name):
 
     if system == 'ellipsoidal_2d':
         fig1 = plt.figure(figsize = (7.25, 8))
-    elif system == 'radial_2labels':
+    elif system == 'radial_bistable':
         fig1 = plt.figure(figsize = (7.25, 8.5))
-    elif system == 'radial_3labels':
+    elif system == 'radial_tristable':
         fig1 = plt.figure(figsize = (7.25, 8.5))
-    elif system == 'straight_separatrix':
+    elif system == 'linear_separatrix':
         fig1 = plt.figure(figsize = (8, 7))
         #fig1 = plt.figure(figsize=(10 + 4, 10 * ratio + 4.75))
     else:
@@ -114,19 +114,19 @@ def plot_data(system, config, file_name):
         step = 2
         ax.set(xlim=(x_min, x_max), xticks=[-4, -2, 0, 2, 4],
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
-    elif system == 'radial_2labels':
+    elif system == 'radial_bistable':
         #plt.subplots_adjust(left=0.19, bottom=0.25, top=0.9, right = 0.9)
         plt.subplots_adjust(left=0.19, bottom=0.3, top=0.9, right = 0.9)
         step = 2
         ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
-    elif system == 'radial_3labels':
+    elif system == 'radial_tristable':
         #plt.subplots_adjust(left=0.19, bottom=0.25, top=0.9, right = 0.9)
         plt.subplots_adjust(left=0.19, bottom=0.3, top=0.9, right = 0.9)
         step = 2
         ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
-    elif system == 'straight_separatrix':
+    elif system == 'linear_separatrix':
         plt.subplots_adjust(left=0.19, bottom=0.3, top=0.9, right = 0.9)
         ax.set(xlim=(x_min, x_max), xticks=[-2, 0, 2],
             ylim=(y_min, y_max), yticks=[-3, 0, 3])
@@ -139,7 +139,7 @@ def plot_data(system, config, file_name):
     plt.yticks()
 
     # Plot 1/6th of the data
-    if system == 'radial_2labels':
+    if system == 'radial_bistable':
         density = 1
     else:
         density = 6
@@ -165,13 +165,13 @@ def plot_data(system, config, file_name):
     color_1, hatch_1 = label_to_polytope_color_and_hatch(config, 1)
 
     # Set marker size
-    if system == 'radial_2labels':
+    if system == 'radial_bistable':
         marker_size = 90
     if system == 'ellipsoidal_2d':
         marker_size = 90
-    if system == 'radial_3labels':
+    if system == 'radial_tristable':
         marker_size = 90
-    if system == 'straight_separatrix':
+    if system == 'linear_separatrix':
         marker_size = 100
 
     # Make scatter plot of data with labels 0 and 1
@@ -183,18 +183,18 @@ def plot_data(system, config, file_name):
         color_2, hatch_2 = label_to_polytope_color_and_hatch(config, 2)
         ax.scatter(x2, y2, c=color_2, marker='s', label='Label 2', s = marker_size)
     
-    if system == 'straight_separatrix':
+    if system == 'linear_separatrix':
         number_columns = 2
     elif system == 'ellipsoidal_2d':
         number_columns = 2
-    elif system == 'radial_2labels':
+    elif system == 'radial_bistable':
         number_columns = 2
-    elif system == 'radial_3labels':
+    elif system == 'radial_tristable':
         number_columns = 2
 
     # Add legend
     
-    if system != 'radial_3labels':
+    if system != 'radial_tristable':
         legend = ax.legend(loc='lower center', bbox_to_anchor=(0.545, 0.04),
             bbox_transform=fig1.transFigure, fancybox=True, scatterpoints=1, ncol = number_columns)
     else:
@@ -231,7 +231,7 @@ def generate_domain_bounding_hyperplanes(config):
 ''' Plot the cubical decomposition together with a colormap depicting the learned function '''
 def make_decomposition_figure(config, model, total_hyperplane_list, show, file_name, system):
 
-    if system == 'straight_separatrix':
+    if system == 'linear_separatrix':
         font_size = 30
     else:
         font_size = 28
@@ -252,11 +252,11 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
 
     if system == 'ellipsoidal_2d':
         fig1 = plt.figure(figsize = (7.25, 8.5))
-    elif system == 'radial_2labels':
+    elif system == 'radial_bistable':
         fig1 = plt.figure(figsize = (7.25, 8.5))
-    elif system == 'radial_3labels':
+    elif system == 'radial_tristable':
         fig1 = plt.figure(figsize = (7.25, 8))
-    elif system == 'straight_separatrix':
+    elif system == 'linear_separatrix':
         fig1 = plt.figure(figsize = (8, 7))
         #fig1 = plt.figure(figsize=(10 + 4, 10 * ratio + 4.75))
     else:
@@ -269,7 +269,7 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
     # Adjust layout and set axis properties 
     step = 2
 
-    if system == 'straight_separatrix':
+    if system == 'linear_separatrix':
         plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
         ax.set(xlim=(x_min, x_max), xticks=[-2, 0, 2],
             ylim=(y_min, y_max), yticks=[-3, 0, 3])
@@ -277,11 +277,11 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
         plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
         ax.set(xlim=(x_min, x_max), xticks=[-4, -2, 0, 2, 4],
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
-    elif system == 'radial_2labels':
+    elif system == 'radial_bistable':
         plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
         ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
-    elif system == 'radial_3labels':
+    elif system == 'radial_tristable':
         plt.subplots_adjust(left=0.19, bottom=0.1, top=0.9, right = 0.9)
         ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
@@ -341,14 +341,14 @@ def make_decomposition_figure(config, model, total_hyperplane_list, show, file_n
             ax.plot(x, y, c = 'w', linewidth = linewidth)
 
     # Add colorbar
-    if system == 'radial_3labels':
+    if system == 'radial_tristable':
         print('max: ', max_network_value)
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=.13, format="%.0f", anchor = (0.5, 0.0), ticks = [0.0, 1.0, max_network_value])
-    elif system == 'straight_separatrix':
+    elif system == 'linear_separatrix':
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
     elif system == 'ellipsoidal_2d':
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
-    elif system == 'radial_2labels':
+    elif system == 'radial_bistable':
         cbar = fig1.colorbar(scatter, orientation = 'horizontal', fraction=0.05, pad=0.20, format="%.1f", anchor = (0.5, 0.5), ticks = [0.0, 0.5, 1.0])
     cbar.ax.tick_params()
 
@@ -411,13 +411,13 @@ def plot_multicolor_polytopes(config, cube_list_for_polytope_figure, show, file_
     ratio = width/height
     plt.style.use('_mpl-gallery-nogrid')
     step = 2
-    if system != 'straight_separatrix':
+    if system != 'linear_separatrix':
         fig = plt.figure(figsize=(10 + 2, 10 * ratio + 4.75))
         ax = fig.add_subplot(111)
         plt.subplots_adjust(left=0.19, bottom=0.25, top=0.9, right = 0.9)
         ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
-    elif system == 'straight_separatrix':
+    elif system == 'linear_separatrix':
         fig = plt.figure(figsize=(10 + 4, 10 * ratio + 4.75))
         ax = fig.add_subplot(111)
         plt.subplots_adjust(left=0.19, bottom=0.3, top=0.9, right = 0.9)
@@ -471,7 +471,7 @@ def plot_multicolor_polytopes(config, cube_list_for_polytope_figure, show, file_
 ''' Produce plot of labeled polytopes from cubical decomposition '''
 def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name, system):
 
-    if system == 'straight_separatrix':
+    if system == 'linear_separatrix':
         font_size = 30
     else:
         font_size = 28
@@ -490,11 +490,11 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name, syste
         fig = plt.figure(figsize = (7.25, 8.5))
         #For making plot without legend
         #fig = plt.figure(figsize = (6, 6))
-    elif system == 'radial_2labels':
+    elif system == 'radial_bistable':
         fig = plt.figure(figsize = (7.25, 8.5))
-    elif system == 'radial_3labels':
+    elif system == 'radial_tristable':
         fig = plt.figure(figsize = (7.25, 8.5))
-    elif system == 'straight_separatrix':
+    elif system == 'linear_separatrix':
         fig = plt.figure(figsize = (8, 7))
     else:
         fig1 = plt.figure(figsize = (7, 7))
@@ -502,25 +502,25 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name, syste
     ax = fig.add_subplot(111)
     box = ax.get_position()
     ax.set_position([box.x0, box.y0, box.width, box.height*0.8])
-    if system != 'straight_separatrix':
+    if system != 'linear_separatrix':
         plt.subplots_adjust(left=0.19, bottom=0.3, top=0.9, right = 0.9)
         # For making the ellipsoidal figure with no legend
         #plt.subplots_adjust(left=0.19, bottom=0.15, top=0.9, right = 0.9)
-    elif system == 'straight_separatrix':
+    elif system == 'linear_separatrix':
         plt.subplots_adjust(left=0.19, bottom=0.3, top=0.9, right = 0.9)
     step = 2
 
     # Set axes
-    if system == 'straight_separatrix':
+    if system == 'linear_separatrix':
         ax.set(xlim=(x_min, x_max), xticks=[-2, 0, 2],
             ylim=(y_min, y_max), yticks=[-3, 0, 3])
     elif system == 'ellipsoidal_2d':
         ax.set(xlim=(x_min, x_max), xticks=[-4, -2, 0, 2, 4],
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
-    elif system == 'radial_2labels':
+    elif system == 'radial_bistable':
         ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
-    elif system == 'radial_3labels':
+    elif system == 'radial_tristable':
         ax.set(xlim=(x_min, x_max), xticks=np.arange(x_min + 1, x_max, step=step),
             ylim=(y_min, y_max), yticks=np.arange(y_min + 1, y_max, step=step))
     else:
@@ -565,16 +565,16 @@ def plot_polytopes(config, cube_list_for_polytope_figure, show, file_name, syste
         circ1 = mpatches.Patch(facecolor=color_1,hatch=hatch_1,edgecolor='white',label='N\u2081')
         color_u, hatch_u = label_to_polytope_color_and_hatch(config, 2)
         circu = mpatches.Patch(facecolor=color_u,hatch=hatch_u,edgecolor='white',label='U')
-        if system == 'radial_3labels':
+        if system == 'radial_tristable':
             num_columns = 2
-        elif system == 'straight_separatrix':
+        elif system == 'linear_separatrix':
             num_columns = 3
         else:
             num_columns = 3
-        if system != 'straight_separatrix':# 0.545, -0.01
+        if system != 'linear_separatrix':# 0.545, -0.01
             ax.legend(handles = [circ0, circu, circ1], loc='lower center', bbox_to_anchor=(0.545, 0.02), prop=font_properties,
             bbox_transform=fig.transFigure, fancybox=True, facecolor='white', framealpha=1, ncol=num_columns)
-        elif system == 'straight_separatrix':
+        elif system == 'linear_separatrix':
             ax.legend(handles = [circ0, circu, circ1], loc='lower center', bbox_to_anchor=(0.545, 0.02), prop=font_properties,
         bbox_transform=fig.transFigure, fancybox=True, facecolor='white', framealpha=1, ncol=num_columns)
         
