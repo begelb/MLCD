@@ -372,7 +372,6 @@ def make_loss_plots(config, test_loss_list, train_loss_list, file_name, show):
     plt.subplots_adjust(left=0.2, bottom=0.2, top=0.9, right = 0.9)
 
     # Set title and axis labels
-    example_type = config.example_type
     ax.set_title('Test and train loss')
     ax.set_xlabel('Epoch Number')
     ax.set_ylabel('Loss')
@@ -381,7 +380,7 @@ def make_loss_plots(config, test_loss_list, train_loss_list, file_name, show):
     timelist=list(range(1,len(test_loss_list)+1))
 
     # Add x_ticks for every 10 epochs
-    step = config.epochs/10
+    step = len(timelist)/10
     ax.set(xticks=np.arange(0, len(test_loss_list), step=step))
 
     # Plot linear interpoloation of the test and train loss
