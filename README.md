@@ -20,16 +20,16 @@ After downloading a copy of the repository, navigate to the project folder and u
 ## Running the code locally in a Jupyter notebook
 The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, it is possible to:
 - Train a cubical neural network using the data from the paper
-- Produce a plot of the learned function and cubical decomposition of phase space,
-- Produce a plot of the labeled cubes, and
+- Produce a plot of the learned function and cubical decomposition of phase space
+- Produce a plot of the labeled cubes
 - Compute homology of labeled regions that are approximations of attracting neighborhoods.
 
 ## How to create your own data
-Data for each system is already produced and contained in the ```data``` directory.
-To produce new data, one can run ```data_production/make_data.py```. Choose the system number and the number of initial points, and a persistence diagram will be produced. From this, it is necessary to choose an appropriate threshold, and then the data will be saved as ```data.csv```, which one can split into a training and testing set.
+Data for each system is already produced and contained in [the data Github](https://github.com/begelb/MLCD-data). Paths to the data should be specified in the configuration files. (More on this below.)
+To produce new data, one can run ```data_production/make_data.py```. Choose the system and the number of initial points, and a persistence diagram will be produced. From this, it is necessary to choose an appropriate threshold, and then the data will be saved as ```data.csv```, which one can split into a training and testing set.
 
 ## System configurations
-Variables that are system specific or which we expect to be changed infrequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and named by the corresponding system. With the exception of the Jupyter notebook, ```learn_decomposition.ipynb```, all computations use local copies of the training and testing datasets with paths specified in the configuration file. By default, the paths are specified with the provided data.
+Variables that are system specific or which we expect to be changed infrequently--such as learning rate and optimizer choice for the neural network--are specified in the ``` .txt ``` files located in the folder ```config``` and named by the corresponding system. With the exception of the Colab notebook, all computations use local copies of the training and testing datasets with paths specified in the configuration file.
 
 The variable data_bounds specifies the domain of the data. The final decomposition of phase space is intersected with this domain. The set $[0, 1] \times [0, 1]$ should be written as $[[0, 1], [0, 1]]$.
 
@@ -39,7 +39,7 @@ If ```weak_weight_share = True```, then the network is constrained so that paral
 
 The parameter ```reduction_threshold``` corresponds to $\beta$ in the paper: it is the proportional decrease of the training loss between the first and final epoch that must be observed in order to continue the computation to the step of obtaining the decomposition. If this criterion is not met, the training restarts (at different initial conditions). For example, setting reduction_threshold = 0.1 means that the training loss must decrease by 10% throughout the duration of training in order to continue.
 
-The parameter ```patience``` corresponds to $\rho$ in the paper: it controls an early stopping criterion for the training process.
+The parameter ```patience``` corresponds to $\rho$ in the paper: it controls an early stopping criterion for the training.
 
 ## Alternative way to compute a single example
 As an alternative to the Jupyter notebook, it is possible to compute a single example using the file ``` single_example.py ```. 
@@ -48,23 +48,23 @@ At the top of the file, under "Global variables set by user", it is possible to 
 - the system name,
 - the number of nodes in the hidden layer of the neural network,
 - the list of labeling thresholds, and
-- the integer name that refers to the example.
+- the integer that names the example (this is used to save the results)
 
 ### Figures
-If the dimension is two and ```make_figures``` is set to True in the configuration file, then figures will be saved in ```output/figures```.
+If the dimension is two and ```make_figures``` is set to True in the configuration file, then figures will be saved in ```output/figures```. You may need to create this folder. 
 
 ### Models
-Models will be saved in ```output/models```.
+Models will be saved in ```output/models```. You may need to create this folder. 
 
 ### Homology results
-The homology results will be saved in ```output/results```.
+The homology results will be saved in ```output/results```. You may need to create this folder. 
 
 ## Acknowledgements
 - The file ```slurm_script_job_array.sh``` was copied from the GitHub repository [cluster-help](https://github.com/marciogameiro/cluster-help) written by **Marcio Gameiro** (2020) and available under MIT License. Small modifications to the file were made. See LICENSE.md for copyright information pertaining to this file.
 
 - The functions used to produce the stacked histograms are copied from [the matplotlib documentation](https://matplotlib.org/stable/gallery/lines_bars_and_markers/filled_step.html)
 
-- The file ```src/config.py``` and the files inside ```config``` are based on the contents of the GitHub repository [MORALS: Morse Graph-aided discovery of Regions of Attraction in a learned Latent Space](https://github.com/Ewerton-Vieira/MORALS/tree/main) written by **Ewerton Vieira, Aravind Sivaramakrishnan, and Sumanth Tangirala** (2023) and available under MIT License. See LICENSE.md for copyright information pertaining to these files.
+- The file ```src/config.py``` is based on the contents of the GitHub repository [MORALS: Morse Graph-aided discovery of Regions of Attraction in a learned Latent Space](https://github.com/Ewerton-Vieira/MORALS/tree/main) written by **Ewerton Vieira, Aravind Sivaramakrishnan, and Sumanth Tangirala** (2023) and available under MIT License. See LICENSE.md for copyright information pertaining to these files.
 
 - The authors acknowledge the [Office of Advanced Research Computing (OARC)](https://oarc.rutgers.edu) at Rutgers, The State University of New Jersey for providing access to the Amarel cluster and associated research computing resources that have been used to develop and run this code.
 
