@@ -16,7 +16,6 @@ After downloading a copy of the repository, navigate to the project folder and u
 **Installation Command Option 2**:
 ```pip install .```
 
-
 ## Running the code locally in a Jupyter notebook
 The main functionality of the code is available in ```learn_decomposition.ipynb```. In this Jupyter noteboook, it is possible to:
 - Train a cubical neural network using the data from the paper
@@ -25,7 +24,7 @@ The main functionality of the code is available in ```learn_decomposition.ipynb`
 - Compute homology of labeled regions that are approximations of attracting neighborhoods.
 
 ## How to create your own data
-Data for each system is already produced and contained in [the data Github](https://github.com/begelb/MLCD-data). Paths to the data should be specified in the configuration files. (More on this below.)
+Data for each system is already produced and contained in [the data repository](https://github.com/begelb/MLCD-data). Paths to the data should be specified in the configuration files. (More on this below.)
 To produce new data, one can run ```data_production/make_data.py```. Choose the system and the number of initial points, and a persistence diagram will be produced. From this, it is necessary to choose an appropriate threshold, and then the data will be saved as ```data.csv```, which one can split into a training and testing set.
 
 ## System configurations
@@ -58,6 +57,9 @@ Models will be saved in ```output/models```. You may need to create this folder.
 
 ### Homology results
 The homology results will be saved in ```output/results```. You may need to create this folder. 
+
+## Authorship
+The code inside ```data_production``` was written by [Paul Tatasciore](https://github.com/paultat91). The code inside ```src``` was written by [Brittany Gelb](https://github.com/begelb).
 
 ## Acknowledgements
 - The file ```slurm_script_job_array.sh``` was copied from the GitHub repository [cluster-help](https://github.com/marciogameiro/cluster-help) written by **Marcio Gameiro** (2020) and available under MIT License. Small modifications to the file were made. See LICENSE.md for copyright information pertaining to this file.
