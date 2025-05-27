@@ -1,6 +1,6 @@
 # Machine-Learned Cubical Decomposition (MLCD) of Phase Space for Identifying Attracting Neighborhoods
 
-This code accompanies the paper "Data-driven Identification of Attractors using Machine Learning" by  Marcio Gameiro, Brittany Gelb, William D. Kalies, Miroslav Kramar, Konstantin Mischaikow, and Paul Tatasciore.
+This code accompanies the paper "Data-driven Identification of Attractors using Machine Learning" by  Marcio Gameiro, Brittany Gelb, William D. Kalies, Miroslav Kramar, Konstantin Mischaikow, and Paul Tatasciore. Questions about the code can be directed to brittany.gelb@rutgers.edu.
 
 ## Google Colab: run MLCD with no local installation
 The code is available on a [Google colab notebook](https://colab.research.google.com/drive/1teYPxaoI0IuQCSlEQuJ9zy43vhqGUqWD?usp=sharing), which does not require local installation to run. The data is automatically read from [a Github repository that hosts the data](https://github.com/begelb/MLCD-data). 
