@@ -8,7 +8,7 @@ The code is available on a [Google colab notebook](https://colab.research.google
 ## Installation
 This code was developed using [Python 3.9.6](https://www.python.org/downloads/release/python-396/). **The program must be executed using Python<=3.11**.
 
-After downloading a copy of the repository, navigate to the project folder and use one of the following commands to install the attractor_id package. The first commmand is preferred if you have multiple versions of Python. 
+After downloading a copy of the repository, navigate to the project folder and use one of the following commands to install the MLCD package. The first commmand is preferred if you have multiple versions of Python. 
 
 You will also need a copy of the configuration files placed inside a ```config``` folder. The files are available at [MLCD-config](https://github.com/begelb/MLCD-config).
 

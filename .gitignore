@@ -19,10 +19,10 @@ __pycache__/
 test_models/
 output/
 data/
-attractor_id/__pycache__/
+MLCD/__pycache__/
 test.py
 *.pth
-attractor_id.egg-info
+MLCD.egg-info
 concatenated_results/
 paper_figures_with_models/
 config/

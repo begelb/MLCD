@@ -19,6 +19,11 @@ def compute_example(system, N, labeling_threshold_list, train_only=False, exampl
     if not os.path.isdir(results_directory):
         os.makedirs(results_directory)
 
+    # Make models directory if it does not exist
+    models_directory = config.results_directory
+    if not os.path.isdir(models_directory):
+        os.makedirs(models_directory)
+
     decomposition_intersects_domain = False
 
     with open(f'{results_directory}/{example_index}-results.csv', 'w', newline='') as file:

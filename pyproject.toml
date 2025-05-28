@@ -1,7 +1,7 @@
 [project]
-name = "attractor_id"
+name = "MLCD"
 version = "1.0.0"
-description = "Attractor identification project"
+description = "Machine Learned Cubical Decomposition"
 license = {file = "LICENSE.txt"}
 requires-python = ">=3.7"
 dependencies = [

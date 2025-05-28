@@ -1,22 +1,22 @@
-from src.attractor_id.compute_example import compute_example
+from src.MLCD.compute_example import compute_example
 
 '''' Global variables set by user '''
 
 ''' 
-The following systems are implemented:
-- 'curved_separatrix'
-- 'ellipsoidal_2d'
-- 'ellipsoidal_3d'
-- 'ellipsoidal_larger_domain_4d'
-- 'ellipsoidal_larger_domain_5d'
-- 'EMT'
-- 'periodic'
-- 'radial_2labels'
-- 'radial_3labels'
-- 'straight_separatrix'
+Available systems:
+- 'linear_separatrix' (2d)
+- 'nonlinear_separatrix' (4d)
+- 'radial_bistable' (2d)
+- 'radial_tristable' (2d)
+- 'M3D' (3d)
+- 'hill_system_with_PO' (3d)
+- 'ellipsoidal_bistable_2d'
+- 'ellipsoidal_bistable_3d'
+- 'ellipsoidal_bistable_4d'
+- 'ellipsoidal_bistable_5d'
 '''
 
-system = 'straight_separatrix'
+system = 'linear_separatrix'
 
 # N is the number of nodes in the hidden layer of the network and must be an integer multiple of the dimension of the system
 N = 4
